@@ -49,8 +49,8 @@ public class AreaCleared : MonoBehaviour
         {
             RectTransform rectTransform = ObjectPooler.SpawnFromPool("UI Money Image", Vector3.zero, Quaternion.identity).GetComponent<RectTransform>();
 
-            rectTransform.parent = canvasTransform;
-            rectTransform.position = from.position; 
+            rectTransform.SetParent(canvasTransform);
+            rectTransform.position = from.position;
             float radius = Screen.width / 3f;
             Vector2 pos = (Vector2)rectTransform.position + new Vector2(Random.Range(-radius, radius), Random.Range(-radius, radius));
             bool isLast = i == count - 1;
