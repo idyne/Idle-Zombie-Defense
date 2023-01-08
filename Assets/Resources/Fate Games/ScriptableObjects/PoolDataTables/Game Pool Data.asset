@@ -1,0 +1,200 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3afb126417b32746878a7258a7a040b, type: 3}
+  m_Name: Game Pool Data
+  m_EditorClassIdentifier: 
+  poolData:
+  - tag: Soldier 1
+    prefab: {fileID: 6756975525295821979, guid: 344e6936ea1552c43a03c464a529be8c, type: 3}
+    size: 40
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Soldier 2
+    prefab: {fileID: 6756975525295821979, guid: 67458aa8177da5240a6c5e527a46f159, type: 3}
+    size: 10
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Soldier 3
+    prefab: {fileID: 6756975525295821979, guid: 049988147b080da4a853ec6611432f01, type: 3}
+    size: 6
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Soldier 4
+    prefab: {fileID: 6756975525295821979, guid: dedf59ee32d71d24e8921345a33a3ccb, type: 3}
+    size: 2
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Soldier 5
+    prefab: {fileID: 6756975525295821979, guid: 73648124c3e01a24791c648ae14b8761, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Soldier 6
+    prefab: {fileID: 6756975525295821979, guid: 183adaf3ebe51dd4b98132a7ad723688, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Soldier 7
+    prefab: {fileID: 6756975525295821979, guid: ca3ec7c3e62ac2e4796d67bdbf2feb34, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Soldier 8
+    prefab: {fileID: 6756975525295821979, guid: dbd25b92bcbae35458160253fbbe2211, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Standard Ammo
+    prefab: {fileID: 5388626812233157393, guid: 14e416daef346e94984f82014403c126, type: 3}
+    size: 30
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Levitating Text
+    prefab: {fileID: 8912479171357307677, guid: b71937c30befb2b4da436dc665df0ec5, type: 3}
+    size: 30
+    canActiveObjectsBeDequeued: 1
+    container: {fileID: 0}
+  - tag: Zombie 1
+    prefab: {fileID: 6756975525295821979, guid: fa4e2c46e7bec8949af3c2ed7ebfc7c5, type: 3}
+    size: 100
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Zombie 2
+    prefab: {fileID: 6756975525295821979, guid: e17d3f7698b4a684da23958f336f149d, type: 3}
+    size: 40
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Zombie 3
+    prefab: {fileID: 6756975525295821979, guid: 3e02c0c95022f2e48a535317d13c6b36, type: 3}
+    size: 20
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Zombie 4
+    prefab: {fileID: 6756975525295821979, guid: 2f1f17a3fe76f464f9947d829844f8f0, type: 3}
+    size: 20
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Zombie 5
+    prefab: {fileID: 6756975525295821979, guid: dad0a4732238afa4b9a977cdf64fddd6, type: 3}
+    size: 10
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Zombie 6
+    prefab: {fileID: 6756975525295821979, guid: a09d6a982af50274e9cd1d84ffdb9acd, type: 3}
+    size: 10
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Explosion Effect
+    prefab: {fileID: 271218684912079319, guid: 2a4996d3a365e1e448bd62c912db5243, type: 3}
+    size: 10
+    canActiveObjectsBeDequeued: 1
+    container: {fileID: 0}
+  - tag: Explosive Ammo
+    prefab: {fileID: 5388626812233157393, guid: 47ca792297e040f488f8a2ae3c88c479, type: 3}
+    size: 10
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Rocket
+    prefab: {fileID: 5388626812233157393, guid: c6df5b8ffd2082f47aca7895ad34325b, type: 3}
+    size: 10
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Dying Zombie 1
+    prefab: {fileID: 7505477399732115323, guid: 6ff1cb301dfd4d04f950e7a04d30da79, type: 3}
+    size: 50
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Dying Zombie 2
+    prefab: {fileID: 7505477399732115323, guid: 1b0822987dd1ccf4fa8412a97a8716f6, type: 3}
+    size: 20
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Dying Zombie 3
+    prefab: {fileID: 7505477399732115323, guid: 2047ed72655e155468b4679a2316763a, type: 3}
+    size: 20
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Dying Zombie 4
+    prefab: {fileID: 7505477399732115323, guid: 9176a2c3fad3a5140ab97012dded859e, type: 3}
+    size: 20
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Dying Zombie 5
+    prefab: {fileID: 7505477399732115323, guid: f198d4db8e8e02b41b09f6747540b86e, type: 3}
+    size: 20
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Dying Zombie 6
+    prefab: {fileID: 7505477399732115323, guid: 978870eed805f1c499ca653357cc5e62, type: 3}
+    size: 20
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: AK47 Ammo
+    prefab: {fileID: 5388626812233157393, guid: 7f3d4a5768a7d9442aaa697231a1e693, type: 3}
+    size: 20
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Sniper Ammo
+    prefab: {fileID: 5388626812233157393, guid: cc80d75972266ca45bb3e86b4c0acd52, type: 3}
+    size: 20
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: M16 Ammo
+    prefab: {fileID: 5388626812233157393, guid: cdae53e1d2f20db429ed17369ebe8f1d, type: 3}
+    size: 20
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Wood Effect
+    prefab: {fileID: 789410352502557902, guid: 9230ac4ea9488a7458696042c0e67b3e, type: 3}
+    size: 10
+    canActiveObjectsBeDequeued: 1
+    container: {fileID: 0}
+  - tag: Fire Rate Effect
+    prefab: {fileID: 108514, guid: 4a3acdc5cefd5f74ebcb02914ae9be64, type: 3}
+    size: 10
+    canActiveObjectsBeDequeued: 1
+    container: {fileID: 0}
+  - tag: Dying Zombie Boss
+    prefab: {fileID: 7505477399732115323, guid: ceb569f2379711a468c48331d3ce5855, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Boss
+    prefab: {fileID: 6756975525295821979, guid: cfd81006dc156f445aaa452fe2076d76, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Coin
+    prefab: {fileID: 61506213663790832, guid: 564ca2f28647a4b4ab9e69124bb9e965, type: 3}
+    size: 40
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Shotgun Ammo
+    prefab: {fileID: 5388626812233157393, guid: b81bc0d4ea8df60469fca691ebaa3100, type: 3}
+    size: 40
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Big Boss
+    prefab: {fileID: 6756975525295821979, guid: e2f1d1f43998efe449ada56d9169895f, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Smoke Effect
+    prefab: {fileID: 8971224939505514978, guid: 9da7726ce0b72e4469daf478b358be44, type: 3}
+    size: 3
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: UI Money Image
+    prefab: {fileID: 590420669460658490, guid: 6b0be8a901f7ccc4694c69da8a7c3af7, type: 3}
+    size: 20
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
