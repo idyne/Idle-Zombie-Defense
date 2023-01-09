@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedAppIndex: 0
   clientTokens:
-  - 
+  - 41c4e1eb2d313c5be8a8f964e4ecf3aa
   appIds:
-  - 123456
+  - 1076671229676634
   appLabels:
-  - 
+  - Idle Zombie Defense
   cookie: 1
   logging: 1
   status: 1

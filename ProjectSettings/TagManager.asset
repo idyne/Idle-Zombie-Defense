@@ -11,7 +11,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Postprocessing Volume
+  - Postprocessing
   - Water
   - UI
   - Ignore Navmesh
@@ -21,7 +21,7 @@ TagManager:
   - Coin
   - Soldier
   - Tower
-  - 
+  - Postprocessing Static
   - 
   - 
   - 
