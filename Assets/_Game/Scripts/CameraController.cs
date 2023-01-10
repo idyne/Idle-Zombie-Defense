@@ -10,6 +10,16 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform camTransform;
     private bool zoomingOut = false;
     private static CameraController instance;
+
+    [SerializeField] private float cameraForwardRange = 10;
+    [SerializeField] private float cameraBackwardRange = -10;
+    [SerializeField] private float cameraZoomSpeed = 10;
+    private Vector3 direction;
+    private Vector3 initialCameraPosition;
+
+    private float zoomDistance = 0;
+    private float anchorDistance = 0;
+
     public static CameraController Instance
     {
         get
@@ -27,14 +37,19 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         Transform = transform;
+        Init();
         swerve = GetComponent<Swerve>();
         swerve.OnStart.AddListener(SetAnchorAngle);
+        swerve.OnStart.AddListener(SetAnchorDistance);
         swerve.OnSwerve.AddListener(() =>
         {
             if (zoomingOut) return;
             angle = anchorAngle + swerve.XRate * 180;
+            zoomDistance = Mathf.Clamp(anchorDistance - swerve.YRate * cameraZoomSpeed, cameraBackwardRange, cameraForwardRange);
+            camTransform.localPosition = initialCameraPosition + direction * zoomDistance;
             Transform.rotation = Quaternion.LookRotation(Quaternion.Euler(0, angle, 0) * Vector3.right);
         });
+
     }
 
     private void SetAnchorAngle()
@@ -42,10 +57,21 @@ public class CameraController : MonoBehaviour
         anchorAngle = angle;
     }
 
+    private void SetAnchorDistance()
+    {
+        anchorDistance = zoomDistance;
+    }
+
     public void ZoomOut()
     {
         zoomingOut = true;
         DOTween.To(() => camTransform.position, x => camTransform.position = x, camTransform.position - camTransform.forward * 5, 3);
+    }
+
+    private void Init()
+    {
+        direction = camTransform.localRotation * Vector3.forward;
+        initialCameraPosition = camTransform.localPosition;
     }
 
 }
