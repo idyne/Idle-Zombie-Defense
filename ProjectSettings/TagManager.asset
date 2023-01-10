@@ -7,6 +7,8 @@ TagManager:
   - Tower
   - Barrier
   - Zombie
+  - Placeable
+  - Grid
   layers:
   - Default
   - TransparentFX
@@ -22,8 +24,8 @@ TagManager:
   - Soldier
   - Tower
   - Postprocessing Static
-  - 
-  - 
+  - Grid
+  - Placeable
   - 
   - 
   - 
