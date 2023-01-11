@@ -46,6 +46,7 @@ public class CameraController : MonoBehaviour
             if (zoomingOut) return;
             angle = anchorAngle + swerve.XRate * 180;
             zoomDistance = Mathf.Clamp(anchorDistance - swerve.YRate * cameraZoomSpeed, cameraBackwardRange, cameraForwardRange);
+            DayCycler.Instance.ChangeFogOffset(-zoomDistance);
             camTransform.localPosition = initialCameraPosition + direction * zoomDistance;
             Transform.rotation = Quaternion.LookRotation(Quaternion.Euler(0, angle, 0) * Vector3.right);
         });
@@ -61,6 +62,7 @@ public class CameraController : MonoBehaviour
     {
         anchorDistance = zoomDistance;
     }
+
 
     public void ZoomOut()
     {
