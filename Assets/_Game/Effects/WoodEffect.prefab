@@ -4874,7 +4874,7 @@ ParticleSystemRenderer:
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: -5495902117074765545, guid: 75fbb84b66ab06a46bcd3ae98c44620a, type: 3}
+  m_Mesh: {fileID: -1997392669490731943, guid: de54b5d9ae2a4224b91f8243d6722d2b, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -9767,7 +9767,7 @@ ParticleSystemRenderer:
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 4493585093827132993, guid: 75fbb84b66ab06a46bcd3ae98c44620a, type: 3}
+  m_Mesh: {fileID: -7087473724099325196, guid: de54b5d9ae2a4224b91f8243d6722d2b, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -14646,7 +14646,7 @@ ParticleSystemRenderer:
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: -1550514412580984892, guid: 75fbb84b66ab06a46bcd3ae98c44620a, type: 3}
+  m_Mesh: {fileID: 4224634350726116895, guid: de54b5d9ae2a4224b91f8243d6722d2b, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}

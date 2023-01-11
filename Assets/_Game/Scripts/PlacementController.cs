@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlacementController : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class PlacementController : MonoBehaviour
 
     private void Update()
     {
+        if (WaveController.State == WaveController.WaveState.RUNNING) return;
         if (Input.GetMouseButtonDown(0)) Select();
         if (selectedPlaceable && Input.GetMouseButton(0)) Hover();
         if (selectedPlaceable && Input.GetMouseButtonUp(0)) Place();
@@ -36,6 +38,10 @@ public class PlacementController : MonoBehaviour
 
     private void Select()
     {
+        // Check if the mouse was clicked over a UI element
+        if (EventSystem.current.IsPointerOverGameObject() && EventSystem.current.currentSelectedGameObject != null) return;
+
+
         // A ray from camera to mouse position
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         // Perform the raycast for 'Placeable' layermask
@@ -50,8 +56,11 @@ public class PlacementController : MonoBehaviour
                 Placeable placeable = hit.transform.GetComponent<Placeable>();
                 // Set selectedPlaceable to hit placeable
                 selectedPlaceable = placeable;
+                selectedPlaceable.OnSelect.Invoke();
                 // Show grids for placement
                 ShowGrids();
+                // Set main camera to placement mode
+                CameraController.InPlacementMode = true;
             }
         }
     }
@@ -86,7 +95,8 @@ public class PlacementController : MonoBehaviour
                     // Set hovered grid to the hit grid
                     hoveredGrid = grid;
                     // Hover the hovered grid
-                    hoveredGrid.Hover();
+                    if (hoveredGrid.IsAvaliable)
+                        hoveredGrid.Hover();
                 }
             }
         }
@@ -103,12 +113,15 @@ public class PlacementController : MonoBehaviour
 
     private void Place()
     {
-        if (hoveredGrid)
+        if (hoveredGrid && hoveredGrid.IsAvaliable)
             selectedPlaceable.Attach(hoveredGrid);
         else selectedPlaceable.PlaceOnGrid();
+        selectedPlaceable.OnDrop.Invoke();
         selectedPlaceable = null;
         hoveredGrid = null;
         HideGrids();
+        // Set main camera to not placement mode
+        CameraController.InPlacementMode = false;
     }
 
     private void ShowGrids()

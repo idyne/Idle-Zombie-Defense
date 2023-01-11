@@ -74,33 +74,26 @@ public class Barrier : MonoBehaviour
     private void BreakOff()
     {
         float percent = currentHealth / (float)MaxHealth;
-        if (percent < 0.75f && breakLevel < 1)
+        if (percent < 0.66f && breakLevel < 1)
         {
             breakLevel = 1;
             parts[0].DOKill();
             parts[0].DOScale(Vector3.zero, 0.2f);
             ObjectPooler.SpawnFromPool("Wood Effect", parts[0].position, parts[0].rotation);
         }
-        if (percent < 0.50f && breakLevel < 2)
+        if (percent < 0.33f && breakLevel < 2)
         {
             breakLevel = 2;
             parts[1].DOKill();
             parts[1].DOScale(Vector3.zero, 0.2f);
             ObjectPooler.SpawnFromPool("Wood Effect", parts[1].position, parts[1].rotation);
         }
-        if (percent < 0.25f && breakLevel < 3)
+        if (percent <= 0.0f && breakLevel < 3)
         {
             breakLevel = 3;
             parts[2].DOKill();
             parts[2].DOScale(Vector3.zero, 0.2f);
             ObjectPooler.SpawnFromPool("Wood Effect", parts[2].position, parts[2].rotation);
-        }
-        if (percent <= 0.0f && breakLevel < 4)
-        {
-            breakLevel = 4;
-            parts[3].DOKill();
-            parts[3].DOScale(Vector3.zero, 0.2f);
-            ObjectPooler.SpawnFromPool("Wood Effect", parts[3].position, parts[3].rotation);
         }
     }
 
@@ -114,7 +107,7 @@ public class Barrier : MonoBehaviour
     public void Repair()
     {
         if (!gameObject.activeSelf) gameObject.SetActive(true);
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < parts.Count; i++)
         {
             parts[i].DOScale(Vector3.one, 0.2f);
         }

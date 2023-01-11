@@ -20,6 +20,8 @@ public class WaveController : MonoBehaviour
 
     private int CurrentMaxZombieLevel { get => GetCurrentMaxZombieLevel(); }
     public UnityEvent<Wave> OnNewWave { get; private set; } = new();
+    public UnityEvent OnWaveStart { get; private set; } = new();
+    public UnityEvent OnWaveEnd { get; private set; } = new();
     private int CurrentBossLevel { get => CurrentTimePeriod == TimePeriod.Night ? NormalizedDay : -1; }
 
     public static TimePeriod CurrentTimePeriod
@@ -148,7 +150,7 @@ public class WaveController : MonoBehaviour
     {
         MoonSDK.TrackLevelEvents(MoonSDK.LevelEvents.Complete, WaveLevel);
         WaveLevel++;
-
+        OnWaveEnd.Invoke();
         LoadCurrentLevel();
     }
 
@@ -183,6 +185,7 @@ public class WaveController : MonoBehaviour
         ButtonManager.Instance.UpdateStartButton(State);
         LevelBar.Instance.Hide();
         zombieBar.GoUp();
+        OnWaveStart.Invoke();
         HapticManager.DoHaptic();
     }
 
