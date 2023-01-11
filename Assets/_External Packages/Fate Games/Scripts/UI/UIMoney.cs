@@ -10,6 +10,8 @@ namespace FateGames
     {
         private Transform _transform = null;
         private bool animating = false;
+        private Transform moneyCanvas;
+
         public Transform Transform
         {
             get
@@ -20,10 +22,12 @@ namespace FateGames
             }
         }
         [SerializeField] private TextMeshProUGUI moneyText;
+        [SerializeField] private RectTransform moneyImage;
 
         private void Awake()
         {
             PlayerProgression.OnMoneyChanged.AddListener(SetMoney);
+            moneyCanvas = Transform.parent;
         }
 
         private void SetMoney(int money)
@@ -34,7 +38,22 @@ namespace FateGames
             Transform.DOScale(1.1f, 0.05f).SetLoops(2, LoopType.Yoyo).OnComplete(() => { animating = false; });
         }
 
-
+        public void AddMoneyEffect(Vector3 position, int gain)
+        {
+            float duration = 0.6f;
+            float startSize = 0.2f;
+            float endSize = 0.8f;
+            RectTransform rectTransform = ObjectPooler.SpawnFromPool("UI Money Image", Camera.main.WorldToScreenPoint(position), Quaternion.identity).GetComponent<RectTransform>();
+            rectTransform.parent = moneyCanvas;
+            rectTransform.localScale = Vector3.one * startSize;
+            rectTransform.DOScale(endSize, duration);
+            rectTransform.DOMove(moneyImage.position, duration).OnStepComplete(() =>
+            {
+                PlayerProgression.MONEY += gain;
+                rectTransform.localScale = Vector3.one;
+                rectTransform.gameObject.SetActive(false);
+            });
+        }
 
         public static string FormatMoney(int money)
         {
