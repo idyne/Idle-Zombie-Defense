@@ -198,3 +198,8 @@ MonoBehaviour:
     size: 20
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
+  - tag: Turret Ammo
+    prefab: {fileID: 5388626812233157393, guid: 20837bf76f116814988b01eae6b31638, type: 3}
+    size: 8
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}

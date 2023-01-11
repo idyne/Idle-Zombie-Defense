@@ -7,10 +7,23 @@ using static WaveController;
 
 public class DayCycler : MonoBehaviour
 {
+    private static DayCycler instance = null;
+    public static DayCycler Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = FindObjectOfType<DayCycler>();
+            return instance;
+        }
+    }
     [SerializeField] private Animator lightAnimator;
     [SerializeField] private Color morningFogColor, noonFogColor, eveningFogColor, nightFogColor;
     [SerializeField] private Light directionalLight;
     [SerializeField] private Color[] directionalLightColors;
+    private float fogStartDistance = 30;
+    private float fogEndDistance = 45;
+    private float fogOffset = 0;
 
     public void SetTimePeriodWithoutAnimation(TimePeriod period)
     {
@@ -108,8 +121,19 @@ public class DayCycler : MonoBehaviour
         }
         else
         {
-            RenderSettings.fogStartDistance = start;
-            RenderSettings.fogEndDistance = end;
+            fogStartDistance = start;
+            fogEndDistance = end;
+            RenderSettings.fogStartDistance = start + fogOffset;
+            RenderSettings.fogEndDistance = end + fogOffset;
         }
     }
+
+    public void ChangeFogOffset(float offset)
+    {
+        fogOffset = offset;
+        RenderSettings.fogStartDistance = fogStartDistance + offset;
+        RenderSettings.fogEndDistance = fogEndDistance + offset;
+    }
+
+
 }

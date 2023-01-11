@@ -7,6 +7,7 @@ using DG.Tweening;
 [RequireComponent(typeof(Swerve))]
 public class CameraController : MonoBehaviour
 {
+    public static bool InPlacementMode = false;
     [SerializeField] private Transform camTransform;
     private bool zoomingOut = false;
     private static CameraController instance;
@@ -43,9 +44,10 @@ public class CameraController : MonoBehaviour
         swerve.OnStart.AddListener(SetAnchorDistance);
         swerve.OnSwerve.AddListener(() =>
         {
-            if (zoomingOut) return;
+            if (zoomingOut || InPlacementMode) return;
             angle = anchorAngle + swerve.XRate * 180;
             zoomDistance = Mathf.Clamp(anchorDistance - swerve.YRate * cameraZoomSpeed, cameraBackwardRange, cameraForwardRange);
+            DayCycler.Instance.ChangeFogOffset(-zoomDistance);
             camTransform.localPosition = initialCameraPosition + direction * zoomDistance;
             Transform.rotation = Quaternion.LookRotation(Quaternion.Euler(0, angle, 0) * Vector3.right);
         });
@@ -54,13 +56,16 @@ public class CameraController : MonoBehaviour
 
     private void SetAnchorAngle()
     {
+        if (InPlacementMode) return;
         anchorAngle = angle;
     }
 
     private void SetAnchorDistance()
     {
+        if (InPlacementMode) return;
         anchorDistance = zoomDistance;
     }
+
 
     public void ZoomOut()
     {

@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Placeable : MonoBehaviour
 {
     [SerializeField] private Grid initialGrid;
+    public UnityEvent OnSelect { get; private set; } = new();
+    public UnityEvent OnDrop { get; private set; } = new();
 
-    private void Start()
+    protected virtual void Start()
     {
         Attach(initialGrid);
     }
