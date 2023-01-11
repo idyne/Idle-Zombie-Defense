@@ -196,8 +196,7 @@ public class Zombie : MonoBehaviour, IPooledObject
 
         int numberOfCoins = level;
         if (isBoss) numberOfCoins *= 10;
-        CoinBurster.Burst(numberOfCoins, Transform.position, Vector3.up, isBoss ? 10 : 7, isBoss);
-        PlayerProgression.MONEY += gain;
+        CoinBurster.Burst(gain, numberOfCoins, Transform.position, Vector3.up, isBoss ? 10 : 7, isBoss);
         LevitatingText levitatingText = ObjectPooler.SpawnFromPool("Levitating Text", levitatingTextPoint.position, Quaternion.identity).GetComponent<LevitatingText>();
         levitatingText.SetText("$" + gain);
     }
