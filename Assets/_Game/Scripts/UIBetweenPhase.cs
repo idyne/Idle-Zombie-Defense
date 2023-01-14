@@ -5,20 +5,32 @@ using UnityEngine;
 public class UIBetweenPhase : MonoBehaviour
 {
     [SerializeField] private GameObject panel = null;
-    [SerializeField] private GameObject button = null;
     [SerializeField] private GameObject startWaveButton = null;
+
+    private void Start()
+    {
+        WaveController.Instance.OnWaveStart.AddListener(() =>
+        {
+            gameObject.SetActive(false);
+        });
+
+        WaveController.Instance.OnWaveEnd.AddListener(() =>
+        {
+            gameObject.SetActive(true);
+        });
+    }
 
     public void OpenPanel()
     {
         panel.SetActive(true);
-        button.SetActive(false);
+        gameObject.SetActive(false);
         startWaveButton.SetActive(false);
     }
 
     public void ClosePanel()
     {
         panel.SetActive(false);
-        button.SetActive(true);
+        gameObject.SetActive(true);
         startWaveButton.SetActive(true);
     }
 }
