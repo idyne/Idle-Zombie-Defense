@@ -87,6 +87,7 @@ MonoBehaviour:
   hitCooldownDuration: 1.5
   shotPoint: {fileID: 6391222573832946911}
   levitatingTextPoint: {fileID: 3957990890118431232}
+  slowedDownColor: {r: 0.41960785, g: 0.6627451, b: 1, a: 1}
 --- !u!195 &4221529958158323268
 NavMeshAgent:
   m_ObjectHideFlags: 0

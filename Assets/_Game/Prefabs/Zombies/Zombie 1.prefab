@@ -83,9 +83,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBoss: 0
   level: 1
+  matIndex: 0
   hitCooldownDuration: 1
   shotPoint: {fileID: 6265209137345314718}
   levitatingTextPoint: {fileID: 1080241218460495724}
+  slowedDownColor: {r: 0.41960785, g: 0.6627451, b: 1, a: 1}
 --- !u!195 &4221529958158323268
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -603,7 +605,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &7055824915684724224
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -620,7 +622,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1001 &7335594545143643145
 PrefabInstance:
   m_ObjectHideFlags: 0

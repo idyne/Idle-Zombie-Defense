@@ -30,7 +30,7 @@ namespace FateGames
             moneyCanvas = Transform.parent;
         }
 
-        private void SetMoney(int money)
+        private void SetMoney(int money, int change = 0)
         {
             moneyText.text = FormatMoney(PlayerProgression.MONEY);
             if (animating || money <= 0) return;

@@ -38,7 +38,7 @@ public class AreaCleared : MonoBehaviour
         dayText.text = "DAY " + day + "\nCOMPLETED";
         moneyText.text = "+ " + money;
         this.money = money;
-        PlayerProgression.OnMoneyChanged.Invoke(0);
+        PlayerProgression.MONEY = PlayerProgression.MONEY;
     }
     public void SpreadMoney(int count)
     {

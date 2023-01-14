@@ -10,7 +10,7 @@ public class Financier : MonoBehaviour
 
     private void Awake()
     {
-        PlayerProgression.OnMoneyChanged.AddListener((money) =>
+        PlayerProgression.OnMoneyChanged.AddListener((money, change) =>
         {
             ButtonManager.Instance.UpdateIncomeButton(GetIncomeCost());
         });

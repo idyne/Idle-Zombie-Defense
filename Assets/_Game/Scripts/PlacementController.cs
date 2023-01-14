@@ -54,13 +54,16 @@ public class PlacementController : MonoBehaviour
             {
                 // Get the 'Placeable' component of the hit object
                 Placeable placeable = hit.transform.GetComponent<Placeable>();
-                // Set selectedPlaceable to hit placeable
-                selectedPlaceable = placeable;
-                selectedPlaceable.OnSelect.Invoke();
-                // Show grids for placement
-                ShowGrids();
-                // Set main camera to placement mode
-                CameraController.InPlacementMode = true;
+                if (placeable.CanSelect)
+                {
+                    // Set selectedPlaceable to hit placeable
+                    selectedPlaceable = placeable;
+                    selectedPlaceable.OnSelect.Invoke();
+                    // Show grids for placement
+                    ShowGrids();
+                    // Set main camera to placement mode
+                    CameraController.InPlacementMode = true;
+                }
             }
         }
     }

@@ -48,7 +48,7 @@ public class UIAnimationSequencer : MonoBehaviour
 
     public IEnumerator GoCurrentTimePeriod()
     {
-        PlayerProgression.OnMoneyChanged.Invoke(0);
+        PlayerProgression.MONEY = PlayerProgression.MONEY;
 
         //Oyuna yeni baþlama
         if (isNewSession && Day == 1 && CurrentTimePeriod == TimePeriod.Morning)
