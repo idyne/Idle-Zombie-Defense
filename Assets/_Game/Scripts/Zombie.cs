@@ -21,6 +21,7 @@ public class Zombie : MonoBehaviour, IPooledObject
     private static int baseDamage = 25;
     private int damage { get => GetDamage(); }
     [SerializeField] private Transform shotPoint, levitatingTextPoint;
+    [SerializeField] private Color slowedDownColor;
     private HealthBar healthBar;
     private MeshAnimatorBase meshAnimator;
     private int currentHealth = 100;
@@ -33,6 +34,8 @@ public class Zombie : MonoBehaviour, IPooledObject
     private Color originalColor;
     private Tower tower;
     private bool isStopped = false;
+    private bool slowedDown = false;
+    private Tween slowDownTween = null;
 
     private void Awake()
     {
@@ -64,6 +67,37 @@ public class Zombie : MonoBehaviour, IPooledObject
         isStopped = true;
         tower = null;
         barriers.Clear();
+    }
+
+    public void SlowDown()
+    {
+        if (slowedDown) return;
+        if (slowDownTween != null)
+        {
+            slowDownTween.Kill();
+            slowDownTween = null;
+        }
+        slowedDown = true;
+        agent.speed *= 0.2f;
+        meshAnimator.speed *= 0.2f;
+        hitCooldownDuration *= 5;
+        SetColor(slowedDownColor);
+        slowDownTween = DOVirtual.DelayedCall(30, CancelSlowDown);
+    }
+
+    public void CancelSlowDown()
+    {
+        if (!slowedDown) return;
+        if (slowDownTween != null)
+        {
+            slowDownTween.Kill();
+            slowDownTween = null;
+        }
+        slowedDown = false;
+        agent.speed *= 5f;
+        meshAnimator.speed *= 5f;
+        hitCooldownDuration *= 0.2f;
+        SetColor(originalColor);
     }
 
 
@@ -209,6 +243,14 @@ public class Zombie : MonoBehaviour, IPooledObject
             GetPushed(projectile.Damage / (float)maxHealth);
         SetHealth(currentHealth - projectile.Damage);
     }
+    public void GetHit(int damage)
+    {
+        if (currentHealth <= 0 || !gameObject.activeSelf) return;
+        Flash(0.05f);
+        if (!isBoss)
+            GetPushed(damage / (float)maxHealth);
+        SetHealth(currentHealth - damage);
+    }
 
     private void GetPushed(float value)
     {
@@ -234,6 +276,7 @@ public class Zombie : MonoBehaviour, IPooledObject
     {
         SetHealth(maxHealth, false);
         agent.SetDestination(Vector3.zero);
+        CancelSlowDown();
         SetColor(originalColor);
     }
     private void SetHealth(int health, bool showBar = true)
@@ -242,7 +285,7 @@ public class Zombie : MonoBehaviour, IPooledObject
         currentHealth = Mathf.Clamp(health, 0, maxHealth);
         healthBar.SetPercent(currentHealth / (float)maxHealth);
         if (showBar)
-            healthBar.Show(4f);
+            healthBar.Show(2f);
         if (currentHealth == 0) Die();
     }
 
@@ -331,7 +374,7 @@ public class Zombie : MonoBehaviour, IPooledObject
     {
         SetColor(Color.white);
         yield return new WaitForSeconds(duration);
-        SetColor(originalColor);
+        SetColor(slowedDown ? slowedDownColor : originalColor);
     }
 
     private void SetColor(Color color)

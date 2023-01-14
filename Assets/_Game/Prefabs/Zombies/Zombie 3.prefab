@@ -83,9 +83,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBoss: 0
   level: 3
+  matIndex: 0
   hitCooldownDuration: 1.5
   shotPoint: {fileID: 2118815613562837560}
   levitatingTextPoint: {fileID: 8295228961346662795}
+  slowedDownColor: {r: 0.41960785, g: 0.6627451, b: 1, a: 1}
 --- !u!195 &4221529958158323268
 NavMeshAgent:
   m_ObjectHideFlags: 0

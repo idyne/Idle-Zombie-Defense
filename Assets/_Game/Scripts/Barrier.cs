@@ -58,7 +58,7 @@ public class Barrier : MonoBehaviour
         currentHealth = Mathf.Clamp(health, 0, MaxHealth);
         healthBar.SetPercent(currentHealth / (float)MaxHealth);
         if (showBar)
-            healthBar.Show(4);
+            healthBar.Show(2);
     }
 
     public void GetHit(int damage)

@@ -34,7 +34,7 @@ public class Barracks : MonoBehaviour
     private void Awake()
     {
         tower = GetComponent<Tower>();
-        PlayerProgression.OnMoneyChanged.AddListener((money) =>
+        PlayerProgression.OnMoneyChanged.AddListener((money, change) =>
         {
             ButtonManager.Instance.UpdateMergeButton(GetMergeCost(), CanMerge(out _));
             ButtonManager.Instance.UpdateSoldierButton(GetSoldierCost(), isFull, isMerging);
@@ -205,7 +205,7 @@ public class Barracks : MonoBehaviour
                 newSoldier.Transform.position = mergePosition;
                 newSoldier.Transform.DOMove(position, transitionDuration);
                 isMerging = false;
-                PlayerProgression.OnMoneyChanged.Invoke(0);
+                PlayerProgression.MONEY = PlayerProgression.MONEY;
             }
 
             soldier.gameObject.SetActive(true);

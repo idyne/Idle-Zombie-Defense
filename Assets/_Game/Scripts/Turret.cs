@@ -13,14 +13,14 @@ public class Turret : Placeable
     [SerializeField] protected Transform barrel;
     [SerializeField] private Transform rangeIndicatorTransform;
     [SerializeField] private Animator animator;
+    private int saveDataIndex = -1;
 
     public Transform Barrel { get => barrel; }
     private Zombie target = null;
     private float lastShootTime = -50;
 
-    protected override void Start()
+    protected virtual void Start()
     {
-        base.Start();
         rangeIndicatorTransform.localScale = Vector3.one * range;
         HideRangeIndicator();
         OnSelect.AddListener(ShowRangeIndicator);
@@ -38,13 +38,22 @@ public class Turret : Placeable
 
     private void Update()
     {
-        Vector3 pos = rangeIndicatorTransform.position;
-        pos.y = 0.01f;
-        rangeIndicatorTransform.position = pos;
+        if (rangeIndicatorTransform.gameObject.activeSelf)
+        {
+            Vector3 pos = rangeIndicatorTransform.position;
+            pos.y = 0.01f;
+            rangeIndicatorTransform.position = pos;
+        }
         if (!target) return;
         Vector3 direction = target.ShotPoint.position - barrel.position;
         Debug.DrawRay(barrel.position, direction);
         head.rotation = Quaternion.Lerp(head.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 8);
+    }
+
+    public void Initialize(Grid grid, int saveDataIndex)
+    {
+        Attach(grid);
+        this.saveDataIndex = saveDataIndex;
     }
     private void FindTarget()
     {

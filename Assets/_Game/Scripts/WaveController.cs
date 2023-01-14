@@ -11,7 +11,16 @@ public class WaveController : MonoBehaviour
 
     [SerializeField] private ZombieBar zombieBar;
     [SerializeField] private UIAnimationSequencer UIAnimationSequencer;
-    public static WaveController Instance { get; private set; } = null;
+    private static WaveController instance = null;
+    public static WaveController Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = FindObjectOfType<WaveController>();
+            return instance;
+        }
+    }
     public static int WaveLevel { get => PlayerProgression.PlayerData.WaveLevel; set => PlayerProgression.PlayerData.WaveLevel = value; }
     public enum TimePeriod { Morning, Noon, Evening, Night }
     public Wave CurrentWave { get; private set; } = null;
@@ -121,15 +130,6 @@ public class WaveController : MonoBehaviour
         }
         return result;
     }
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            DestroyImmediate(gameObject);
-            return;
-        }
-        Instance = this;
-    }
 
     private void Start()
     {
@@ -141,7 +141,7 @@ public class WaveController : MonoBehaviour
         State = WaveState.WAITING;
 
         CreateWave(GetCurrentLevelPower(), CurrentMaxZombieLevel, CurrentBossLevel);
-        PlayerProgression.OnMoneyChanged.Invoke(PlayerProgression.MONEY);
+        PlayerProgression.MONEY = PlayerProgression.MONEY;
         StartCoroutine(UIAnimationSequencer.GoCurrentTimePeriod());
         BarrierController.Instance.RepairAll();
     }

@@ -25,10 +25,10 @@ TagManager:
   - Tower
   - Postprocessing Static
   - Grid
-  - Placeable
+  - Turret
   - Walls
-  - 
-  - 
+  - Trap
+  - Effect
   - 
   - 
   - 

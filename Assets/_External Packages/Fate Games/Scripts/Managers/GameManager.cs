@@ -46,7 +46,7 @@ namespace FateGames
         {
             levelManager = FindObjectOfType<LevelManager>();
             GlobalEventDispatcher.Emit("UPDATE_MONEY");
-            PlayerProgression.OnMoneyChanged.Invoke(PlayerProgression.MONEY);
+            PlayerProgression.OnMoneyChanged.Invoke(PlayerProgression.MONEY, 0);
             if (scene.name != "LevelLoader")
                 ObjectPooler.CreatePools();
         }

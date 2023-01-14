@@ -195,11 +195,21 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: UI Money Image
     prefab: {fileID: 590420669460658490, guid: 6b0be8a901f7ccc4694c69da8a7c3af7, type: 3}
-    size: 20
+    size: 40
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Turret Ammo
     prefab: {fileID: 5388626812233157393, guid: 20837bf76f116814988b01eae6b31638, type: 3}
     size: 8
     canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Explosive Bomb Effect
+    prefab: {fileID: 5473071050136131083, guid: b926145101b8d504298b39ccdbbad4c4, type: 3}
+    size: 10
+    canActiveObjectsBeDequeued: 1
+    container: {fileID: 0}
+  - tag: Frost Bomb Effect
+    prefab: {fileID: 8208000713559375710, guid: f714511a7ca6aab44826d73b01234bde, type: 3}
+    size: 10
+    canActiveObjectsBeDequeued: 1
     container: {fileID: 0}

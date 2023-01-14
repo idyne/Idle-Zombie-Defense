@@ -6,7 +6,7 @@ namespace FateGames
     public static class PlayerProgression
     {
         public static PlayerData PlayerData { get; private set; }
-        public static readonly UnityEvent<int> OnMoneyChanged = new();
+        public static readonly UnityEvent<int, int> OnMoneyChanged = new();
         public static bool CanAfford(int cost) => MONEY >= cost;
 
         public static int CurrentLevel
@@ -24,7 +24,7 @@ namespace FateGames
             {
                 int previous = PlayerData.Money;
                 PlayerData.Money = value;
-                OnMoneyChanged.Invoke(value - previous);
+                OnMoneyChanged.Invoke(value, value - previous);
             }
         }
 
@@ -36,7 +36,7 @@ namespace FateGames
                 PlayerData = new PlayerData();
                 SaveManager.Save(PlayerData);
             }
-            OnMoneyChanged.Invoke(MONEY);
+            OnMoneyChanged.Invoke(MONEY, 0);
             Debug.Log("Player Data is initialized");
         }
     }

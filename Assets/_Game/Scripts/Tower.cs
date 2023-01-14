@@ -116,7 +116,7 @@ public class Tower : MonoBehaviour
         currentHealth = health;
         healthBar.SetPercent(currentHealth / (float)MaxHealth);
         if (showBar)
-            healthBar.Show(4);
+            healthBar.Show(2);
         if (health <= 0) Die();
     }
 

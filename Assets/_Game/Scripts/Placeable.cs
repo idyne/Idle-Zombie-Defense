@@ -6,13 +6,9 @@ using UnityEngine.Events;
 public class Placeable : MonoBehaviour
 {
     [SerializeField] private Grid initialGrid;
+    public virtual bool CanSelect { get; protected set; } = true;
     public UnityEvent OnSelect { get; private set; } = new();
     public UnityEvent OnDrop { get; private set; } = new();
-
-    protected virtual void Start()
-    {
-        Attach(initialGrid);
-    }
 
     private Transform _transform = null;
     public Transform transform

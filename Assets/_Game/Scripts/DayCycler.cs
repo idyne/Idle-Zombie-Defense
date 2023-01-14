@@ -116,8 +116,8 @@ public class DayCycler : MonoBehaviour
     {
         if (animate)
         {
-            DOTween.To(() => RenderSettings.fogStartDistance, x => RenderSettings.fogStartDistance = x, start, 2);
-            DOTween.To(() => RenderSettings.fogEndDistance, x => RenderSettings.fogEndDistance = x, end, 2);
+            DOTween.To(() => RenderSettings.fogStartDistance, x => RenderSettings.fogStartDistance = x, start + fogOffset, 2);
+            DOTween.To(() => RenderSettings.fogEndDistance, x => RenderSettings.fogEndDistance = x, end + fogOffset, 2);
         }
         else
         {

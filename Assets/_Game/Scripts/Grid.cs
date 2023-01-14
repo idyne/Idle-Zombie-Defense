@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class Grid : MonoBehaviour
 {
+    [SerializeField] private int id = -1;
     [SerializeField] private Image image;
     [SerializeField] private Color availableColor, notAvailableColor, hoverColor, fromColor;
+
+    public int Id { get => id; }
     private Transform _transform = null;
     public Transform transform
     {
@@ -16,6 +19,11 @@ public class Grid : MonoBehaviour
                 _transform = base.transform;
             return _transform;
         }
+    }
+
+    private void Start()
+    {
+        Hide();
     }
     public Placeable AttachedPlaceable { get; private set; }
 
@@ -28,7 +36,7 @@ public class Grid : MonoBehaviour
 
     public void Show(Placeable placeable = null)
     {
-        if (!image.enabled) image.enabled = true;
+        gameObject.SetActive(true);
         if (placeable != null && placeable == AttachedPlaceable)
             image.color = fromColor;
         else
@@ -37,11 +45,10 @@ public class Grid : MonoBehaviour
 
     public void Hover()
     {
-        if (!image.enabled) image.enabled = true;
         image.color = hoverColor;
     }
     public void Hide()
     {
-        image.enabled = false;
+        gameObject.SetActive(false);
     }
 }

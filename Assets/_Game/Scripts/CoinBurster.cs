@@ -11,7 +11,6 @@ public static class CoinBurster
         if (time)
             delay = 0.3f / numberOfCoins;
         else delay = 0;
-        Debug.Log("gain: " + gain + " count: " + numberOfCoins);
         GameManager.Instance.StartCoroutine(BurstCoin(gain, numberOfCoins, delay, position, direction, forceMultiplier));
     }
 
@@ -22,7 +21,6 @@ public static class CoinBurster
 
         int currentGain = gain / count;
         coinRigidbody.GetComponent<Coin>().Gain = currentGain;
-        Debug.Log(currentGain);
         gain -= currentGain;
 
         coinRigidbody.AddForce((direction + new Vector3(Random.Range(-randomScaler, randomScaler), 0, Random.Range(-randomScaler, randomScaler))) * forceMultiplier, ForceMode.Impulse);
