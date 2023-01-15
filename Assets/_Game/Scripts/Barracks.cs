@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using FateGames;
 using System;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Tower))]
 public class Barracks : MonoBehaviour
@@ -30,6 +31,8 @@ public class Barracks : MonoBehaviour
     private int mergingSoldiersPower = 0;
     private bool isFull { get => tower.NumberOfPoints <= numberOfSoldiers; }
     public static int FireRateLevel { get => PlayerProgression.PlayerData.FireRateLevel; }
+    private int maxMergeLevel = 0;
+    public readonly UnityEvent<int> OnNewMergeUnlocked = new();
 
     private void Awake()
     {
@@ -41,6 +44,7 @@ public class Barracks : MonoBehaviour
             ButtonManager.Instance.UpdateFireRateButton(GetFireRateCost(), FireRateLevel >= GetMaxFireRateLevel());
         });
         UpgradeController.Instance.OnSoldierMergeLevelUpgrade.AddListener(ClearLowLevelSoldiers);
+        
     }
 
     private void ClearLowLevelSoldiers(int level)
@@ -88,6 +92,14 @@ public class Barracks : MonoBehaviour
         Initialize();
         ButtonManager.Instance.UpdateMergeButton(GetMergeCost(), CanMerge(out _));
         ButtonManager.Instance.UpdateSoldierButton(GetSoldierCost(), isFull, isMerging);
+        for (int i = soldierTable.Count - 1; i >= 0; i--)
+        {
+            if(soldierTable[i].Count > 0)
+            {
+                maxMergeLevel = i;
+                break;
+            }
+        }
     }
 
     private void Initialize()
@@ -225,6 +237,9 @@ public class Barracks : MonoBehaviour
                 newSoldier.Transform.position = mergePosition;
                 newSoldier.Transform.DOMove(position, transitionDuration);
                 isMerging = false;
+                bool isNewMerge = soldierLevel > maxMergeLevel;
+                if (isNewMerge) maxMergeLevel = soldierLevel;
+                OnNewMergeUnlocked.Invoke(soldierLevel);
                 PlayerProgression.MONEY = PlayerProgression.MONEY;
             }
 
@@ -232,7 +247,7 @@ public class Barracks : MonoBehaviour
             soldier.Transform.DOMove(mergePosition, transitionDuration).OnComplete(count == 3 ? hideAndAddSoldier : hide);
         }
 
-
+        
 
         PlayerProgression.MONEY -= cost;
         HapticManager.DoHaptic();
