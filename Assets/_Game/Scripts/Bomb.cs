@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FateGames;
-using EPOOutline;
 
 public abstract class Bomb : Trap
 {
@@ -11,7 +10,7 @@ public abstract class Bomb : Trap
     [SerializeField] private Transform rangeIndicatorTransform;
 
 
-    [SerializeField] private Outlinable outlinable;
+    [SerializeField] private Outline outlinable;
 
 
     protected override void Start()
@@ -59,7 +58,7 @@ public abstract class Bomb : Trap
         mesh.SetActive(!exploded);
         explodedMesh.SetActive(exploded);
         Exploded = exploded;
-        Attach(grid);
         this.saveDataIndex = saveDataIndex;
+        Attach(grid);
     }
 }

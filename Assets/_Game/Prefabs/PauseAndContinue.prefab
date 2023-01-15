@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c4e3e5cdd8e304447b0960af9f6de235, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f4ec64ab159b9c4ca010d3a50a06bd9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -146,6 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7bb12cd93697a4eb19025dde6fb8be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseSprite: {fileID: 21300000, guid: c4e3e5cdd8e304447b0960af9f6de235, type: 3}
-  continueSprite: {fileID: 21300000, guid: 2ae7669716c54c04b8486eee0707121c, type: 3}
+  pauseSprite: {fileID: 21300000, guid: 1f4ec64ab159b9c4ca010d3a50a06bd9, type: 3}
+  continueSprite: {fileID: 21300000, guid: 70b9c4594c46a024b95a25eb86c37990, type: 3}
   buttonImage: {fileID: 7405788755022833098}

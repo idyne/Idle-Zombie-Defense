@@ -33,16 +33,16 @@ public class Barrier : MonoBehaviour
         switch (WaveController.ZoneLevel)
         {
             case 1:
-                result = baseHealth * (WaveController.NormalizedDay);
+                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
                 break;
             case 2:
-                result = baseHealth * (WaveController.NormalizedDay);
+                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
                 break;
             case 3:
-                result = baseHealth * (WaveController.NormalizedDay);
+                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
                 break;
             case 4:
-                result = baseHealth * (WaveController.NormalizedDay);
+                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
                 break;
         }
         if (WaveController.ZoneLevel == 3 && WaveController.NormalizedDay == 1)

@@ -19,8 +19,19 @@ public class SpeedBooster : MonoBehaviour, IPointerDownHandler
         }
     }
     private Transform _transform;
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            // Check if the mouse was clicked over a UI element
+            if (EventSystem.current.IsPointerOverGameObject() && EventSystem.current.currentSelectedGameObject != null) return;
+            Boost();
+        }
+    }
     public void Boost()
     {
+        if (PauseButton.Paused) return;
         tween?.Kill();
         Time.timeScale = 1.5f;
         tween = DOVirtual.DelayedCall(duration, () =>
@@ -33,6 +44,7 @@ public class SpeedBooster : MonoBehaviour, IPointerDownHandler
 
     private void Deboost()
     {
+        if (PauseButton.Paused) return;
         Time.timeScale = 1;
     }
 

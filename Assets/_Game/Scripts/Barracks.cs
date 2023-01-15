@@ -21,7 +21,7 @@ public class Barracks : MonoBehaviour
     private Tower tower;
     private List<List<Soldier>> soldierTable = new List<List<Soldier>> { null, new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>() };
     private int numberOfSoldiers = 0;
-    private float baseSoldierCost = 2.47f;
+    private float baseSoldierCost { get => 2.47f * Mathf.Pow(2.5f, PlayerProgression.PlayerData.SoldierMergeLevel - 1); }
     private float baseFireRateCost = 10.13f;
     private float baseMergeCost = 15.14f;
     private int power = 0;
@@ -40,7 +40,27 @@ public class Barracks : MonoBehaviour
             ButtonManager.Instance.UpdateSoldierButton(GetSoldierCost(), isFull, isMerging);
             ButtonManager.Instance.UpdateFireRateButton(GetFireRateCost(), FireRateLevel >= GetMaxFireRateLevel());
         });
+        UpgradeController.Instance.OnSoldierMergeLevelUpgrade.AddListener(ClearLowLevelSoldiers);
+    }
 
+    private void ClearLowLevelSoldiers(int level)
+    {
+        for (int i = 1; i < level; i++)
+        {
+            int numberOfSoldiers = soldierTable[i].Count;
+            if (numberOfSoldiers > 0)
+            {
+                for (int j = 0; j < numberOfSoldiers; j++)
+                {
+                    RemoveSoldier(i);
+                }
+                int numberOfHighLevelSoldiers = Mathf.CeilToInt(numberOfSoldiers / 3f);
+                for (int j = 0; j < numberOfHighLevelSoldiers; j++)
+                {
+                    AddSoldier(i + 1, out Soldier soldier, out Transform spawnPoint);
+                }
+            }
+        }
     }
 
     public static int GetMaxFireRateLevel()
@@ -120,7 +140,7 @@ public class Barracks : MonoBehaviour
     {
         int cost = GetSoldierCost();
         if (!PlayerProgression.CanAfford(cost)) return;
-        int soldierLevel = 1;
+        int soldierLevel = PlayerProgression.PlayerData.SoldierMergeLevel;
         AddSoldier(soldierLevel, out _, out _);
         lastWaveLevelOfBuySoldier = WaveController.NormalizedDay;
         PlayerProgression.MONEY -= cost;

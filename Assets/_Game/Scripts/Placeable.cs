@@ -38,7 +38,7 @@ public class Placeable : MonoBehaviour
         transform.position = position;
     }
 
-    public void Attach(Grid grid)
+    public virtual void Attach(Grid grid)
     {
         if (!grid) return;
         Detach();

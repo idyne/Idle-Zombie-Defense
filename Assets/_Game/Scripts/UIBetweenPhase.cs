@@ -5,32 +5,38 @@ using UnityEngine;
 public class UIBetweenPhase : MonoBehaviour
 {
     [SerializeField] private GameObject panel = null;
-    [SerializeField] private GameObject startWaveButton = null;
+    [SerializeField] private GameObject[] objectsToHide;
+    private bool[] wereTheyShown;
 
-    private void Start()
+    private void Awake()
     {
-        WaveController.Instance.OnWaveStart.AddListener(() =>
-        {
-            gameObject.SetActive(false);
-        });
-
-        WaveController.Instance.OnWaveEnd.AddListener(() =>
-        {
-            gameObject.SetActive(true);
-        });
+        wereTheyShown = new bool[objectsToHide.Length];
     }
+
+
+    private void Show() => gameObject.SetActive(true);
+    private void Hide() => gameObject.SetActive(false);
+
 
     public void OpenPanel()
     {
         panel.SetActive(true);
         gameObject.SetActive(false);
-        startWaveButton.SetActive(false);
+        for (int i = 0; i < objectsToHide.Length; i++)
+        {
+            wereTheyShown[i] = objectsToHide[i].activeSelf;
+            objectsToHide[i].SetActive(false);
+        }
     }
 
     public void ClosePanel()
     {
         panel.SetActive(false);
         gameObject.SetActive(true);
-        startWaveButton.SetActive(true);
+        for (int i = 0; i < objectsToHide.Length; i++)
+        {
+            if (wereTheyShown[i])
+                objectsToHide[i].SetActive(true);
+        }
     }
 }

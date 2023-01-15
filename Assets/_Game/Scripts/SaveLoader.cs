@@ -7,7 +7,13 @@ public class SaveLoader : MonoBehaviour
 {
     private void Start()
     {
-        List<Grid> grids = new(FindObjectsOfType<Grid>());
+        List<Grid> grids = new();
+        PlacementController[] placementControllers = FindObjectsOfType<PlacementController>();
+        for (int i = 0; i < placementControllers.Length; i++)
+        {
+            grids.AddRange(placementControllers[i].Grids);
+        }
+
         for (int i = 0; i < PlayerProgression.PlayerData.Traps.Count; i++)
         {
             (int, int, bool) data = PlayerProgression.PlayerData.Traps[i];

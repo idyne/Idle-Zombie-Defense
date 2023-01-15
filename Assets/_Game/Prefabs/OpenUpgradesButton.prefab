@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 340019305208198234}
   - component: {fileID: 340019305208198237}
   - component: {fileID: 308842033088838702}
+  - component: {fileID: 5371278318276021388}
   m_Layer: 0
   m_Name: OpenUpgradesButton
   m_TagString: Untagged
@@ -149,6 +150,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panel: {fileID: 0}
   startWaveButton: {fileID: 0}
+--- !u!114 &5371278318276021388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340019305208198239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47ed06cdcd32ae34c89c27e98600405e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  root: {fileID: 340019305208198239}
+  button: {fileID: 340019305208198237}
+  text: {fileID: 340019305521296588}
+  disabledImage: {fileID: 0}
 --- !u!1 &340019305521296590
 GameObject:
   m_ObjectHideFlags: 0

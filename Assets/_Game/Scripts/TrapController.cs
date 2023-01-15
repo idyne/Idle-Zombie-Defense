@@ -37,9 +37,9 @@ public class TrapController : MonoBehaviour
                         firstTapTween = null;
                     }
                     Trap trap = hit.transform.GetComponent<Trap>();
-                    if (trap.Exploded && WaveController.State == WaveController.WaveState.WAITING)
+                   /* if (trap.Exploded && WaveController.State == WaveController.WaveState.WAITING)
                         trap.Rebuy();
-                    else if (!trap.Exploded && WaveController.State == WaveController.WaveState.RUNNING)
+                    else */if (!trap.Exploded && WaveController.State == WaveController.WaveState.RUNNING)
                         trap.Detonate();
                 }
             }

@@ -7,21 +7,21 @@ public class PlacementController : MonoBehaviour
 {
     [SerializeField] private LayerMask gridLayerMask, placeableLayerMask, groundLayerMask;
     [SerializeField] private Transform gridContainer;
-    private List<Grid> _grids = null;
+    private List<Grid> grids = null;
     private Grid hoveredGrid = null;
-    private List<Grid> grids
+    public List<Grid> Grids
     {
         get
         {
-            if (_grids == null)
+            if (grids == null)
             {
-                _grids = new();
+                grids = new();
                 for (int i = 0; i < gridContainer.childCount; i++)
                 {
-                    _grids.Add(gridContainer.GetChild(i).GetComponent<Grid>());
+                    grids.Add(gridContainer.GetChild(i).GetComponent<Grid>());
                 }
             }
-            return _grids;
+            return grids;
         }
     }
     private Camera _mainCamera = null;
@@ -129,13 +129,13 @@ public class PlacementController : MonoBehaviour
 
     private void ShowGrids()
     {
-        foreach (Grid grid in grids)
+        foreach (Grid grid in Grids)
             grid.Show(selectedPlaceable);
     }
 
     private void HideGrids()
     {
-        foreach (Grid grid in grids)
+        foreach (Grid grid in Grids)
             grid.Hide();
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using FateGames;
 using UnityEngine.EventSystems;
-using EPOOutline;
 
 public class ExplosiveBomb : Bomb
 {

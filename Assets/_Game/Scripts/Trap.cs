@@ -14,7 +14,7 @@ public abstract class Trap : Placeable
 
     private void Awake()
     {
-        WaveController.Instance.OnWaveEnd.AddListener(() => { if (Exploded) priceTag.Show(); });
+        UIAnimationSequencer.OnOutWaveUIActivated.AddListener(() => { if (Exploded) priceTag.Show(); });
         WaveController.Instance.OnWaveStart.AddListener(priceTag.Hide);
         PlayerProgression.OnMoneyChanged.AddListener((money, change) =>
         {
@@ -25,6 +25,8 @@ public abstract class Trap : Placeable
 
     protected virtual void Start()
     {
+        if (PlayerProgression.MONEY >= price && !priceTag.ButtonEnabled) priceTag.EnableButton();
+        else if (PlayerProgression.MONEY < price && priceTag.ButtonEnabled) priceTag.DisableButton();
         priceTag.SetPrice(price);
         if (Exploded)
             priceTag.Show();
@@ -36,7 +38,7 @@ public abstract class Trap : Placeable
 
     public void Detonate()
     {
-        if (!Explode()) return;
+        if (PauseButton.Paused || !Explode()) return;
         (int, int, bool) saveData = PlayerProgression.PlayerData.Traps[saveDataIndex];
         saveData.Item3 = true;
         PlayerProgression.PlayerData.Traps[saveDataIndex] = saveData;
@@ -54,5 +56,13 @@ public abstract class Trap : Placeable
         saveData.Item3 = false;
         PlayerProgression.PlayerData.Traps[saveDataIndex] = saveData;
         PlayerProgression.MONEY -= price;
+    }
+
+    public override void Attach(Grid grid)
+    {
+        base.Attach(grid);
+        (int, int, bool) data = PlayerProgression.PlayerData.Traps[saveDataIndex];
+        data.Item2 = grid.Id;
+        PlayerProgression.PlayerData.Traps[saveDataIndex] = data;
     }
 }

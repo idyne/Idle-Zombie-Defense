@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class PauseButton : MonoBehaviour
 {
     [SerializeField] private Sprite pauseSprite = null;
     [SerializeField] private Sprite continueSprite = null;
     [SerializeField] private Image buttonImage = null;
-    private bool isPaused = false;
+    public static bool Paused = false;
+    public static UnityEvent OnPause = new(), OnResume = new();
 
     private void Start()
     {
@@ -22,18 +24,24 @@ public class PauseButton : MonoBehaviour
         {
             gameObject.SetActive(false);
         });
+        gameObject.SetActive(false);
     }
 
     public void Press()
     {
-        print("pause");
-        isPaused = !isPaused;
-
-        if (isPaused)
+        Paused = !Paused;
+        
+        if (Paused)
+        {
             buttonImage.sprite = continueSprite;
+            Time.timeScale = 0;
+        }
         else
+        {
             buttonImage.sprite = pauseSprite;
-
-
+            Time.timeScale = 1;
+        }
+        if (Paused) OnPause.Invoke();
+        else OnResume.Invoke();
     }
 }

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using static WaveController;
 
 public class UIAnimationSequencer : MonoBehaviour
@@ -25,6 +26,8 @@ public class UIAnimationSequencer : MonoBehaviour
     [SerializeField] private AreaCleared areaCleared;
     [SerializeField] private GameObject areaClearedText;
     [SerializeField] private GameObject UIContainer;
+    public static UnityEvent OnOutWaveUIActivated = new();
+
     private bool goNext = false;
     private bool soldierUnlockedHide = false;
     private bool isNewSession = true;
@@ -66,6 +69,9 @@ public class UIAnimationSequencer : MonoBehaviour
             LevelBar.Instance.Show();
             LevelBar.Instance.SetDay(NormalizedDay);
             ButtonManager.Instance.UpdateStartButton(State);
+            ButtonManager.Instance.UpdateUpgradesButton();
+            ButtonManager.Instance.ShowOutWaveButtons();
+            OnOutWaveUIActivated.Invoke();
         }
         //Oyuna giriþ
         else if (isNewSession & !(Day == 1 && CurrentTimePeriod == TimePeriod.Morning))
@@ -83,6 +89,9 @@ public class UIAnimationSequencer : MonoBehaviour
             LevelBar.Instance.Show();
             LevelBar.Instance.SetDay(NormalizedDay);
             ButtonManager.Instance.UpdateStartButton(State);
+            ButtonManager.Instance.UpdateUpgradesButton();
+            ButtonManager.Instance.ShowOutWaveButtons();
+            OnOutWaveUIActivated.Invoke();
         }
         //Sonraki zonea geçme
         else if (!isNewSession && CurrentTimePeriod == TimePeriod.Morning && (Day == 8 || Day == 22 || Day == 42))
@@ -98,6 +107,9 @@ public class UIAnimationSequencer : MonoBehaviour
             LevelBar.Instance.SetDay(NormalizedDay);
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
             ButtonManager.Instance.UpdateStartButton(State);
+            ButtonManager.Instance.UpdateUpgradesButton();
+            ButtonManager.Instance.ShowOutWaveButtons();
+            OnOutWaveUIActivated.Invoke();
         }
         //Sonraki güne geçme
         else if (!isNewSession && CurrentTimePeriod == TimePeriod.Morning && !(Day == 8 || Day == 22 || Day == 42))
@@ -112,6 +124,9 @@ public class UIAnimationSequencer : MonoBehaviour
             LevelBar.Instance.SetDay(NormalizedDay);
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
             ButtonManager.Instance.UpdateStartButton(State);
+            ButtonManager.Instance.UpdateUpgradesButton();
+            ButtonManager.Instance.ShowOutWaveButtons();
+            OnOutWaveUIActivated.Invoke();
         }
         //Sonraki time perioda geçme
         else if (!isNewSession && CurrentTimePeriod != TimePeriod.Morning)
@@ -125,6 +140,9 @@ public class UIAnimationSequencer : MonoBehaviour
                 LevelBar.Instance.Show();
                 LevelBar.Instance.SetDay(NormalizedDay);
                 ButtonManager.Instance.UpdateStartButton(State);
+                ButtonManager.Instance.UpdateUpgradesButton();
+                ButtonManager.Instance.ShowOutWaveButtons();
+                OnOutWaveUIActivated.Invoke();
             });
         }
         isNewSession = false;
@@ -163,6 +181,10 @@ public class UIAnimationSequencer : MonoBehaviour
         Barracks.Instance.ClearSoldiers();
         PlayerProgression.PlayerData.IncomeLevel = 1;
         PlayerProgression.PlayerData.FireRateLevel = 1;
+        PlayerProgression.PlayerData.BaseDefenseLevel = 1;
+        PlayerProgression.PlayerData.TrapCapacity = 0;
+        PlayerProgression.PlayerData.TurretCapacity = 0;
+        PlayerProgression.PlayerData.SoldierMergeLevel = 1;
         PlayerProgression.MONEY = 0;
         environmentChanger.SetZone(ZoneLevel);
         tower.SetTower();

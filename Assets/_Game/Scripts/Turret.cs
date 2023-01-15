@@ -52,8 +52,8 @@ public class Turret : Placeable
 
     public void Initialize(Grid grid, int saveDataIndex)
     {
-        Attach(grid);
         this.saveDataIndex = saveDataIndex;
+        Attach(grid);
     }
     private void FindTarget()
     {
@@ -102,5 +102,10 @@ public class Turret : Placeable
     {
         animator.SetFloat("Speed", 0.15f);
         CancelInvoke(nameof(Shoot));
+    }
+    public override void Attach(Grid grid)
+    {
+        base.Attach(grid);
+        PlayerProgression.PlayerData.Turrets[saveDataIndex] = grid.Id;
     }
 }

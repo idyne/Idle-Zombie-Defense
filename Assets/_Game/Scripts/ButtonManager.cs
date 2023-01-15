@@ -7,7 +7,8 @@ using FateGames;
 public class ButtonManager : MonoBehaviour
 {
     public static ButtonManager Instance { get; private set; }
-    [SerializeField] private UIButton soldierButton, repairButton, incomeButton, mergeButton, startButton;
+    [SerializeField] private UIButton soldierButton, repairButton, incomeButton, mergeButton, startButton, upgradesButton;
+    [SerializeField] private GameObject inWaveButtons, outWaveButtons;
 
     private void Awake()
     {
@@ -17,6 +18,11 @@ public class ButtonManager : MonoBehaviour
             return;
         }
         Instance = this;
+        WaveController.Instance.OnWaveStart.AddListener(SwitchInWave);
+        WaveController.Instance.OnWaveStart.AddListener(UpdateUpgradesButton);
+        WaveController.Instance.OnWaveEnd.AddListener(HideInWaveButtons);
+        PauseButton.OnPause.AddListener(HideInWaveButtons);
+        PauseButton.OnResume.AddListener(ShowInWaveButtons);
     }
 
     public void HideAll()
@@ -34,6 +40,22 @@ public class ButtonManager : MonoBehaviour
         incomeButton.Show();
         //mergeButton.Show();
     }
+
+    public void SwitchInWave()
+    {
+        HideOutWaveButtons();
+        ShowInWaveButtons();
+    }
+    public void SwitchOutWave()
+    {
+        HideInWaveButtons();
+        ShowOutWaveButtons();
+    }
+
+    public void ShowInWaveButtons() => inWaveButtons.SetActive(true);
+    public void HideInWaveButtons() => inWaveButtons.SetActive(false);
+    public void ShowOutWaveButtons() => outWaveButtons.SetActive(true);
+    public void HideOutWaveButtons() => outWaveButtons.SetActive(false);
 
     public void UpdateSoldierButton(int cost, bool isFull, bool isMerging)
     {
@@ -65,6 +87,12 @@ public class ButtonManager : MonoBehaviour
     {
         if (state == WaveController.WaveState.RUNNING) startButton.Hide();
         else if (state == WaveController.WaveState.WAITING) startButton.Show();
+    }
+
+    public void UpdateUpgradesButton()
+    {
+        if (WaveController.State == WaveController.WaveState.RUNNING) upgradesButton.Hide();
+        else if (WaveController.State == WaveController.WaveState.WAITING) upgradesButton.Show();
     }
 
     public void UpdateMergeButton(int cost, bool canMerge)
