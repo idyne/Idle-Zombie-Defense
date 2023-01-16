@@ -213,3 +213,18 @@ MonoBehaviour:
     size: 10
     canActiveObjectsBeDequeued: 1
     container: {fileID: 0}
+  - tag: Turret
+    prefab: {fileID: 7779394644475227580, guid: ea67d4a0e0e034141818d399f02c9940, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Frost Bomb
+    prefab: {fileID: 2567905047410825368, guid: 12d475007820d47458a7cd674442541b, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Explosive Bomb
+    prefab: {fileID: 2567905047410825368, guid: 837409f5c2e86794693673801b45905a, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}

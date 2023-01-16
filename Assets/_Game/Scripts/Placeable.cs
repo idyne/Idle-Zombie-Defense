@@ -29,7 +29,7 @@ public class Placeable : MonoBehaviour
 
     public void PlaceOnGrid()
     {
-        if (grid == null) return;
+        if (grid == null) { gameObject.SetActive(false); return; };
         transform.position = grid.transform.position;
     }
 
