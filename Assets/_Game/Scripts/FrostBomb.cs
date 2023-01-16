@@ -18,6 +18,7 @@ public class FrostBomb : Bomb
         mesh.SetActive(false);
         explodedMesh.SetActive(true);
         Exploded = true;
+        HideRangeIndicator();
         return true;
     }
 }

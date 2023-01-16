@@ -14,26 +14,38 @@ public class Turret : Placeable
     [SerializeField] private Transform rangeIndicatorTransform;
     [SerializeField] private Animator animator;
     private int saveDataIndex = -1;
+    private bool bought { get => saveDataIndex >= 0; }
 
     public Transform Barrel { get => barrel; }
     private Zombie target = null;
     private float lastShootTime = -50;
 
+    private void Awake()
+    {
+        HideRangeIndicator();
+        OnSelect.AddListener(() => { ShowRangeIndicator(); });
+        OnDrop.AddListener(() => { HideRangeIndicator(); });
+    }
+
     protected virtual void Start()
     {
         rangeIndicatorTransform.localScale = Vector3.one * range;
-        HideRangeIndicator();
-        OnSelect.AddListener(ShowRangeIndicator);
-        OnDrop.AddListener(HideRangeIndicator);
+
         InvokeRepeating(nameof(FindTarget), 0, 2 + Random.Range(-0.2f, 0.2f));
     }
-    private void HideRangeIndicator()
+    private void HideRangeIndicator(float duration = -1)
     {
+        if (DOTween.Kill(this) > 0) print("Turret hiderangeindicator tween killded");
         rangeIndicatorTransform.gameObject.SetActive(false);
+        if (duration > 0)
+            DOVirtual.DelayedCall(duration, () => { ShowRangeIndicator(); });
     }
-    private void ShowRangeIndicator()
+    private void ShowRangeIndicator(float duration = -1)
     {
+        if (DOTween.Kill(this) > 0) print("Turret showrangeindicator tween killed");
         rangeIndicatorTransform.gameObject.SetActive(true);
+        if (duration > 0)
+            DOVirtual.DelayedCall(duration, () => { HideRangeIndicator(); });
     }
 
     private void Update()
@@ -106,6 +118,15 @@ public class Turret : Placeable
     public override void Attach(Grid grid)
     {
         base.Attach(grid);
-        PlayerProgression.PlayerData.Turrets[saveDataIndex] = grid.Id;
+        if (!bought)
+        {
+            saveDataIndex = PlayerProgression.PlayerData.Turrets.Count;
+            PlayerProgression.PlayerData.Turrets.Add(grid.Id);
+            PlayerProgression.MONEY -= OutWaveButtonsManager.Instance.GetTurretPrice();
+        }
+        else
+        {
+            PlayerProgression.PlayerData.Turrets[saveDataIndex] = grid.Id;
+        }
     }
 }

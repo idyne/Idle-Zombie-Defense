@@ -63,6 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialGrid: {fileID: 0}
+  trapType: 1
   price: 100
   priceTag: {fileID: 8615659684962924948}
   explodedMesh: {fileID: 2797777531680307137}

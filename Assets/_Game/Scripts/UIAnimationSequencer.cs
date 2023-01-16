@@ -24,6 +24,7 @@ public class UIAnimationSequencer : MonoBehaviour
     [SerializeField] private TutorialManager tutorialManager;
     [SerializeField] private GameObject surviveText;
     [SerializeField] private AreaCleared areaCleared;
+    [SerializeField] private PhaseCleared phaseCleared;
     [SerializeField] private GameObject areaClearedText;
     [SerializeField] private GameObject UIContainer;
     public static UnityEvent OnOutWaveUIActivated = new();
@@ -45,6 +46,13 @@ public class UIAnimationSequencer : MonoBehaviour
         yield return new WaitUntil(() => areaClearedNext);
         areaClearedNext = false;
         yield return new WaitForSeconds(3.2f);
+    }
+    private IEnumerator FinishPhase()
+    {
+        yield return phaseCleared.Show(Barracks.Instance.GetSoldierCost() * 2 + 6);
+        zombieBar.Hide();
+        LevelBar.Instance.Hide();
+        yield return new WaitForSeconds(0.7f);
     }
 
     public void GoAreaClearedNext() => areaClearedNext = true;
@@ -132,6 +140,7 @@ public class UIAnimationSequencer : MonoBehaviour
         else if (!isNewSession && CurrentTimePeriod != TimePeriod.Morning)
         {
             print("next time period");
+            yield return FinishPhase();
             StartCoroutine(dayCycler.SetTimePeriod(CurrentTimePeriod));
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
             zombieBar.Show();

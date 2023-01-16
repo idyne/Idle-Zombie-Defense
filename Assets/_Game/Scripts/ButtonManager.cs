@@ -66,6 +66,19 @@ public class ButtonManager : MonoBehaviour
         else soldierButton.Activate();
     }
 
+    public void HideStartAndUpgradeButtons()
+    {
+        startButton.Hide();
+        upgradesButton.Hide();
+    }
+
+    public void ShowStartAndUpgradeButtons()
+    {
+        startButton.Show();
+        if (WaveController.Day > 1)
+            upgradesButton.Show();
+    }
+
     public void UpdateFireRateButton(int cost, bool isMaxedOut)
     {
         if (!isMaxedOut)

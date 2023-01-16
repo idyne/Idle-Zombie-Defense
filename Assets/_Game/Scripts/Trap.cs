@@ -5,14 +5,17 @@ using FateGames;
 using TMPro;
 public abstract class Trap : Placeable
 {
+    public enum TrapType { EXPLOSIVE, FROST }
+    [SerializeField] private TrapType trapType;
     [SerializeField] protected int price = 100;
     [SerializeField] private TrapPriceTag priceTag;
     [SerializeField] protected GameObject explodedMesh, mesh;
     public int saveDataIndex = -1;
+    private bool bought { get => saveDataIndex >= 0; }
     public bool Exploded { get; protected set; } = false;
     public override bool CanSelect { get => !Exploded; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         UIAnimationSequencer.OnOutWaveUIActivated.AddListener(() => { if (Exploded) priceTag.Show(); });
         WaveController.Instance.OnWaveStart.AddListener(priceTag.Hide);
@@ -61,8 +64,21 @@ public abstract class Trap : Placeable
     public override void Attach(Grid grid)
     {
         base.Attach(grid);
-        (int, int, bool) data = PlayerProgression.PlayerData.Traps[saveDataIndex];
-        data.Item2 = grid.Id;
-        PlayerProgression.PlayerData.Traps[saveDataIndex] = data;
+        if (bought)
+        {
+            (int, int, bool) data = PlayerProgression.PlayerData.Traps[saveDataIndex];
+            data.Item2 = grid.Id;
+            PlayerProgression.PlayerData.Traps[saveDataIndex] = data;
+        }
+        else
+        {
+            saveDataIndex = PlayerProgression.PlayerData.Traps.Count;
+            PlayerProgression.PlayerData.Traps.Add(((int)trapType, grid.Id, false));
+            if (trapType == TrapType.EXPLOSIVE)
+                PlayerProgression.MONEY -= OutWaveButtonsManager.Instance.GetTNTPrice();
+            else if (trapType == TrapType.FROST)
+                PlayerProgression.MONEY -= OutWaveButtonsManager.Instance.GetFrostPrice();
+        }
+
     }
 }

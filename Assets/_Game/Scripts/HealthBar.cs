@@ -17,7 +17,7 @@ public class HealthBar : MonoBehaviour
 
     private void Update()
     {
-        slider.value = Mathf.MoveTowards(slider.value, desiredValue, Time.deltaTime / 4);
+        slider.value = Mathf.MoveTowards(slider.value, desiredValue, Time.deltaTime / 10);
     }
 
     public void SetPercent(float percent)

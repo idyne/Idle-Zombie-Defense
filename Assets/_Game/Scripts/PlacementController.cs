@@ -54,17 +54,24 @@ public class PlacementController : MonoBehaviour
             {
                 // Get the 'Placeable' component of the hit object
                 Placeable placeable = hit.transform.GetComponent<Placeable>();
-                if (placeable.CanSelect)
-                {
-                    // Set selectedPlaceable to hit placeable
-                    selectedPlaceable = placeable;
-                    selectedPlaceable.OnSelect.Invoke();
-                    // Show grids for placement
-                    ShowGrids();
-                    // Set main camera to placement mode
-                    CameraController.InPlacementMode = true;
-                }
+                Select(placeable);
             }
+        }
+    }
+
+    public void Select(Placeable placeable)
+    {
+        if (placeable.CanSelect)
+        {
+            // Set selectedPlaceable to hit placeable
+            selectedPlaceable = placeable;
+            selectedPlaceable.OnSelect.Invoke();
+            // Show grids for placement
+            ShowGrids();
+            // Set main camera to placement mode
+            CameraController.InPlacementMode = true;
+            OutWaveButtonsManager.Instance.Hide();
+            ButtonManager.Instance.HideStartAndUpgradeButtons();
         }
     }
 
@@ -125,6 +132,8 @@ public class PlacementController : MonoBehaviour
         HideGrids();
         // Set main camera to not placement mode
         CameraController.InPlacementMode = false;
+        OutWaveButtonsManager.Instance.Show();
+        ButtonManager.Instance.ShowStartAndUpgradeButtons();
     }
 
     private void ShowGrids()

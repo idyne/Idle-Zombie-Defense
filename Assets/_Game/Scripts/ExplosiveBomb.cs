@@ -21,6 +21,7 @@ public class ExplosiveBomb : Bomb
         mesh.SetActive(false);
         explodedMesh.SetActive(true);
         Exploded = true;
+        HideRangeIndicator();
         return true;
     }
 }
