@@ -27,20 +27,24 @@ public class PauseButton : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void Pause()
+    {
+        buttonImage.sprite = continueSprite;
+        Time.timeScale = 0;
+    }
+
+    public void Resume()
+    {
+        buttonImage.sprite = pauseSprite;
+        Time.timeScale = 1;
+    }
+
     public void Press()
     {
         Paused = !Paused;
-        
-        if (Paused)
-        {
-            buttonImage.sprite = continueSprite;
-            Time.timeScale = 0;
-        }
-        else
-        {
-            buttonImage.sprite = pauseSprite;
-            Time.timeScale = 1;
-        }
+
+        if (Paused) Pause();
+        else Resume();
         if (Paused) OnPause.Invoke();
         else OnResume.Invoke();
     }

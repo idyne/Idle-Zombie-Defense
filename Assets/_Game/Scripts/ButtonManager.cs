@@ -21,8 +21,8 @@ public class ButtonManager : MonoBehaviour
         WaveController.Instance.OnWaveStart.AddListener(SwitchInWave);
         WaveController.Instance.OnWaveStart.AddListener(UpdateUpgradesButton);
         WaveController.Instance.OnWaveEnd.AddListener(HideInWaveButtons);
-        PauseButton.OnPause.AddListener(HideInWaveButtons);
-        PauseButton.OnResume.AddListener(ShowInWaveButtons);
+        PauseButton.OnPause.AddListener(() => { if (WaveController.State == WaveController.WaveState.RUNNING) HideInWaveButtons(); });
+        PauseButton.OnResume.AddListener(() => { if (WaveController.State == WaveController.WaveState.RUNNING) ShowInWaveButtons(); });
     }
 
     public void HideAll()

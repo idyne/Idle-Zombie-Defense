@@ -10,7 +10,7 @@ public class SoldierRenderController : MonoBehaviour
     [SerializeField] private GameObject[] soldiers = null;
     [SerializeField] private Transform soldierParent = null;
 
-    private int lastRenderedSoldierIndex = 0;
+    private int lastRenderedSoldierIndex = 1;
 
     void Awake()
     {

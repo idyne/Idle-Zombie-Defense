@@ -35,6 +35,7 @@ namespace FateGames
                 MoonSDK.TrackLevelEvents(MoonSDK.LevelEvents.Fail, WaveController.Day);
                 PlayerProgression.PlayerData.WaveLevel = WaveController.Day * 4 - 3;
             }
+            Turret.Stopped = true;
             Tower.Instance.Explode();
             WaveController.Instance.StopWave();
             Barracks.Instance.DeactivateSoldiers();

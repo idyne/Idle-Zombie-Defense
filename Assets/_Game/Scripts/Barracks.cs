@@ -44,11 +44,12 @@ public class Barracks : MonoBehaviour
             ButtonManager.Instance.UpdateFireRateButton(GetFireRateCost(), FireRateLevel >= GetMaxFireRateLevel());
         });
         UpgradeController.Instance.OnSoldierMergeLevelUpgrade.AddListener(ClearLowLevelSoldiers);
-        
+
     }
 
     private void ClearLowLevelSoldiers(int level)
     {
+        bool isNewMerge = false;
         for (int i = 1; i < level; i++)
         {
             int numberOfSoldiers = soldierTable[i].Count;
@@ -61,9 +62,21 @@ public class Barracks : MonoBehaviour
                 int numberOfHighLevelSoldiers = Mathf.CeilToInt(numberOfSoldiers / 3f);
                 for (int j = 0; j < numberOfHighLevelSoldiers; j++)
                 {
+                    if (i + 1 > maxMergeLevel)
+                    {
+                        maxMergeLevel = i + 1;
+                        isNewMerge = true;
+                        print(maxMergeLevel);
+                    }
                     AddSoldier(i + 1, out Soldier soldier, out Transform spawnPoint);
                 }
             }
+        }
+        if (isNewMerge)
+        {
+            print(maxMergeLevel);
+
+            OnNewMergeUnlocked.Invoke(maxMergeLevel);
         }
     }
 
@@ -94,7 +107,7 @@ public class Barracks : MonoBehaviour
         ButtonManager.Instance.UpdateSoldierButton(GetSoldierCost(), isFull, isMerging);
         for (int i = soldierTable.Count - 1; i >= 0; i--)
         {
-            if(soldierTable[i].Count > 0)
+            if (soldierTable[i].Count > 0)
             {
                 maxMergeLevel = i;
                 break;
@@ -231,15 +244,18 @@ public class Barracks : MonoBehaviour
                 hide();
 
                 ObjectPooler.SpawnFromPool("Smoke Effect", mergePosition, Quaternion.identity);
-                power -= Mathf.RoundToInt(Mathf.Pow(3, soldierLevel)); ;
+                power -= Mathf.RoundToInt(Mathf.Pow(3, soldierLevel));
                 AddSoldier(soldierLevel + 1, out Soldier newSoldier, out Transform spawnPoint);
                 Vector3 position = newSoldier.Transform.position;
                 newSoldier.Transform.position = mergePosition;
                 newSoldier.Transform.DOMove(position, transitionDuration);
                 isMerging = false;
-                bool isNewMerge = soldierLevel > maxMergeLevel;
-                if (isNewMerge) maxMergeLevel = soldierLevel;
-                OnNewMergeUnlocked.Invoke(soldierLevel);
+                bool isNewMerge = soldierLevel + 1 > maxMergeLevel;
+                if (isNewMerge)
+                {
+                    maxMergeLevel = soldierLevel + 1;
+                    OnNewMergeUnlocked.Invoke(soldierLevel + 1);
+                }
                 PlayerProgression.MONEY = PlayerProgression.MONEY;
             }
 
@@ -247,7 +263,7 @@ public class Barracks : MonoBehaviour
             soldier.Transform.DOMove(mergePosition, transitionDuration).OnComplete(count == 3 ? hideAndAddSoldier : hide);
         }
 
-        
+
 
         PlayerProgression.MONEY -= cost;
         HapticManager.DoHaptic();

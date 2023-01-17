@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.Animations;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class ExplosionRecorder : MonoBehaviour
-{/*
+{
     public AnimationClip clip;
 
     public bool record = false;
@@ -31,5 +31,5 @@ public class ExplosionRecorder : MonoBehaviour
             recorder.SaveToClip(clip);
             recorder.ResetRecording();
         }
-    }*/
+    }
 }

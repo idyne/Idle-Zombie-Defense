@@ -85,6 +85,8 @@ public class UIAnimationSequencer : MonoBehaviour
         else if (isNewSession & !(Day == 1 && CurrentTimePeriod == TimePeriod.Morning))
         {
             print("start game");
+            if (CurrentTimePeriod == TimePeriod.Night)
+                tower.TurnOnLights();
             surviveText.SetActive(ZoneLevel == 1);
             dayCycler.SetTimePeriodWithoutAnimation(CurrentTimePeriod);
             environmentChanger.SetZone(ZoneLevel);
@@ -143,6 +145,8 @@ public class UIAnimationSequencer : MonoBehaviour
             yield return FinishPhase();
             StartCoroutine(dayCycler.SetTimePeriod(CurrentTimePeriod));
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
+            if (CurrentTimePeriod == TimePeriod.Night)
+                tower.TurnOnLights();
             zombieBar.Show();
             zombieBar.GoDown().OnComplete(() =>
             {
@@ -182,6 +186,7 @@ public class UIAnimationSequencer : MonoBehaviour
         dayCycler.SetTimePeriodWithoutAnimation(CurrentTimePeriod);
         zombieBar.SetPercent(0, false);
         zombieBar.SetDay(NormalizedDay);
+        tower.TurnOffLights();
         yield return PlayDayAnimation();
     }
     private IEnumerator GoCurrentZone()

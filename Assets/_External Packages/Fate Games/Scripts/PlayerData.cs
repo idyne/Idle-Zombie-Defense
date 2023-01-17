@@ -8,9 +8,9 @@ namespace FateGames
     public class PlayerData : Data
     {
         public int CurrentLevel = 1;
-        public int Money = 800;
-        public List<int> Soldiers = new() { 0, 1, 0, 0, 0, 0, 1, 1, 0 };
-        public int WaveLevel = 5;
+        public int Money = 100000;
+        public List<int> Soldiers = new() { 0, 3, 0, 0, 0, 0, 0, 0, 0 };
+        public int WaveLevel = 67;
         public int IncomeLevel = 1;
         public int FireRateLevel = 1;
         public int BaseDefenseLevel = 1;
