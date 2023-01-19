@@ -87,13 +87,13 @@ public class WaveController : MonoBehaviour
         switch (ZoneLevel)
         {
             case 2:
-                result *= 1.5f;
+                result *= 1f;
                 break;
             case 3:
-                result *= 2.5f;
+                result *= 1.3f;
                 break;
             case 4:
-                result *= 2.5f;
+                result *= 1.5f;
                 break;
             default:
                 break;
@@ -101,7 +101,7 @@ public class WaveController : MonoBehaviour
         if (Day == 1)
             result *= 2;
         else if (Day == 8)
-            result *= 1.5f;
+            result *= 1.3f;
         else if (Day == 22)
             result *= 1.3f;
         else if (Day == 42)
@@ -186,6 +186,7 @@ public class WaveController : MonoBehaviour
         LevelBar.Instance.Hide();
         zombieBar.GoUp();
         OnWaveStart.Invoke();
+        Turret.Stopped = false;
         HapticManager.DoHaptic();
     }
 

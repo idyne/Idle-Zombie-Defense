@@ -45,14 +45,10 @@ public class UIUpgradesPanelButtonManager : MonoBehaviour
     }
     public void UpdateSoldierMergeLevelButton(int cost, bool maxedOut)
     {
-        bool locked = WaveController.Day <= 7;
-        if (locked)
-            soldierMergeLevelButton.SetText("Unlocks after 1st week");
-        else
         if (!maxedOut)
             soldierMergeLevelButton.SetText(UIMoney.FormatMoney(cost));
         else soldierMergeLevelButton.SetText("Maxed Out");
-        if (!PlayerProgression.CanAfford(cost) || maxedOut || locked) soldierMergeLevelButton.Deactivate();
+        if (!PlayerProgression.CanAfford(cost) || maxedOut) soldierMergeLevelButton.Deactivate();
         else soldierMergeLevelButton.Activate();
         soldierMergeLevelText.text = "Level " + PlayerProgression.PlayerData.SoldierMergeLevel.ToString();
     }

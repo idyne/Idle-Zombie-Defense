@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Turret : Placeable
 {
+    public static bool Stopped = false;
     [SerializeField] private float shootingPeriod = 1;
     [SerializeField] private float range = 20;
     [SerializeField] private Transform head;
@@ -106,6 +107,7 @@ public class Turret : Placeable
     }
     private void Shoot()
     {
+        if (Stopped) return;
         lastShootTime = Time.time;
         Projectile projectile = ObjectPooler.SpawnFromPool(ammoTag, barrel.position, barrel.rotation).GetComponent<Projectile>();
         projectile.StartMovement(target);
@@ -121,8 +123,9 @@ public class Turret : Placeable
         if (!bought)
         {
             saveDataIndex = PlayerProgression.PlayerData.Turrets.Count;
+            PlayerProgression.MONEY -= OutWaveButtonsManager.GetTurretPrice();
             PlayerProgression.PlayerData.Turrets.Add(grid.Id);
-            PlayerProgression.MONEY -= OutWaveButtonsManager.Instance.GetTurretPrice();
+            PlayerProgression.MONEY = PlayerProgression.MONEY;
         }
         else
         {

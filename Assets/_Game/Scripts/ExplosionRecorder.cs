@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ExplosionRecorder : MonoBehaviour
-{/*
-    public AnimationClip clip;
+{
+    /*public AnimationClip clip;
 
     public bool record = false;
 

@@ -464,7 +464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialGrid: {fileID: 0}
   shootingPeriod: 0.2
-  range: 10
+  range: 5
   head: {fileID: 3591039999589701768}
   ammoTag: Turret Ammo
   barrel: {fileID: 8151678622397315555}

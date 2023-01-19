@@ -50,18 +50,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialGrid: {fileID: 0}
-  price: 10
+  trapType: 0
   priceTag: {fileID: 3864237668345927210}
   explodedMesh: {fileID: 1338132319767396104}
   mesh: {fileID: 3414399050282629238}
   saveDataIndex: -1
-  range: 7
+  range: 4
   zombieLayerMask:
     serializedVersion: 2
     m_Bits: 128
   rangeIndicatorTransform: {fileID: 9072939192064517841}
   outlinable: {fileID: 532850675717370508}
-  damage: 500
 --- !u!65 &2567905047410825373
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -121,18 +121,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1569074973106290848}
     m_Modifications:
-    - target: {fileID: 117868285755056250, guid: 9230ac4ea9488a7458696042c0e67b3e, type: 3}
-      propertyPath: CollisionModule.type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 117868285755056250, guid: 9230ac4ea9488a7458696042c0e67b3e, type: 3}
-      propertyPath: CollisionModule.radiusScale
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 450615331477079088, guid: 9230ac4ea9488a7458696042c0e67b3e, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 4e25b066ce59bd946bd341e9a0bb5c5e, type: 2}
     - target: {fileID: 789410352502557902, guid: 9230ac4ea9488a7458696042c0e67b3e, type: 3}
       propertyPath: m_Name
       value: WoodEffect
@@ -145,10 +133,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2237335061639798794, guid: 9230ac4ea9488a7458696042c0e67b3e, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 4e25b066ce59bd946bd341e9a0bb5c5e, type: 2}
     - target: {fileID: 2603890937908678753, guid: 9230ac4ea9488a7458696042c0e67b3e, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -193,29 +177,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3772583451350063050, guid: 9230ac4ea9488a7458696042c0e67b3e, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 4e25b066ce59bd946bd341e9a0bb5c5e, type: 2}
-    - target: {fileID: 4456749822205570320, guid: 9230ac4ea9488a7458696042c0e67b3e, type: 3}
-      propertyPath: CollisionModule.type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4456749822205570320, guid: 9230ac4ea9488a7458696042c0e67b3e, type: 3}
-      propertyPath: CollisionModule.radiusScale
-      value: 0.15
-      objectReference: {fileID: 0}
     - target: {fileID: 6544781729488321449, guid: 9230ac4ea9488a7458696042c0e67b3e, type: 3}
       propertyPath: m_Layer
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7820388885159254114, guid: 9230ac4ea9488a7458696042c0e67b3e, type: 3}
-      propertyPath: CollisionModule.type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7820388885159254114, guid: 9230ac4ea9488a7458696042c0e67b3e, type: 3}
-      propertyPath: CollisionModule.radiusScale
-      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 8043686136695255378, guid: 9230ac4ea9488a7458696042c0e67b3e, type: 3}
       propertyPath: m_Layer

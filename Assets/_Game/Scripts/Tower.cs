@@ -17,6 +17,7 @@ public class Tower : MonoBehaviour
     }
     private int baseHealth = 1000;
     private int currentHealth = 100;
+    [SerializeField] private BaseSpotlight[] spotlights;
     [SerializeField] private Transform pointContainer;
     [SerializeField] private Transform smallPointContainer;
     [SerializeField] private GameObject smallTower, bigTower;
@@ -31,6 +32,7 @@ public class Tower : MonoBehaviour
 
     private void Awake()
     {
+        TurnOffLights();
         Transform = transform;
         healthBar = GetComponentInChildren<HealthBar>();
         SetHealth(MaxHealth);
@@ -49,14 +51,52 @@ public class Tower : MonoBehaviour
                 damageTaken = 0;
             });
         });
+        UpgradeController.Instance.OnBaseDefenseUpgrade.AddListener(() =>
+        {
+            SetHealth(MaxHealth);
+        });
+    }
+
+    public void TurnOnLights()
+    {
+        for (int i = 0; i < spotlights.Length; i++)
+        {
+            spotlights[i].TurnOn();
+        }
+    }
+
+    public void TurnOffLights()
+    {
+        for (int i = 0; i < spotlights.Length; i++)
+        {
+            spotlights[i].TurnOff();
+        }
     }
 
     public void Explode()
     {
         smallTower.SetActive(false);
         bigTower.SetActive(false);
-        seperateSmallTower.SetActive(WaveController.ZoneLevel == 1);
-        seperateBigTower.SetActive(WaveController.ZoneLevel != 1);
+        if (WaveController.ZoneLevel == 1)
+        {
+            seperateSmallTower.SetActive(true);
+            Rigidbody[] rbs = seperateSmallTower.GetComponentsInChildren<Rigidbody>();
+            foreach (Rigidbody rb in rbs)
+            {
+                rb.isKinematic = false;
+                rb.AddExplosionForce(5, transform.position, 5, 1, ForceMode.Impulse);
+            }
+        }
+        else
+        {
+            seperateBigTower.SetActive(true);
+            Rigidbody[] rbs = seperateBigTower.GetComponentsInChildren<Rigidbody>();
+            foreach (Rigidbody rb in rbs)
+            {
+                rb.isKinematic = false;
+                rb.AddExplosionForce(5, transform.position, 5, 1, ForceMode.Impulse);
+            }
+        }
     }
 
     public void SetTower()
@@ -71,16 +111,16 @@ public class Tower : MonoBehaviour
         switch (WaveController.ZoneLevel)
         {
             case 1:
-                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
+                result = baseHealth * (PlayerProgression.PlayerData.BaseDefenseLevel);
                 break;
             case 2:
-                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
+                result = baseHealth * (PlayerProgression.PlayerData.BaseDefenseLevel);
                 break;
             case 3:
-                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
+                result = baseHealth * (PlayerProgression.PlayerData.BaseDefenseLevel);
                 break;
             case 4:
-                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
+                result = baseHealth * (PlayerProgression.PlayerData.BaseDefenseLevel);
                 break;
         }
         if (WaveController.CurrentTimePeriod == WaveController.TimePeriod.Night)

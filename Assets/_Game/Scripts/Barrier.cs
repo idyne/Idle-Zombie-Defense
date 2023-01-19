@@ -25,6 +25,10 @@ public class Barrier : MonoBehaviour
         healthBar = GetComponentInChildren<HealthBar>();
         SetHealth(MaxHealth, false);
         healthBar.Hide();
+        UpgradeController.Instance.OnBaseDefenseUpgrade.AddListener(() =>
+        {
+            SetHealth(MaxHealth);
+        });
     }
 
     private static int GetMaxHealth()
@@ -79,21 +83,21 @@ public class Barrier : MonoBehaviour
             breakLevel = 1;
             parts[0].DOKill();
             parts[0].DOScale(Vector3.zero, 0.2f);
-            ObjectPooler.SpawnFromPool("Wood Effect", parts[0].position, parts[0].rotation);
+            ObjectPooler.SpawnFromPool("Wood Effect", Transform.position + Vector3.up, Transform.rotation);
         }
         if (percent < 0.33f && breakLevel < 2)
         {
             breakLevel = 2;
             parts[1].DOKill();
             parts[1].DOScale(Vector3.zero, 0.2f);
-            ObjectPooler.SpawnFromPool("Wood Effect", parts[1].position, parts[1].rotation);
+            ObjectPooler.SpawnFromPool("Wood Effect", Transform.position + Vector3.up, Transform.rotation);
         }
         if (percent <= 0.0f && breakLevel < 3)
         {
             breakLevel = 3;
             parts[2].DOKill();
             parts[2].DOScale(Vector3.zero, 0.2f);
-            ObjectPooler.SpawnFromPool("Wood Effect", parts[2].position, parts[2].rotation);
+            ObjectPooler.SpawnFromPool("Wood Effect", Transform.position + Vector3.up, Transform.rotation);
         }
     }
 

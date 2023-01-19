@@ -14,6 +14,7 @@ public class OutWaveButtonsManager : MonoBehaviour
 
     private void Awake()
     {
+        print(Instance);
         PlayerProgression.OnMoneyChanged.AddListener((money, change) => UpdateFrostButton());
         PlayerProgression.OnMoneyChanged.AddListener((money, change) => UpdateTurretButton());
         PlayerProgression.OnMoneyChanged.AddListener((money, change) => UpdateTNTButton());
@@ -34,19 +35,55 @@ public class OutWaveButtonsManager : MonoBehaviour
         container.SetActive(true);
     }
 
-    public int GetFrostPrice()
+    public static int GetFrostPrice()
     {
-        return 5;
+        float result = PlayerProgression.PlayerData.Traps.Where(trapData => trapData.Item1 == 1).Count() * 100 + 5;
+        switch (WaveController.ZoneLevel)
+        {
+            case 3:
+                result *= 2f;
+                break;
+            case 4:
+                result *= 2f;
+                break;
+            default:
+                break;
+        }
+        return Mathf.CeilToInt(result);
     }
 
-    public int GetTurretPrice()
+    public static int GetTurretPrice()
     {
-        return 5;
+        float result = (PlayerProgression.PlayerData.Turrets.Count) * 800 + 200;
+        switch (WaveController.ZoneLevel)
+        {
+            case 3:
+                result *= 2f;
+                break;
+            case 4:
+                result *= 2f;
+                break;
+            default:
+                break;
+        }
+        return Mathf.CeilToInt(result);
     }
 
-    public int GetTNTPrice()
+    public static int GetTNTPrice()
     {
-        return 5;
+        float result = PlayerProgression.PlayerData.Traps.Where(trapData => trapData.Item1 == 0).Count() * 100 + 5;
+        switch (WaveController.ZoneLevel)
+        {
+            case 3:
+                result *= 2f;
+                break;
+            case 4:
+                result *= 2f;
+                break;
+            default:
+                break;
+        }
+        return Mathf.CeilToInt(result);
     }
 
     public void UpdateFrostButton()
@@ -99,6 +136,7 @@ public class OutWaveButtonsManager : MonoBehaviour
 
     public void SelectFrostBomb()
     {
+        if (!PlayerProgression.CanAfford(GetFrostPrice()) || WaveController.Day < 8) return;
         int capacity = PlayerProgression.PlayerData.TrapCapacity - PlayerProgression.PlayerData.Traps.Where(data => data.Item1 == 1).Count();
         if (capacity <= 0) return;
         FrostBomb bomb = ObjectPooler.SpawnFromPool("Frost Bomb", Vector3.up * 100, Quaternion.identity).GetComponent<FrostBomb>();
@@ -106,6 +144,7 @@ public class OutWaveButtonsManager : MonoBehaviour
     }
     public void SelectExplosiveBomb()
     {
+        if (!PlayerProgression.CanAfford(GetTNTPrice()) || WaveController.Day < 8) return;
         int capacity = PlayerProgression.PlayerData.TrapCapacity - PlayerProgression.PlayerData.Traps.Where(data => data.Item1 == 0).Count();
         if (capacity <= 0) return;
         ExplosiveBomb bomb = ObjectPooler.SpawnFromPool("Explosive Bomb", Vector3.up * 100, Quaternion.identity).GetComponent<ExplosiveBomb>();
@@ -113,6 +152,7 @@ public class OutWaveButtonsManager : MonoBehaviour
     }
     public void SelectTurret()
     {
+        if (!PlayerProgression.CanAfford(GetTurretPrice()) || WaveController.Day < 15) return;
         int capacity = PlayerProgression.PlayerData.TurretCapacity - PlayerProgression.PlayerData.Turrets.Count;
         if (capacity <= 0) return;
         Turret turret = ObjectPooler.SpawnFromPool("Turret", Vector3.up * 100, Quaternion.identity).GetComponent<Turret>();

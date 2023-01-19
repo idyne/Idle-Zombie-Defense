@@ -9,6 +9,7 @@ public class HealthBar : MonoBehaviour
     private Slider slider;
     private Tween tween = null;
     private float desiredValue = 1;
+    public float Percent { get => slider.value; }
     private void Awake()
     {
         slider = GetComponentInChildren<Slider>();
@@ -17,7 +18,7 @@ public class HealthBar : MonoBehaviour
 
     private void Update()
     {
-        slider.value = Mathf.MoveTowards(slider.value, desiredValue, Time.deltaTime / 10);
+        slider.value = Mathf.MoveTowards(slider.value, desiredValue, Time.deltaTime);
     }
 
     public void SetPercent(float percent)
@@ -33,10 +34,11 @@ public class HealthBar : MonoBehaviour
             tween = DOVirtual.DelayedCall(duration, () => { Show(); });
     }
 
-    public void Show(float duration = -1)
+    public void Show(float duration = -1, bool instant = false)
     {
         if (tween != null) tween.Kill();
-        slider.value = desiredValue;
+        if (instant)
+            slider.value = desiredValue;
         gameObject.SetActive(true);
         if (duration > 0)
             tween = DOVirtual.DelayedCall(duration, () => { Hide(); });

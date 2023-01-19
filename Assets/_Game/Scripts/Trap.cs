@@ -7,7 +7,7 @@ public abstract class Trap : Placeable
 {
     public enum TrapType { EXPLOSIVE, FROST }
     [SerializeField] private TrapType trapType;
-    [SerializeField] protected int price = 100;
+    protected virtual int price { get; set; } = 10;
     [SerializeField] private TrapPriceTag priceTag;
     [SerializeField] protected GameObject explodedMesh, mesh;
     public int saveDataIndex = -1;
@@ -23,6 +23,7 @@ public abstract class Trap : Placeable
         {
             if (money >= price && !priceTag.ButtonEnabled) priceTag.EnableButton();
             else if (money < price && priceTag.ButtonEnabled) priceTag.DisableButton();
+            priceTag.SetPrice(price);
         });
     }
 
@@ -72,12 +73,13 @@ public abstract class Trap : Placeable
         }
         else
         {
+            if (trapType == TrapType.EXPLOSIVE)
+                PlayerProgression.MONEY -= OutWaveButtonsManager.GetTNTPrice();
+            else if (trapType == TrapType.FROST)
+                PlayerProgression.MONEY -= OutWaveButtonsManager.GetFrostPrice();
             saveDataIndex = PlayerProgression.PlayerData.Traps.Count;
             PlayerProgression.PlayerData.Traps.Add(((int)trapType, grid.Id, false));
-            if (trapType == TrapType.EXPLOSIVE)
-                PlayerProgression.MONEY -= OutWaveButtonsManager.Instance.GetTNTPrice();
-            else if (trapType == TrapType.FROST)
-                PlayerProgression.MONEY -= OutWaveButtonsManager.Instance.GetFrostPrice();
+            PlayerProgression.MONEY = PlayerProgression.MONEY;
         }
 
     }

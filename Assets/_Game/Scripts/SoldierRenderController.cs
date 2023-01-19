@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoldierRenderController : MonoBehaviour
 {
@@ -9,12 +10,18 @@ public class SoldierRenderController : MonoBehaviour
     [SerializeField] private float rotateSpeed = 10;
     [SerializeField] private GameObject[] soldiers = null;
     [SerializeField] private Transform soldierParent = null;
+    [SerializeField] private Camera camera;
+    [SerializeField] private RawImage image;
 
-    private int lastRenderedSoldierIndex = 0;
+    private int lastRenderedSoldierIndex = 1;
 
     void Awake()
     {
         Instance = this;
+        camera.targetTexture = new RenderTexture(512, 512, 24);
+        camera.targetTexture.Create();
+        RenderTexture.active = camera.targetTexture;
+        image.texture = camera.targetTexture;
     }
 
 

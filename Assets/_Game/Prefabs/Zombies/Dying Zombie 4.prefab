@@ -139,6 +139,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieDead
       objectReference: {fileID: 0}
+    - target: {fileID: 8049044602053614363, guid: 4de8b2e737323b9409f915499481a13b, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.2235294
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049044602053614363, guid: 4de8b2e737323b9409f915499481a13b, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.8919554
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049044602053614363, guid: 4de8b2e737323b9409f915499481a13b, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4de8b2e737323b9409f915499481a13b, type: 3}
 --- !u!4 &2191965954354616387 stripped

@@ -14,11 +14,11 @@ public class Zombie : MonoBehaviour, IPooledObject
     private NavMeshAgent agent;
     [SerializeField] private bool isBoss = false;
     [SerializeField] private int level = 1;
-    private static int baseHealth = 25;
+    private static int baseHealth = 40;
     private int maxHealth { get => GetMaxHealth(); }
     [SerializeField] private int matIndex = 0;
     [SerializeField] private float hitCooldownDuration = 1f;
-    private static int baseDamage = 25;
+    private static int baseDamage = 30;
     private int damage { get => GetDamage(); }
     [SerializeField] private Transform shotPoint, levitatingTextPoint;
     [SerializeField] private Color slowedDownColor;
@@ -78,11 +78,11 @@ public class Zombie : MonoBehaviour, IPooledObject
             slowDownTween = null;
         }
         slowedDown = true;
-        agent.speed *= 0.2f;
-        meshAnimator.speed *= 0.2f;
-        hitCooldownDuration *= 5;
+        agent.speed *= 0.4f;
+        meshAnimator.speed *= 0.4f;
+        hitCooldownDuration *= 2.5f;
         SetColor(slowedDownColor);
-        slowDownTween = DOVirtual.DelayedCall(30, CancelSlowDown);
+        slowDownTween = DOVirtual.DelayedCall(15, CancelSlowDown);
     }
 
     public void CancelSlowDown()
@@ -94,9 +94,9 @@ public class Zombie : MonoBehaviour, IPooledObject
             slowDownTween = null;
         }
         slowedDown = false;
-        agent.speed *= 5f;
-        meshAnimator.speed *= 5f;
-        hitCooldownDuration *= 0.2f;
+        agent.speed *= 2.5f;
+        meshAnimator.speed *= 2.5f;
+        hitCooldownDuration *= 0.4f;
         SetColor(originalColor);
     }
 
@@ -111,10 +111,10 @@ public class Zombie : MonoBehaviour, IPooledObject
         switch (WaveController.ZoneLevel)
         {
             case 2:
-                result *= 1.0f;
+                result *= 0.9f;
                 break;
             case 3:
-                result *= 1.0f;
+                result *= 0.9f;
                 break;
             case 4:
                 result *= 1.0f;
@@ -163,37 +163,42 @@ public class Zombie : MonoBehaviour, IPooledObject
         switch (WaveController.ZoneLevel)
         {
             case 2:
-                result *= 1.0f;
+                result *= 1.1f;
                 break;
             case 3:
-                result *= 1.2f;
+                result *= 1.0f;
                 break;
             case 4:
-                result *= 1.2f;
+                result *= 1.3f;
                 break;
         }
         if (isBoss)
         {
             result *= bossMultiplier * 1.5f;
             if (WaveController.ZoneLevel == 2)
-                result *= 2;
+                result *= 1.0f;
             else if (WaveController.ZoneLevel == 3)
                 result *= 1.3f;
             else if (WaveController.ZoneLevel == 4)
-                result *= 1.2f;
+                result *= 1.3f;
         }
-        if (WaveController.ZoneLevel == 2 && WaveController.NormalizedDay > 5)
+        if (WaveController.ZoneLevel == 2 && WaveController.NormalizedDay > 2 && WaveController.NormalizedDay < 8)
         {
-            result *= 1.3f + (WaveController.NormalizedDay - 5) / 9f * 2f;
+            result *= 1.3f + (WaveController.NormalizedDay - 2) / 12f * 2f;
         }
-        else if (WaveController.ZoneLevel == 2 && WaveController.NormalizedDay <= 5)
+        else if (WaveController.ZoneLevel == 2 && WaveController.NormalizedDay >= 8)
         {
-            result *= 1.3f + (WaveController.NormalizedDay - 5) / 9f * 2f;
+            result *= 1.3f + (WaveController.NormalizedDay - 2) / 12f * 2f;
             result *= 1.3f;
         }
-        else if (WaveController.ZoneLevel == 3 && WaveController.NormalizedDay > 5)
+        else if (WaveController.ZoneLevel == 3 && WaveController.NormalizedDay > 2 && WaveController.NormalizedDay < 11)
         {
-            result *= 1.3f + (WaveController.NormalizedDay - 5) / 9f * 2f;
+            result *= 1.4f + (WaveController.NormalizedDay - 2) / 18f * 3f;
+        }
+        else if (WaveController.ZoneLevel == 3 && WaveController.NormalizedDay >= 11)
+        {
+            result *= 1.4f + (WaveController.NormalizedDay - 2) / 18f * 3f;
+            result *= 1.3f;
         }
         else if (WaveController.ZoneLevel == 4 && WaveController.NormalizedDay > 5)
         {
@@ -210,13 +215,13 @@ public class Zombie : MonoBehaviour, IPooledObject
         switch (WaveController.ZoneLevel)
         {
             case 2:
-                gain *= 2.5f;
+                gain *= 1.5f;
                 break;
             case 3:
-                gain *= 3.5f;
+                gain *= 1.7f;
                 break;
             case 4:
-                gain *= 3.5f;
+                gain *= 1.7f;
                 break;
         }
         if (isBoss)
@@ -283,9 +288,10 @@ public class Zombie : MonoBehaviour, IPooledObject
     {
 
         currentHealth = Mathf.Clamp(health, 0, maxHealth);
+        bool first = healthBar.Percent <= currentHealth / (float)maxHealth;
         healthBar.SetPercent(currentHealth / (float)maxHealth);
         if (showBar)
-            healthBar.Show(2f);
+            healthBar.Show(2f, instant: first);
         if (currentHealth == 0) Die();
     }
 
