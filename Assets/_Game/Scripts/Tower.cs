@@ -15,7 +15,6 @@ public class Tower : MonoBehaviour
             return instance;
         }
     }
-    private int baseHealth = 1000;
     private int currentHealth = 100;
     [SerializeField] private BaseSpotlight[] spotlights;
     [SerializeField] private Transform pointContainer;
@@ -107,25 +106,18 @@ public class Tower : MonoBehaviour
 
     private int GetMaxHealth()
     {
-        float result = baseHealth;
         switch (WaveController.ZoneLevel)
         {
             case 1:
-                result = baseHealth * (PlayerProgression.PlayerData.BaseDefenseLevel);
-                break;
+                return Settings.Zone1.TowerMaxHealth;
             case 2:
-                result = baseHealth * (PlayerProgression.PlayerData.BaseDefenseLevel);
-                break;
+                return Settings.Zone2.TowerMaxHealth;
             case 3:
-                result = baseHealth * (PlayerProgression.PlayerData.BaseDefenseLevel);
-                break;
+                return Settings.Zone3.TowerMaxHealth;
             case 4:
-                result = baseHealth * (PlayerProgression.PlayerData.BaseDefenseLevel);
-                break;
+                return Settings.Zone4.TowerMaxHealth;
         }
-        if (WaveController.CurrentTimePeriod == WaveController.TimePeriod.Night)
-            result *= 3;
-        return Mathf.CeilToInt(result);
+        return 1;
     }
 
     private void InitializePoints()

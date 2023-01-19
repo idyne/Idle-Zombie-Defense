@@ -10,6 +10,8 @@ public class UIButton : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI text;
     [SerializeField] private Image disabledImage;
 
+    public bool Active { get => button.interactable; }
+
     public void SetText(string text) => this.text.text = text;
     public void Activate()
     {

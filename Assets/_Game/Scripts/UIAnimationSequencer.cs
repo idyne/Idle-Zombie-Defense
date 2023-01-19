@@ -42,23 +42,22 @@ public class UIAnimationSequencer : MonoBehaviour
         UIContainer.SetActive(false);
         zombieBar.Hide();
         LevelBar.Instance.Hide();
-        float money = (NormalizedDay - 2) * 101 + 51;
+        float money = 1;
         switch (ZoneLevel)
         {
+            case 1:
+                money = Settings.Zone1.FinishDayPrize;
+                break;
             case 2:
-                money *= 1.5f;
+                money = Settings.Zone2.FinishDayPrize;
                 break;
             case 3:
-                money *= 2f;
+                money = Settings.Zone3.FinishDayPrize;
                 break;
             case 4:
-                money *= 2f;
-                break;
-            default:
+                money = Settings.Zone4.FinishDayPrize;
                 break;
         }
-        if (Day == 8 || Day == 22 || Day == 42)
-            money = 1500;
         areaCleared.Show(Mathf.CeilToInt(money));
         yield return new WaitUntil(() => areaClearedNext);
         areaClearedNext = false;

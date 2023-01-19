@@ -14,11 +14,9 @@ public class Zombie : MonoBehaviour, IPooledObject
     private NavMeshAgent agent;
     [SerializeField] private bool isBoss = false;
     [SerializeField] private int level = 1;
-    private static int baseHealth = 40;
     private int maxHealth { get => GetMaxHealth(); }
     [SerializeField] private int matIndex = 0;
     [SerializeField] private float hitCooldownDuration = 1f;
-    private static int baseDamage = 30;
     private int damage { get => GetDamage(); }
     [SerializeField] private Transform shotPoint, levitatingTextPoint;
     [SerializeField] private Color slowedDownColor;
@@ -103,130 +101,50 @@ public class Zombie : MonoBehaviour, IPooledObject
 
     private int GetDamage()
     {
-        int bossMultiplier = 4;
-        float normalizedDayMultiplier = (WaveController.NormalizedDay - 1) * 0.8f;
-        if (WaveController.NormalizedDay >= 3)
-            normalizedDayMultiplier *= 0.5f;
-        float result = baseDamage * (level + normalizedDayMultiplier);
         switch (WaveController.ZoneLevel)
         {
+            case 1:
+                return Settings.Zone1.ZombieDamage(level, isBoss);
             case 2:
-                result *= 0.9f;
-                break;
+                return Settings.Zone2.ZombieDamage(level, isBoss);
             case 3:
-                result *= 0.9f;
-                break;
+                return Settings.Zone3.ZombieDamage(level, isBoss);
             case 4:
-                result *= 1.0f;
-                break;
+                return Settings.Zone4.ZombieDamage(level, isBoss);
         }
-
-        if (isBoss)
-        {
-            result *= bossMultiplier * 0.8f;
-            if (WaveController.ZoneLevel == 2)
-            {
-                result *= 2;
-                if (WaveController.NormalizedDay == 14)
-                {
-                    result *= 0.7f;
-                }
-            }
-            else if (WaveController.ZoneLevel == 3)
-            {
-                result *= 2;
-                if (WaveController.NormalizedDay == 20)
-                {
-                    result *= 0.7f;
-                }
-            }
-            else if (WaveController.ZoneLevel == 4)
-            {
-                result *= 2;
-                if (WaveController.NormalizedDay == 30)
-                {
-                    result *= 0.7f;
-                }
-            }
-
-        }
-        return Mathf.CeilToInt(result);
+        return 1;
     }
 
     private int GetMaxHealth()
     {
-        int bossMultiplier = 8;
-        float normalizedDayMultiplier = (WaveController.NormalizedDay - 1) * 0.8f;
-        if (WaveController.NormalizedDay >= 3)
-            normalizedDayMultiplier *= 0.5f;
-        float result = baseHealth * (level + normalizedDayMultiplier);
         switch (WaveController.ZoneLevel)
         {
+            case 1:
+                return Settings.Zone1.ZombieHealth(level, isBoss);
             case 2:
-                result *= 1.1f;
-                break;
+                return Settings.Zone2.ZombieHealth(level, isBoss);
             case 3:
-                result *= 1.0f;
-                break;
+                return Settings.Zone3.ZombieHealth(level, isBoss);
             case 4:
-                result *= 1.3f;
-                break;
+                return Settings.Zone4.ZombieHealth(level, isBoss);
         }
-        if (isBoss)
-        {
-            result *= bossMultiplier * 1.5f;
-            if (WaveController.ZoneLevel == 2)
-                result *= 1.0f;
-            else if (WaveController.ZoneLevel == 3)
-                result *= 1.3f;
-            else if (WaveController.ZoneLevel == 4)
-                result *= 1.3f;
-        }
-        if (WaveController.ZoneLevel == 2 && WaveController.NormalizedDay > 2 && WaveController.NormalizedDay < 8)
-        {
-            result *= 1.3f + (WaveController.NormalizedDay - 2) / 12f * 2f;
-        }
-        else if (WaveController.ZoneLevel == 2 && WaveController.NormalizedDay >= 8)
-        {
-            result *= 1.3f + (WaveController.NormalizedDay - 2) / 12f * 2f;
-            result *= 1.3f;
-        }
-        else if (WaveController.ZoneLevel == 3 && WaveController.NormalizedDay > 2 && WaveController.NormalizedDay < 11)
-        {
-            result *= 1.4f + (WaveController.NormalizedDay - 2) / 18f * 3f;
-        }
-        else if (WaveController.ZoneLevel == 3 && WaveController.NormalizedDay >= 11)
-        {
-            result *= 1.4f + (WaveController.NormalizedDay - 2) / 18f * 3f;
-            result *= 1.3f;
-        }
-        else if (WaveController.ZoneLevel == 4 && WaveController.NormalizedDay > 5)
-        {
-            result *= 1.3f + (WaveController.NormalizedDay - 5) / 9f * 2f;
-        }
-        if (WaveController.NormalizedDay > 1)
-            result *= 1.35f;
-        return Mathf.CeilToInt(result);
+        return 1;
     }
 
     private int GetGain()
     {
-        float gain = (((PlayerProgression.PlayerData.IncomeLevel - 1) / 3f) + (WaveController.NormalizedDay) * 2) * level;
         switch (WaveController.ZoneLevel)
         {
+            case 1:
+                return Settings.Zone1.ZombieGain(level, isBoss);
             case 2:
-                gain *= 1.5f;
-                break;
+                return Settings.Zone2.ZombieGain(level, isBoss);
             case 3:
-                gain *= 1.7f;
-                break;
+                return Settings.Zone3.ZombieGain(level, isBoss);
             case 4:
-                gain *= 1.7f;
-                break;
+                return Settings.Zone4.ZombieGain(level, isBoss);
         }
-        if (isBoss)
-            gain *= 2f;
-        return Mathf.CeilToInt(gain);
+        return 1;
     }
 
     private void DropMoney()

@@ -34,94 +34,66 @@ public class UpgradeController : MonoBehaviour
 
     private int GetTrapLimit()
     {
-        int result = 1;
         switch (WaveController.ZoneLevel)
         {
             case 1:
-                result = 1;
-                break;
+                return Settings.Zone1.TrapCapacityLimit;
             case 2:
-                result = 4;
-                break;
+                return Settings.Zone2.TrapCapacityLimit;
             case 3:
-                result = 5;
-                break;
+                return Settings.Zone3.TrapCapacityLimit;
             case 4:
-                result = 6;
-                break;
-            default:
-                break;
+                return Settings.Zone4.TrapCapacityLimit;
         }
-        return result;
+        return 1;
     }
 
     private int GetTurretLimit()
     {
-        int result = 1;
         switch (WaveController.ZoneLevel)
         {
             case 1:
-                result = 1;
-                break;
+                return Settings.Zone1.TurretCapacityLimit;
             case 2:
-                result = 2;
-                break;
+                return Settings.Zone2.TurretCapacityLimit;
             case 3:
-                result = 4;
-                break;
+                return Settings.Zone3.TurretCapacityLimit;
             case 4:
-                result = 6;
-                break;
-            default:
-                break;
+                return Settings.Zone4.TurretCapacityLimit;
         }
-        return result;
+        return 1;
     }
 
     private int GetBaseDefenseLimit()
     {
-        int result = 1;
         switch (WaveController.ZoneLevel)
         {
             case 1:
-                result = 7;
-                break;
+                return Settings.Zone1.BaseDefenseLimit;
             case 2:
-                result = 14;
-                break;
+                return Settings.Zone2.BaseDefenseLimit;
             case 3:
-                result = 30;
-                break;
+                return Settings.Zone3.BaseDefenseLimit;
             case 4:
-                result = 90;
-                break;
-            default:
-                break;
+                return Settings.Zone4.BaseDefenseLimit;
         }
-        return result;
+        return 1;
     }
 
     private int GetSoldierMergeLimit()
     {
-        int result = 1;
         switch (WaveController.ZoneLevel)
         {
             case 1:
-                result = 2;
-                break;
+                return Settings.Zone1.SoldierMergeLevelLimit;
             case 2:
-                result = 3;
-                break;
+                return Settings.Zone2.SoldierMergeLevelLimit;
             case 3:
-                result = 4;
-                break;
+                return Settings.Zone3.SoldierMergeLevelLimit;
             case 4:
-                result = 4;
-                break;
-            default:
-                break;
+                return Settings.Zone4.SoldierMergeLevelLimit;
         }
-        return result;
+        return 1;
     }
 
     private void Start()
@@ -135,67 +107,63 @@ public class UpgradeController : MonoBehaviour
     private bool CanAfford(int price) => price <= PlayerProgression.MONEY;
     private int GetBaseDefenseLevelPrice()
     {
-        float result = PlayerProgression.PlayerData.BaseDefenseLevel * 100;
         switch (WaveController.ZoneLevel)
         {
+            case 1:
+                return Settings.Zone1.BaseDefenseLevelCost;
+            case 2:
+                return Settings.Zone2.BaseDefenseLevelCost;
             case 3:
-                result *= 3;
-                break;
+                return Settings.Zone3.BaseDefenseLevelCost;
             case 4:
-                result *= 3;
-                break;
-            default:
-                break;
+                return Settings.Zone4.BaseDefenseLevelCost;
         }
-        return Mathf.CeilToInt(result);
+        return 1;
     }
     private int GetTrapCapacityPrice()
     {
-        float result = (PlayerProgression.PlayerData.TrapCapacity + 1) * 100;
         switch (WaveController.ZoneLevel)
         {
+            case 1:
+                return Settings.Zone1.TrapCapacityCost;
+            case 2:
+                return Settings.Zone2.TrapCapacityCost;
             case 3:
-                result *= 2;
-                break;
+                return Settings.Zone3.TrapCapacityCost;
             case 4:
-                result *= 2;
-                break;
-            default:
-                break;
+                return Settings.Zone4.TrapCapacityCost;
         }
-        return Mathf.CeilToInt(result);
+        return 1;
     }
     private int GetTurretCapacityPrice()
     {
-        float result = (PlayerProgression.PlayerData.TurretCapacity + 1) * 250;
         switch (WaveController.ZoneLevel)
         {
+            case 1:
+                return Settings.Zone1.TurretCapacityCost;
+            case 2:
+                return Settings.Zone2.TurretCapacityCost;
             case 3:
-                result *= 1.5f;
-                break;
+                return Settings.Zone3.TurretCapacityCost;
             case 4:
-                result *= 1.5f;
-                break;
-            default:
-                break;
+                return Settings.Zone4.TurretCapacityCost;
         }
-        return Mathf.CeilToInt(result);
+        return 1;
     }
     private int GetSoldierMergeLevelPrice()
     {
-        float result = PlayerProgression.PlayerData.SoldierMergeLevel * 1500;
         switch (WaveController.ZoneLevel)
         {
+            case 1:
+                return Settings.Zone1.SoldierMergeLevelCost;
+            case 2:
+                return Settings.Zone2.SoldierMergeLevelCost;
             case 3:
-                result *= 1.5f;
-                break;
+                return Settings.Zone3.SoldierMergeLevelCost;
             case 4:
-                result *= 1.5f;
-                break;
-            default:
-                break;
+                return Settings.Zone4.SoldierMergeLevelCost;
         }
-        return Mathf.CeilToInt(result);
+        return 1;
     }
     public void UpgradeBaseDefense()
     {

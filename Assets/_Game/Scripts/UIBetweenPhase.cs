@@ -6,6 +6,7 @@ public class UIBetweenPhase : MonoBehaviour
 {
     [SerializeField] private GameObject panel = null;
     [SerializeField] private GameObject[] objectsToHide;
+    [SerializeField] private GameObject notification;
     private bool[] wereTheyShown;
 
     private void Awake()
@@ -17,11 +18,22 @@ public class UIBetweenPhase : MonoBehaviour
     private void Show() => gameObject.SetActive(true);
     private void Hide() => gameObject.SetActive(false);
 
+    public void ShowNotification()
+    {
+        notification.SetActive(true);
+    }
+
+    public void HideNotification()
+    {
+        notification.SetActive(false);
+    }
+
 
     public void OpenPanel()
     {
         panel.SetActive(true);
         gameObject.SetActive(false);
+        HideNotification();
         for (int i = 0; i < objectsToHide.Length; i++)
         {
             wereTheyShown[i] = objectsToHide[i].activeSelf;

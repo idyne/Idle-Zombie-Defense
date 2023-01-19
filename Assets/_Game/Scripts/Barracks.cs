@@ -22,10 +22,7 @@ public class Barracks : MonoBehaviour
     private Tower tower;
     private List<List<Soldier>> soldierTable = new List<List<Soldier>> { null, new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>() };
     private int numberOfSoldiers = 0;
-    private float baseSoldierCost { get => getBaseSoldierCost(); }
-    private float baseFireRateCost = 10.13f;
-    private float baseMergeCost = 15.14f;
-    private int power = 0;
+    public int Power { get; private set; } = 0;
     private int lastWaveLevelOfBuySoldier = 1;
     private bool isMerging = false;
     private int mergingSoldiersPower = 0;
@@ -34,28 +31,6 @@ public class Barracks : MonoBehaviour
     private int maxMergeLevel = 0;
     public readonly UnityEvent<int> OnNewMergeUnlocked = new();
 
-    private float getBaseSoldierCost()
-    {
-        float result = 2.47f;
-        switch (WaveController.ZoneLevel)
-        {
-            case 1:
-                result *= Mathf.Pow(2.5f, PlayerProgression.PlayerData.SoldierMergeLevel - 1);
-                break;
-            case 2:
-                result *= Mathf.Pow(1.75f, PlayerProgression.PlayerData.SoldierMergeLevel - 1);
-                break;
-            case 3:
-                result *= Mathf.Pow(2.1f, Mathf.Clamp(PlayerProgression.PlayerData.SoldierMergeLevel - 1, 0, 2));
-                break;
-            case 4:
-                result *= Mathf.Pow(2.1f, Mathf.Clamp(PlayerProgression.PlayerData.SoldierMergeLevel - 1, 0, 2));
-                break;
-            default:
-                break;
-        }
-        return result;
-    }
 
     private void Awake()
     {
@@ -105,23 +80,18 @@ public class Barracks : MonoBehaviour
 
     public static int GetMaxFireRateLevel()
     {
-        int result = 1;
         switch (WaveController.ZoneLevel)
         {
             case 1:
-                result = 14;
-                break;
+                return Settings.Zone1.MaxFireRateLevel;
             case 2:
-                result = 28;
-                break;
+                return Settings.Zone2.MaxFireRateLevel;
             case 3:
-                result = 40;
-                break;
+                return Settings.Zone3.MaxFireRateLevel;
             case 4:
-                result = 40;
-                break;
+                return Settings.Zone4.MaxFireRateLevel;
         }
-        return result;
+        return 1;
     }
     private void Start()
     {
@@ -149,38 +119,54 @@ public class Barracks : MonoBehaviour
         }
     }
 
+    public int TotalMerge
+    {
+        get
+        {
+            int totalMerge = 0;
+            int[] merges = new int[] { 0, 0, 1, 4, 13, 40, 121, 364, 1093 };
+            for (int i = 2; i < soldierTable.Count; i++)
+            {
+                for (int j = 0; j < soldierTable[i].Count; j++)
+                {
+                    totalMerge += merges[i];
+                }
+            }
+            return totalMerge;
+        }
+    }
+
     private int GetMergeCost()
     {
-        int totalMerge = 0;
-        int[] merges = new int[] { 0, 0, 1, 4, 13, 40, 121, 364, 1093 };
-        for (int i = 2; i < soldierTable.Count; i++)
-        {
-            for (int j = 0; j < soldierTable[i].Count; j++)
-            {
-                totalMerge += merges[i];
-            }
-        }
-        float result = baseMergeCost * (totalMerge + 1);
         switch (WaveController.ZoneLevel)
         {
+            case 1:
+                return Settings.Zone1.MergeCost;
+            case 2:
+                return Settings.Zone2.MergeCost;
             case 3:
-                result *= PlayerProgression.PlayerData.SoldierMergeLevel * 1.5f;
-                break;
+                return Settings.Zone3.MergeCost;
             case 4:
-                result *= PlayerProgression.PlayerData.SoldierMergeLevel * 1.5f;
-                break;
-            default:
-                break;
+                return Settings.Zone4.MergeCost;
         }
-        return Mathf.CeilToInt(result);
+        return 1;
     }
 
     public int GetSoldierCost()
     {
-        return Mathf.CeilToInt(
-            (baseSoldierCost * ((power - 1) * 2f)) +
-            (baseSoldierCost * (lastWaveLevelOfBuySoldier / 3f)) * 3
-            );
+        switch (WaveController.ZoneLevel)
+        {
+            case 1:
+                return Settings.Zone1.SoldierCost;
+            case 2:
+                return Settings.Zone2.SoldierCost;
+            case 3:
+                return Settings.Zone3.SoldierCost;
+            case 4:
+                return Settings.Zone4.SoldierCost;
+            default:
+                return 1;
+        }
     }
 
     public void DeactivateSoldiers()
@@ -216,7 +202,7 @@ public class Barracks : MonoBehaviour
             soldierTable.Add(new List<Soldier>());
         soldierTable[level].Add(soldier);
         numberOfSoldiers++;
-        power += Mathf.RoundToInt(Mathf.Pow(3, level - 1));
+        Power += Mathf.RoundToInt(Mathf.Pow(3, level - 1));
         PlaceSoldiers();
         soldier.SetTarget();
         if (save) PlayerProgression.PlayerData.Soldiers[level]++;
@@ -271,14 +257,14 @@ public class Barracks : MonoBehaviour
         while (count++ < 3)
         {
             Soldier soldier = RemoveSoldier(soldierLevel);
-            power += Mathf.RoundToInt(Mathf.Pow(3, soldierLevel - 1)); ;
+            Power += Mathf.RoundToInt(Mathf.Pow(3, soldierLevel - 1)); ;
             void hide() => soldier.gameObject.SetActive(false);
             void hideAndAddSoldier()
             {
                 hide();
 
                 ObjectPooler.SpawnFromPool("Smoke Effect", mergePosition, Quaternion.identity);
-                power -= Mathf.RoundToInt(Mathf.Pow(3, soldierLevel));
+                Power -= Mathf.RoundToInt(Mathf.Pow(3, soldierLevel));
                 AddSoldier(soldierLevel + 1, out Soldier newSoldier, out Transform spawnPoint);
                 Vector3 position = newSoldier.Transform.position;
                 newSoldier.Transform.position = mergePosition;
@@ -316,7 +302,7 @@ public class Barracks : MonoBehaviour
         soldiers.RemoveAt(soldiers.Count - 1);
         PlaceSoldiers();
         numberOfSoldiers--;
-        power -= Mathf.RoundToInt(Mathf.Pow(3, level - 1));
+        Power -= Mathf.RoundToInt(Mathf.Pow(3, level - 1));
         PlayerProgression.PlayerData.Soldiers[level]--;
         return soldier;
     }
@@ -338,20 +324,18 @@ public class Barracks : MonoBehaviour
 
     private int GetFireRateCost()
     {
-        float result = baseFireRateCost * (FireRateLevel) * 4;
         switch (WaveController.ZoneLevel)
         {
+            case 1:
+                return Settings.Zone1.FireRateCost;
             case 2:
-                result *= 1.1f;
-                break;
+                return Settings.Zone2.FireRateCost;
             case 3:
-                result *= 1.2f;
-                break;
+                return Settings.Zone3.FireRateCost;
             case 4:
-                result *= 1.3f;
-                break;
+                return Settings.Zone4.FireRateCost;
         }
-        return Mathf.CeilToInt(result);
+        return 1;
     }
 
     public void BuyFireRate()
