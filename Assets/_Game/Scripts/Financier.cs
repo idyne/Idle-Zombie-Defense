@@ -5,7 +5,6 @@ using FateGames;
 
 public class Financier : MonoBehaviour
 {
-    private float baseIncomeCost = 50.37f;
     private int incomeLevel { get => PlayerProgression.PlayerData.IncomeLevel; set => PlayerProgression.PlayerData.IncomeLevel = value; }
 
     private void Awake()
@@ -18,19 +17,18 @@ public class Financier : MonoBehaviour
 
     private int GetIncomeCost()
     {
-        float result = baseIncomeCost * (incomeLevel);
         switch (WaveController.ZoneLevel)
         {
+            case 1:
+                return Settings.Zone1.IncomeCost;
+            case 2:
+                return Settings.Zone2.IncomeCost;
             case 3:
-                result *= 1.5f;
-                break;
+                return Settings.Zone3.IncomeCost;
             case 4:
-                result *= 1.5f;
-                break;
-            default:
-                break;
+                return Settings.Zone4.IncomeCost;
         }
-        return Mathf.CeilToInt(result);
+        return 1;
     }
 
     public void IncreaseIncome()

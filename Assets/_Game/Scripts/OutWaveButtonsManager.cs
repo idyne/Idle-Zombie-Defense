@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FateGames;
 using System.Linq;
+using static Settings;
 
 public class OutWaveButtonsManager : MonoBehaviour
 {
@@ -37,63 +38,66 @@ public class OutWaveButtonsManager : MonoBehaviour
 
     public static int GetFrostPrice()
     {
-        float result = PlayerProgression.PlayerData.Traps.Where(trapData => trapData.Item1 == 1).Count() * 100 + 5;
         switch (WaveController.ZoneLevel)
         {
+            case 1:
+                return Settings.Zone1.FrostBombCost;
+            case 2:
+                return Settings.Zone2.FrostBombCost;
             case 3:
-                result *= 2f;
-                break;
+                return Settings.Zone3.FrostBombCost;
             case 4:
-                result *= 2f;
-                break;
-            default:
-                break;
+                return Settings.Zone4.FrostBombCost;
         }
-        return Mathf.CeilToInt(result);
+        return 1;
     }
 
     public static int GetTurretPrice()
     {
-        float result = (PlayerProgression.PlayerData.Turrets.Count) * 800 + 200;
         switch (WaveController.ZoneLevel)
         {
+            case 1:
+                return Settings.Zone1.TurretCost;
+            case 2:
+                return Settings.Zone2.TurretCost;
             case 3:
-                result *= 2f;
-                break;
+                return Settings.Zone3.TurretCost;
             case 4:
-                result *= 2f;
-                break;
-            default:
-                break;
+                return Settings.Zone4.TurretCost;
         }
-        return Mathf.CeilToInt(result);
+        return 1;
     }
 
     public static int GetTNTPrice()
     {
-        float result = PlayerProgression.PlayerData.Traps.Where(trapData => trapData.Item1 == 0).Count() * 100 + 5;
         switch (WaveController.ZoneLevel)
         {
+            case 1:
+                return Settings.Zone1.ExplosiveBombCost;
+            case 2:
+                return Settings.Zone2.ExplosiveBombCost;
             case 3:
-                result *= 2f;
-                break;
+                return Settings.Zone3.ExplosiveBombCost;
             case 4:
-                result *= 2f;
-                break;
-            default:
-                break;
+                return Settings.Zone4.ExplosiveBombCost;
         }
-        return Mathf.CeilToInt(result);
+        return 1;
     }
 
     public void UpdateFrostButton()
     {
-        bool locked = WaveController.Day <= 7;
+        int unlockDay = FrostUnlockDay;
+        bool locked = WaveController.Day < unlockDay;
         int capacity = PlayerProgression.PlayerData.TrapCapacity - PlayerProgression.PlayerData.Traps.Where(data => data.Item1 == 1).Count();
+        frostButton.ShowCapacity();
         frostButton.SetCapacityText(capacity.ToString());
         bool noCapacity = capacity <= 0;
         if (locked)
-            frostButton.SetText("Unlocks after 1st week");
+        {
+            int remainingDays = unlockDay - WaveController.Day;
+            frostButton.SetText("Unlocks after " + remainingDays + (remainingDays > 1 ? " days" : " day"));
+            frostButton.HideCapacity();
+        }
         else if (noCapacity)
             frostButton.SetText("No Capacity");
         else
@@ -104,12 +108,18 @@ public class OutWaveButtonsManager : MonoBehaviour
 
     public void UpdateTurretButton()
     {
-        bool locked = WaveController.Day <= 14;
+        int unlockDay = TurretUnlockDay;
+        bool locked = WaveController.Day < unlockDay;
         int capacity = PlayerProgression.PlayerData.TurretCapacity - PlayerProgression.PlayerData.Turrets.Count();
+        turretButton.ShowCapacity();
         turretButton.SetCapacityText(capacity.ToString());
         bool noCapacity = capacity <= 0;
         if (locked)
-            turretButton.SetText("Unlocks after 2nd week");
+        {
+            int remainingDays = unlockDay - WaveController.Day;
+            turretButton.SetText("Unlocks after " + remainingDays + (remainingDays > 1 ? " days" : " day"));
+            turretButton.HideCapacity();
+        }
         else if (noCapacity)
             turretButton.SetText("No Capacity");
         else
@@ -120,12 +130,18 @@ public class OutWaveButtonsManager : MonoBehaviour
 
     public void UpdateTNTButton()
     {
-        bool locked = WaveController.Day <= 7;
+        int unlockDay = TNTUnlockDay;
+        bool locked = WaveController.Day < unlockDay;
         int capacity = PlayerProgression.PlayerData.TrapCapacity - PlayerProgression.PlayerData.Traps.Where(data => data.Item1 == 0).Count();
+        tntButton.ShowCapacity();
         tntButton.SetCapacityText(capacity.ToString());
         bool noCapacity = capacity <= 0;
         if (locked)
-            tntButton.SetText("Unlocks after 1st week");
+        {
+            int remainingDays = unlockDay - WaveController.Day;
+            tntButton.SetText("Unlocks after " + remainingDays + (remainingDays > 1 ? " days" : " day"));
+            tntButton.HideCapacity();
+        }
         else if (noCapacity)
             tntButton.SetText("No Capacity");
         else
@@ -136,7 +152,7 @@ public class OutWaveButtonsManager : MonoBehaviour
 
     public void SelectFrostBomb()
     {
-        if (!PlayerProgression.CanAfford(GetFrostPrice()) || WaveController.Day < 8) return;
+        if (!PlayerProgression.CanAfford(GetFrostPrice()) || WaveController.Day < Settings.FrostUnlockDay) return;
         int capacity = PlayerProgression.PlayerData.TrapCapacity - PlayerProgression.PlayerData.Traps.Where(data => data.Item1 == 1).Count();
         if (capacity <= 0) return;
         FrostBomb bomb = ObjectPooler.SpawnFromPool("Frost Bomb", Vector3.up * 100, Quaternion.identity).GetComponent<FrostBomb>();
@@ -144,7 +160,7 @@ public class OutWaveButtonsManager : MonoBehaviour
     }
     public void SelectExplosiveBomb()
     {
-        if (!PlayerProgression.CanAfford(GetTNTPrice()) || WaveController.Day < 8) return;
+        if (!PlayerProgression.CanAfford(GetTNTPrice()) || WaveController.Day < Settings.TNTUnlockDay) return;
         int capacity = PlayerProgression.PlayerData.TrapCapacity - PlayerProgression.PlayerData.Traps.Where(data => data.Item1 == 0).Count();
         if (capacity <= 0) return;
         ExplosiveBomb bomb = ObjectPooler.SpawnFromPool("Explosive Bomb", Vector3.up * 100, Quaternion.identity).GetComponent<ExplosiveBomb>();
@@ -152,7 +168,7 @@ public class OutWaveButtonsManager : MonoBehaviour
     }
     public void SelectTurret()
     {
-        if (!PlayerProgression.CanAfford(GetTurretPrice()) || WaveController.Day < 15) return;
+        if (!PlayerProgression.CanAfford(GetTurretPrice()) || WaveController.Day < Settings.TurretUnlockDay) return;
         int capacity = PlayerProgression.PlayerData.TurretCapacity - PlayerProgression.PlayerData.Turrets.Count;
         if (capacity <= 0) return;
         Turret turret = ObjectPooler.SpawnFromPool("Turret", Vector3.up * 100, Quaternion.identity).GetComponent<Turret>();

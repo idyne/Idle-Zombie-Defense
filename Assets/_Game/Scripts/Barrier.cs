@@ -8,7 +8,6 @@ using FateGames;
 public class Barrier : MonoBehaviour
 {
     [SerializeField] private List<Transform> parts;
-    private static int baseHealth = 300;
     private int currentHealth = 100;
     private HealthBar healthBar;
     public Transform Transform { get; private set; }
@@ -33,27 +32,18 @@ public class Barrier : MonoBehaviour
 
     private static int GetMaxHealth()
     {
-        float result = baseHealth;
         switch (WaveController.ZoneLevel)
         {
             case 1:
-                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
-                break;
+                return Settings.Zone1.BarrierMaxHealth;
             case 2:
-                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
-                break;
+                return Settings.Zone2.BarrierMaxHealth;
             case 3:
-                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
-                break;
+                return Settings.Zone3.BarrierMaxHealth;
             case 4:
-                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
-                break;
+                return Settings.Zone4.BarrierMaxHealth;
         }
-        if (WaveController.ZoneLevel == 3 && WaveController.NormalizedDay == 1)
-            result *= 2;
-        if (WaveController.CurrentTimePeriod == WaveController.TimePeriod.Night)
-            result *= 3;
-        return Mathf.CeilToInt(result);
+        return 1;
     }
 
     private void SetHealth(int health, bool showBar = true)

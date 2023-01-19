@@ -25,7 +25,6 @@ public class WaveController : MonoBehaviour
     public enum TimePeriod { Morning, Noon, Evening, Night }
     public Wave CurrentWave { get; private set; } = null;
     public static WaveState State { get; private set; }
-    private readonly int baseLevelPower = 5;
 
     private int CurrentMaxZombieLevel { get => GetCurrentMaxZombieLevel(); }
     public UnityEvent<Wave> OnNewWave { get; private set; } = new();
@@ -65,70 +64,35 @@ public class WaveController : MonoBehaviour
 
     private int GetCurrentLevelPower()
     {
-        float result = baseLevelPower;
-        float multiplier = 1.5f;
-        switch (CurrentTimePeriod)
-        {
-            case TimePeriod.Morning:
-                result = baseLevelPower * ((NormalizedDay - 1) * multiplier + 1);
-                break;
-            case TimePeriod.Noon:
-                result = baseLevelPower * ((NormalizedDay - 1) * multiplier + 1) * 1.8f;
-                break;
-            case TimePeriod.Evening:
-                result = baseLevelPower * ((NormalizedDay - 1) * multiplier + 1) * 2.5f;
-                break;
-            case TimePeriod.Night:
-                result = baseLevelPower * ((NormalizedDay - 1) * multiplier + 1) * 4f;
-                break;
-            default:
-                break;
-        }
         switch (ZoneLevel)
         {
+            case 1:
+                return Settings.Zone1.WavePower;
             case 2:
-                result *= 1f;
-                break;
+                return Settings.Zone2.WavePower;
             case 3:
-                result *= 1.3f;
-                break;
+                return Settings.Zone3.WavePower;
             case 4:
-                result *= 1.5f;
-                break;
-            default:
-                break;
+                return Settings.Zone4.WavePower;
         }
-        if (Day == 1)
-            result *= 2;
-        else if (Day == 8)
-            result *= 1.3f;
-        else if (Day == 22)
-            result *= 1.3f;
-        else if (Day == 42)
-            result *= 1.3f;
-        return Mathf.CeilToInt(result);
+        return 1;
     }
 
     private int GetCurrentMaxZombieLevel()
     {
 
-        int result = 1;
         switch (ZoneLevel)
         {
             case 1:
-                result = Mathf.CeilToInt(Mathf.Clamp((NormalizedDay + 0.73f) / 7f, 0, 1f) * 4);
-                break;
+                return Settings.Zone1.MaxZombieLevel;
             case 2:
-                result = Mathf.CeilToInt(Mathf.Clamp((NormalizedDay + 4) / 14f, 0, 1f) * 5);
-                break;
+                return Settings.Zone2.MaxZombieLevel;
             case 3:
-                result = Mathf.CeilToInt(Mathf.Clamp((NormalizedDay + 6) / 20f, 0, 1f) * 6);
-                break;
+                return Settings.Zone3.MaxZombieLevel;
             case 4:
-                result = Mathf.CeilToInt(Mathf.Clamp((NormalizedDay + 9) / 30f, 0, 1f) * 6);
-                break;
+                return Settings.Zone4.MaxZombieLevel;
         }
-        return result;
+        return 1;
     }
 
     private void Start()
