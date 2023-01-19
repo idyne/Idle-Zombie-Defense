@@ -105,7 +105,7 @@ public class ButtonManager : MonoBehaviour
     public void UpdateUpgradesButton()
     {
         if (WaveController.State == WaveController.WaveState.RUNNING) upgradesButton.Hide();
-        else if (WaveController.State == WaveController.WaveState.WAITING) upgradesButton.Show();
+        else if (WaveController.State == WaveController.WaveState.WAITING && WaveController.Day > 1) upgradesButton.Show();
     }
 
     public void UpdateMergeButton(int cost, bool canMerge)
