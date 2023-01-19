@@ -18,18 +18,21 @@ public class PhaseCleared : MonoBehaviour
     public IEnumerator Show(int money)
     {
         phaseClearedText.SetActive(true);
-        SpreadMoney(20);
+        this.money = money;
+        SpreadMoney(15);
         yield return new WaitForSeconds(2.5f);
         phaseClearedText.SetActive(false);
         moneyText.text = "+ " + money;
-        this.money = money;
         PlayerProgression.MONEY = PlayerProgression.MONEY;
         
     }
     public void SpreadMoney(int count)
     {
+        print(money);
         int delta = money / count;
+        print(delta);
         int last = money - delta * count;
+        print(last);
         for (int i = 0; i < count; i++)
         {
             RectTransform rectTransform = ObjectPooler.SpawnFromPool("UI Money Image", Vector3.zero, Quaternion.identity).GetComponent<RectTransform>();

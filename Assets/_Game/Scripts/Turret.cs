@@ -123,8 +123,9 @@ public class Turret : Placeable
         if (!bought)
         {
             saveDataIndex = PlayerProgression.PlayerData.Turrets.Count;
+            PlayerProgression.MONEY -= OutWaveButtonsManager.GetTurretPrice();
             PlayerProgression.PlayerData.Turrets.Add(grid.Id);
-            PlayerProgression.MONEY -= OutWaveButtonsManager.Instance.GetTurretPrice();
+            PlayerProgression.MONEY = PlayerProgression.MONEY;
         }
         else
         {

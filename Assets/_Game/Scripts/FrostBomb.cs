@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class FrostBomb : Bomb
 {
+    protected override int price
+    {
+        get
+        {
+            return OutWaveButtonsManager.GetFrostPrice() / 4;
+        }
+    }
     protected override bool Explode()
     {
         if (Exploded) return false;

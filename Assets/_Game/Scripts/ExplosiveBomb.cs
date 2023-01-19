@@ -6,7 +6,18 @@ using UnityEngine.EventSystems;
 
 public class ExplosiveBomb : Bomb
 {
-    [SerializeField] private int damage;
+    private int damage { get => GetDamage(); }
+    protected override int price
+    {
+        get
+        {
+            return OutWaveButtonsManager.GetTNTPrice() / 4;
+        }
+    }
+    private int GetDamage()
+    {
+        return WaveController.NormalizedDay * 75;
+    }
 
     protected override bool Explode()
     {

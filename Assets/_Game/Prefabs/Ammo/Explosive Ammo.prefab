@@ -48,8 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: 20
   ease: 5
-  Damage: 200
-  range: 2
+  Damage: 250
+  range: 2.2
   affectedLayers:
     serializedVersion: 2
     m_Bits: 128

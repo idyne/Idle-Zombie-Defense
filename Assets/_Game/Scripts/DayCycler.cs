@@ -25,6 +25,12 @@ public class DayCycler : MonoBehaviour
     private float fogEndDistance = 45;
     private float fogOffset = 0;
 
+    private void Update()
+    {
+        RenderSettings.fogStartDistance = fogStartDistance + fogOffset;
+        RenderSettings.fogEndDistance = fogEndDistance + fogOffset;
+    }
+
     public void SetTimePeriodWithoutAnimation(TimePeriod period)
     {
         lightAnimator.enabled = false;
@@ -116,23 +122,19 @@ public class DayCycler : MonoBehaviour
     {
         if (animate)
         {
-            DOTween.To(() => RenderSettings.fogStartDistance, x => RenderSettings.fogStartDistance = x, start + fogOffset, 2);
-            DOTween.To(() => RenderSettings.fogEndDistance, x => RenderSettings.fogEndDistance = x, end + fogOffset, 2);
+            DOTween.To(() => fogStartDistance, x => fogStartDistance = x, start + fogOffset, 2);
+            DOTween.To(() => fogEndDistance, x => fogEndDistance = x, end + fogOffset, 2);
         }
         else
         {
             fogStartDistance = start;
             fogEndDistance = end;
-            RenderSettings.fogStartDistance = start + fogOffset;
-            RenderSettings.fogEndDistance = end + fogOffset;
         }
     }
 
     public void ChangeFogOffset(float offset)
     {
         fogOffset = offset;
-        RenderSettings.fogStartDistance = fogStartDistance + offset;
-        RenderSettings.fogEndDistance = fogEndDistance + offset;
     }
 
 

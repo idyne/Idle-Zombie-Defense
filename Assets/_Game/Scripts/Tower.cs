@@ -51,6 +51,10 @@ public class Tower : MonoBehaviour
                 damageTaken = 0;
             });
         });
+        UpgradeController.Instance.OnBaseDefenseUpgrade.AddListener(() =>
+        {
+            SetHealth(MaxHealth);
+        });
     }
 
     public void TurnOnLights()
@@ -107,16 +111,16 @@ public class Tower : MonoBehaviour
         switch (WaveController.ZoneLevel)
         {
             case 1:
-                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
+                result = baseHealth * (PlayerProgression.PlayerData.BaseDefenseLevel);
                 break;
             case 2:
-                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
+                result = baseHealth * (PlayerProgression.PlayerData.BaseDefenseLevel);
                 break;
             case 3:
-                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
+                result = baseHealth * (PlayerProgression.PlayerData.BaseDefenseLevel);
                 break;
             case 4:
-                result = baseHealth * (WaveController.NormalizedDay + PlayerProgression.PlayerData.BaseDefenseLevel);
+                result = baseHealth * (PlayerProgression.PlayerData.BaseDefenseLevel);
                 break;
         }
         if (WaveController.CurrentTimePeriod == WaveController.TimePeriod.Night)

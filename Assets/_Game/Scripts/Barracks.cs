@@ -22,7 +22,7 @@ public class Barracks : MonoBehaviour
     private Tower tower;
     private List<List<Soldier>> soldierTable = new List<List<Soldier>> { null, new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>() };
     private int numberOfSoldiers = 0;
-    private float baseSoldierCost { get => 2.47f * Mathf.Pow(2.5f, PlayerProgression.PlayerData.SoldierMergeLevel - 1); }
+    private float baseSoldierCost { get => getBaseSoldierCost(); }
     private float baseFireRateCost = 10.13f;
     private float baseMergeCost = 15.14f;
     private int power = 0;
@@ -33,6 +33,29 @@ public class Barracks : MonoBehaviour
     public static int FireRateLevel { get => PlayerProgression.PlayerData.FireRateLevel; }
     private int maxMergeLevel = 0;
     public readonly UnityEvent<int> OnNewMergeUnlocked = new();
+
+    private float getBaseSoldierCost()
+    {
+        float result = 2.47f;
+        switch (WaveController.ZoneLevel)
+        {
+            case 1:
+                result *= Mathf.Pow(2.5f, PlayerProgression.PlayerData.SoldierMergeLevel - 1);
+                break;
+            case 2:
+                result *= Mathf.Pow(1.75f, PlayerProgression.PlayerData.SoldierMergeLevel - 1);
+                break;
+            case 3:
+                result *= Mathf.Pow(2.1f, Mathf.Clamp(PlayerProgression.PlayerData.SoldierMergeLevel - 1, 0, 2));
+                break;
+            case 4:
+                result *= Mathf.Pow(2.1f, Mathf.Clamp(PlayerProgression.PlayerData.SoldierMergeLevel - 1, 0, 2));
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
 
     private void Awake()
     {
@@ -137,15 +160,26 @@ public class Barracks : MonoBehaviour
                 totalMerge += merges[i];
             }
         }
-        return Mathf.RoundToInt(baseMergeCost * (totalMerge + 1));
+        float result = baseMergeCost * (totalMerge + 1);
+        switch (WaveController.ZoneLevel)
+        {
+            case 3:
+                result *= PlayerProgression.PlayerData.SoldierMergeLevel * 1.5f;
+                break;
+            case 4:
+                result *= PlayerProgression.PlayerData.SoldierMergeLevel * 1.5f;
+                break;
+            default:
+                break;
+        }
+        return Mathf.CeilToInt(result);
     }
 
     public int GetSoldierCost()
     {
         return Mathf.CeilToInt(
             (baseSoldierCost * ((power - 1) * 2f)) +
-            (baseSoldierCost * (lastWaveLevelOfBuySoldier / 3f)) +
-            (baseSoldierCost)
+            (baseSoldierCost * (lastWaveLevelOfBuySoldier / 3f)) * 3
             );
     }
 
@@ -248,14 +282,19 @@ public class Barracks : MonoBehaviour
                 AddSoldier(soldierLevel + 1, out Soldier newSoldier, out Transform spawnPoint);
                 Vector3 position = newSoldier.Transform.position;
                 newSoldier.Transform.position = mergePosition;
-                newSoldier.Transform.DOMove(position, transitionDuration);
-                isMerging = false;
                 bool isNewMerge = soldierLevel + 1 > maxMergeLevel;
                 if (isNewMerge)
                 {
                     maxMergeLevel = soldierLevel + 1;
-                    OnNewMergeUnlocked.Invoke(soldierLevel + 1);
+
                 }
+                newSoldier.Transform.DOMove(position, transitionDuration).OnComplete(() =>
+                {
+                    if (isNewMerge)
+                        DOVirtual.DelayedCall(0.4f, () => { OnNewMergeUnlocked.Invoke(soldierLevel + 1); });
+                });
+                isMerging = false;
+
                 PlayerProgression.MONEY = PlayerProgression.MONEY;
             }
 
@@ -303,13 +342,13 @@ public class Barracks : MonoBehaviour
         switch (WaveController.ZoneLevel)
         {
             case 2:
-                result *= 2;
+                result *= 1.1f;
                 break;
             case 3:
-                result *= 3;
+                result *= 1.2f;
                 break;
             case 4:
-                result *= 4;
+                result *= 1.3f;
                 break;
         }
         return Mathf.CeilToInt(result);

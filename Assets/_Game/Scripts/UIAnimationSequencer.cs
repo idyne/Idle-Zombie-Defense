@@ -42,14 +42,46 @@ public class UIAnimationSequencer : MonoBehaviour
         UIContainer.SetActive(false);
         zombieBar.Hide();
         LevelBar.Instance.Hide();
-        areaCleared.Show(Barracks.Instance.GetSoldierCost() * 2 + 6);
+        float money = (NormalizedDay - 2) * 101 + 51;
+        switch (ZoneLevel)
+        {
+            case 2:
+                money *= 1.5f;
+                break;
+            case 3:
+                money *= 2f;
+                break;
+            case 4:
+                money *= 2f;
+                break;
+            default:
+                break;
+        }
+        if (Day == 8 || Day == 22 || Day == 42)
+            money = 1500;
+        areaCleared.Show(Mathf.CeilToInt(money));
         yield return new WaitUntil(() => areaClearedNext);
         areaClearedNext = false;
         yield return new WaitForSeconds(3.2f);
     }
     private IEnumerator FinishPhase()
     {
-        yield return phaseCleared.Show(Barracks.Instance.GetSoldierCost() * 2 + 6);
+        float money = NormalizedDay * 20;
+        switch (ZoneLevel)
+        {
+            case 2:
+                money *= 1.5f;
+                break;
+            case 3:
+                money *= 2f;
+                break;
+            case 4:
+                money *= 2f;
+                break;
+            default:
+                break;
+        }
+        yield return phaseCleared.Show(Mathf.CeilToInt(money));
         zombieBar.Hide();
         LevelBar.Instance.Hide();
         yield return new WaitForSeconds(0.7f);
@@ -196,8 +228,8 @@ public class UIAnimationSequencer : MonoBehaviour
         PlayerProgression.PlayerData.IncomeLevel = 1;
         PlayerProgression.PlayerData.FireRateLevel = 1;
         PlayerProgression.PlayerData.BaseDefenseLevel = 1;
-        PlayerProgression.PlayerData.TrapCapacity = 0;
-        PlayerProgression.PlayerData.TurretCapacity = 0;
+        PlayerProgression.PlayerData.TrapCapacity = 1;
+        PlayerProgression.PlayerData.TurretCapacity = 1;
         PlayerProgression.PlayerData.SoldierMergeLevel = 1;
         PlayerProgression.MONEY = 0;
         environmentChanger.SetZone(ZoneLevel);

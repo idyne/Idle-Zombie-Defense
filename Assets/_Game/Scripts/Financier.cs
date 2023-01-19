@@ -18,7 +18,19 @@ public class Financier : MonoBehaviour
 
     private int GetIncomeCost()
     {
-        return Mathf.RoundToInt(baseIncomeCost * (incomeLevel));
+        float result = baseIncomeCost * (incomeLevel);
+        switch (WaveController.ZoneLevel)
+        {
+            case 3:
+                result *= 1.5f;
+                break;
+            case 4:
+                result *= 1.5f;
+                break;
+            default:
+                break;
+        }
+        return Mathf.CeilToInt(result);
     }
 
     public void IncreaseIncome()
