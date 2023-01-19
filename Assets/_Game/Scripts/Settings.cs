@@ -11,9 +11,9 @@ public static class Settings
     public static readonly int TurretUnlockDay = 15;
     public static readonly int TNTUnlockDay = 4;
 
-    private static readonly int NumberOfFrostBombs = PlayerData.Traps.Where(trapData => trapData.Item1 == 1).Count();
-    private static readonly int NumberOfTurrets = PlayerData.Turrets.Count;
-    private static readonly int NumberOfExplosiveBombs = PlayerData.Traps.Where(trapData => trapData.Item1 == 0).Count();
+    private static int NumberOfFrostBombs { get => PlayerData.Traps.Where(trapData => trapData.Item1 == 1).Count(); }
+    private static int NumberOfTurrets { get => PlayerData.Turrets.Count; }
+    private static int NumberOfExplosiveBombs { get => PlayerData.Traps.Where(trapData => trapData.Item1 == 0).Count(); }
 
     public static class Zone1
     {
