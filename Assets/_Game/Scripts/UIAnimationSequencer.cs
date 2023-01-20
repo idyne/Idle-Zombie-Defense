@@ -230,6 +230,8 @@ public class UIAnimationSequencer : MonoBehaviour
         PlayerProgression.PlayerData.TrapCapacity = 1;
         PlayerProgression.PlayerData.TurretCapacity = 1;
         PlayerProgression.PlayerData.SoldierMergeLevel = 1;
+        PlayerProgression.PlayerData.Traps.Clear();
+        PlayerProgression.PlayerData.Turrets.Clear();
         PlayerProgression.MONEY = 0;
         environmentChanger.SetZone(ZoneLevel);
         tower.SetTower();
