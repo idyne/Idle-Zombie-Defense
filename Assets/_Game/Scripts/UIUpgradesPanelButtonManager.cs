@@ -31,7 +31,7 @@ public class UIUpgradesPanelButtonManager : MonoBehaviour
         if (locked)
         {
             int remainingDays = unlockDay - WaveController.Day;
-            trapCapacityButton.SetText("Unlocks after " + remainingDays + (remainingDays > 1 ? " days" : " day"));
+            trapCapacityButton.SetText("Unlocks " + (remainingDays > 1 ? "after " + remainingDays + " days" : "the next day"));
         }
         else if (!maxedOut)
             trapCapacityButton.SetText(UIMoney.FormatMoney(cost));
@@ -51,7 +51,7 @@ public class UIUpgradesPanelButtonManager : MonoBehaviour
         if (locked)
         {
             int remainingDays = unlockDay - WaveController.Day;
-            turretCapacityButton.SetText("Unlocks after " + remainingDays + (remainingDays > 1 ? " days" : " day"));
+            turretCapacityButton.SetText("Unlocks " + (remainingDays > 1 ? "after " + remainingDays + " days" : "the next day"));
         }
         else
         if (!maxedOut)

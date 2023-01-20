@@ -95,7 +95,7 @@ public class OutWaveButtonsManager : MonoBehaviour
         if (locked)
         {
             int remainingDays = unlockDay - WaveController.Day;
-            frostButton.SetText("Unlocks after " + remainingDays + (remainingDays > 1 ? " days" : " day"));
+            frostButton.SetText("Unlocks " + (remainingDays > 1 ? "after " + remainingDays + " days" : "the next day"));
             frostButton.HideCapacity();
         }
         else if (noCapacity)
@@ -117,7 +117,7 @@ public class OutWaveButtonsManager : MonoBehaviour
         if (locked)
         {
             int remainingDays = unlockDay - WaveController.Day;
-            turretButton.SetText("Unlocks after " + remainingDays + (remainingDays > 1 ? " days" : " day"));
+            turretButton.SetText("Unlocks " + (remainingDays > 1 ? "after " + remainingDays + " days" : "the next day"));
             turretButton.HideCapacity();
         }
         else if (noCapacity)
@@ -139,7 +139,7 @@ public class OutWaveButtonsManager : MonoBehaviour
         if (locked)
         {
             int remainingDays = unlockDay - WaveController.Day;
-            tntButton.SetText("Unlocks after " + remainingDays + (remainingDays > 1 ? " days" : " day"));
+            tntButton.SetText("Unlocks " + (remainingDays > 1 ? "after " + remainingDays + " days" : "the next day"));
             tntButton.HideCapacity();
         }
         else if (noCapacity)
