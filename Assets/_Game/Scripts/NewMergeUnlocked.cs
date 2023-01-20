@@ -14,8 +14,8 @@ public class NewMergeUnlocked : MonoBehaviour
     {
         Barracks.Instance.OnNewMergeUnlocked.AddListener((level) =>
         {
-            print(level);
-            Open(level);
+            if (GameManager.Instance.State != GameState.FINISHED)
+                Open(level);
         });
         gameObject.SetActive(false);
     }
