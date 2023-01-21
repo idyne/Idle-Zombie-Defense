@@ -360,7 +360,7 @@ public static class Settings
         private static readonly float BaseMergeRateCost = 15.14f;
         public static int MaxFireRateLevel = 40;
         public static int MergeCost { get => Mathf.CeilToInt(PlayerData.SoldierMergeLevel * 1.5f * BaseMergeRateCost * (Barracks.Instance.TotalMerge + 1)); }
-        public static int SoldierCost { get => Mathf.CeilToInt(BaseSoldierCost * ((Barracks.Instance.Power) * 2f)); }
+        public static int SoldierCost { get => Mathf.CeilToInt(BaseSoldierCost * ((Barracks.Instance.Power) * 2.2f)); }
         public static int FireRateCost { get => Mathf.CeilToInt(1.2f * BaseFireRateCost * (PlayerData.FireRateLevel) * 4); }
         #endregion
         #region Base
@@ -428,10 +428,10 @@ public static class Settings
         public static readonly int TrapCapacityLimit = 5;
         public static readonly int TurretCapacityLimit = 4;
         public static readonly int SoldierMergeLevelLimit = 4;
-        public static int BaseDefenseLevelCost { get => Mathf.CeilToInt(3 * PlayerData.BaseDefenseLevel * 100); }
-        public static int TrapCapacityCost { get => Mathf.CeilToInt(2 * (PlayerData.TrapCapacity + 1) * 100); }
-        public static int TurretCapacityCost { get => Mathf.CeilToInt(1.5f * (PlayerData.TurretCapacity + 1) * 250); }
-        public static int SoldierMergeLevelCost { get => Mathf.CeilToInt(1.5f * PlayerData.SoldierMergeLevel * 1500); }
+        public static int BaseDefenseLevelCost { get => Mathf.CeilToInt(3 * Mathf.Pow(PlayerData.BaseDefenseLevel, 1.5f) * 100); }
+        public static int TrapCapacityCost { get => Mathf.CeilToInt(2 * Mathf.Pow(PlayerData.TrapCapacity + 1, 1.9f) * 100); }
+        public static int TurretCapacityCost { get => Mathf.CeilToInt(1.5f * Mathf.Pow(PlayerData.TurretCapacity + 1,  2.2f) * 250); }
+        public static int SoldierMergeLevelCost { get => Mathf.CeilToInt(1.5f * Mathf.Pow(PlayerData.SoldierMergeLevel, 2.1f) * 1500); }
 
         #endregion
         #region Wave
@@ -487,9 +487,14 @@ public static class Settings
             float result = BaseZombieHealth * (level + normalizedDayMultiplier);
             if (boss)
                 result *= bossMultiplier * 1.5f * 1.3f;
-            if (NormalizedDay > 2 && NormalizedDay < 11)
+            if (NormalizedDay > 2 && NormalizedDay < 5)
             {
                 result *= 1.4f + (NormalizedDay - 2) / 18f * 3f;
+            }
+            else if (NormalizedDay >= 5 && NormalizedDay < 11)
+            {
+                result *= 1.4f + (NormalizedDay - 2) / 18f * 3f;
+                result *= 1.3f;
             }
             else if (NormalizedDay >= 11)
             {
@@ -524,7 +529,7 @@ public static class Settings
         public static int ZombieGain(int level, bool boss)
         {
             float gain = (((PlayerData.IncomeLevel - 1) / 3f) + (NormalizedDay) * 2) * level;
-            gain *= 1.7f;
+            gain *= 2.2f;
             if (boss)
                 gain *= 2f;
             return Mathf.CeilToInt(gain);
