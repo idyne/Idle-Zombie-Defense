@@ -9,7 +9,16 @@ public class FrostBomb : Bomb
     {
         get
         {
-            return OutWaveButtonsManager.GetFrostPrice() / 4;
+            float result = OutWaveButtonsManager.GetFrostPrice() / 4;
+            switch (WaveController.ZoneLevel)
+            {
+                case 2:
+                    result = OutWaveButtonsManager.GetFrostPrice() / 4 + Mathf.Pow(WaveController.NormalizedDay, 1.2f) * 11;
+                    break;
+                default:
+                    break;
+            }
+            return Mathf.CeilToInt(result);
         }
     }
     protected override bool Explode()

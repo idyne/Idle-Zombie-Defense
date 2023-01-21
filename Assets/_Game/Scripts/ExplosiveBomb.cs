@@ -11,7 +11,16 @@ public class ExplosiveBomb : Bomb
     {
         get
         {
-            return OutWaveButtonsManager.GetTNTPrice() / 4;
+            float result = OutWaveButtonsManager.GetTNTPrice() / 4;
+            switch (WaveController.ZoneLevel)
+            {
+                case 2:
+                    result = OutWaveButtonsManager.GetTNTPrice() / 4 + Mathf.Pow(WaveController.NormalizedDay, 1.2f) * 11;
+                    break;
+                default:
+                    break;
+            }
+            return Mathf.CeilToInt(result);
         }
     }
     private int GetDamage()
