@@ -247,10 +247,10 @@ public static class Settings
         public static readonly int TurretCapacityLimit = 2;
         public static readonly int BaseDefenseLimit = 14;
         public static readonly int SoldierMergeLevelLimit = 3;
-        public static int BaseDefenseLevelCost { get => Mathf.CeilToInt(PlayerData.BaseDefenseLevel * 100); }
-        public static int TrapCapacityCost { get => Mathf.CeilToInt((PlayerData.TrapCapacity + 1) * 100); }
-        public static int TurretCapacityCost { get => Mathf.CeilToInt((PlayerData.TurretCapacity + 1) * 250); }
-        public static int SoldierMergeLevelCost { get => Mathf.CeilToInt(PlayerData.SoldierMergeLevel * 1500); }
+        public static int BaseDefenseLevelCost { get => Mathf.CeilToInt(Mathf.Pow(PlayerData.BaseDefenseLevel, 1.5f) * 100); }
+        public static int TrapCapacityCost { get => Mathf.CeilToInt(Mathf.Pow(PlayerData.TrapCapacity + 1, 1.9f) * 100); }
+        public static int TurretCapacityCost { get => Mathf.CeilToInt(Mathf.Pow(PlayerData.TurretCapacity + 1, 2.2f) * 250); }
+        public static int SoldierMergeLevelCost { get => Mathf.CeilToInt(Mathf.Pow(PlayerData.SoldierMergeLevel, 2.1f) * 1500); }
 
         #endregion
         #region Wave
@@ -308,15 +308,15 @@ public static class Settings
                 result *= bossMultiplier * 1.5f;
             if (NormalizedDay > 2 && NormalizedDay < 8)
             {
-                result *= 1.3f + (NormalizedDay - 2) / 12f * 2f;
+                result *= 1.0f + (NormalizedDay - 2) / 12f * 2f;
             }
             else if (NormalizedDay >= 8)
             {
-                result *= 1.3f + (NormalizedDay - 2) / 12f * 2f;
+                result *= 1.0f + (NormalizedDay - 2) / 12f * 2f;
                 result *= 1.3f;
             }
             if (NormalizedDay > 1)
-                result *= 1.35f;
+                result *= 1.2f;
             return Mathf.CeilToInt(result);
         }
         public static int ZombieDamage(int level, bool boss)
@@ -327,7 +327,7 @@ public static class Settings
             if (NormalizedDay >= 3)
                 normalizedDayMultiplier *= 0.5f;
             float result = BaseZombieDamage * (level + normalizedDayMultiplier);
-            result *= 0.9f;
+            result *= 0.5f;
             if (boss)
             {
                 result *= bossMultiplier * 0.8f;
@@ -342,8 +342,7 @@ public static class Settings
 
         public static int ZombieGain(int level, bool boss)
         {
-            float gain = (((PlayerData.IncomeLevel - 1) / 3f) + (NormalizedDay) * 2) * level;
-            gain *= 1.5f;
+            float gain = (((PlayerData.IncomeLevel - 1) / 3f) + (NormalizedDay)) * level;
             if (boss)
                 gain *= 2f;
             return Mathf.CeilToInt(gain);
