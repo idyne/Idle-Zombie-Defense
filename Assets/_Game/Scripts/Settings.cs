@@ -143,10 +143,18 @@ public static class Settings
             if (NormalizedDay >= 3)
                 normalizedDayMultiplier *= 0.5f;
             float result = BaseZombieHealth * (level + normalizedDayMultiplier);
-            if (boss)
-                result *= bossMultiplier * 1.5f;
+            if (boss && NormalizedDay == 7)
+                result *= bossMultiplier * 0.5f;
+            if (NormalizedDay >= 6)
+                result *= 1.2f;
+            if (NormalizedDay >= 5)
+                result *= 1.4f;
+            if (NormalizedDay > 2)
+                result *= 1.2f;
             if (NormalizedDay > 1)
-                result *= 1.35f;
+                result *= 0.9f;
+            if (NormalizedDay == 1 && CurrentTimePeriod == TimePeriod.Morning)
+                result *= 0.7f;
             return Mathf.CeilToInt(result);
         }
         public static int ZombieDamage(int level, bool boss)
