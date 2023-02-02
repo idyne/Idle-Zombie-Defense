@@ -1166,6 +1166,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 923760278}
     - target: {fileID: 308842033088838702, guid: 65acb18367adea34bbc76041baebc851, type: 3}
+      propertyPath: upgradeScreen
+      value: 
+      objectReference: {fileID: 923760280}
+    - target: {fileID: 308842033088838702, guid: 65acb18367adea34bbc76041baebc851, type: 3}
       propertyPath: startWaveButton
       value: 
       objectReference: {fileID: 969382968}
@@ -18913,6 +18917,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bab9dd4926b1af8458ce441dda64ec0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &923760280 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1880321434802247289, guid: 2847ff918b900144aba2c4cc4de078cf, type: 3}
+  m_PrefabInstance: {fileID: 923760276}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923760278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c792b9c51275fb4b81651365571f5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &924481715 stripped
