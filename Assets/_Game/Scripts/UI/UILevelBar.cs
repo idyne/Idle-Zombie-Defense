@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using static LevelManager;
 public class UILevelBar : MonoBehaviour
 {
     
@@ -22,7 +22,7 @@ public class UILevelBar : MonoBehaviour
     public void SetDay(int day)
     {
         HideZoneBars();
-        UIZoneBar zoneBar = zoneBars[WaveController.ZoneLevel - 1];
+        UIZoneBar zoneBar = zoneBars[ZoneLevel - 1];
         zoneBar.Show();
         zoneBar.SetDay(day);
     }

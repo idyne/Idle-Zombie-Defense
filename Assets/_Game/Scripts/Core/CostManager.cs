@@ -1,131 +1,133 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using static LevelManager;
 public static class CostManager
 {
 
     public static int GetFrostPrice()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.FrostBombCost;
+                return Settings.World1.FrostBombCost;
             case 2:
-                return Settings.Zone2.FrostBombCost;
-            case 3:
-                return Settings.Zone3.FrostBombCost;
-            case 4:
-                return Settings.Zone4.FrostBombCost;
+                return Settings.World2.FrostBombCost;
+        }
+        return 1;
+    }
+
+    public static int GetBarbwirePrice()
+    {
+        switch (WorldLevel)
+        {
+            case 1:
+                return Settings.World1.BarbwireCost;
+            case 2:
+                return Settings.World2.BarbwireCost;
         }
         return 1;
     }
 
     public static int GetTurretPrice()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.TurretCost;
+                return Settings.World1.TurretCost;
             case 2:
-                return Settings.Zone2.TurretCost;
-            case 3:
-                return Settings.Zone3.TurretCost;
-            case 4:
-                return Settings.Zone4.TurretCost;
+                return Settings.World2.TurretCost;
         }
         return 1;
     }
 
     public static int GetTNTPrice()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.ExplosiveBombCost;
+                return Settings.World1.ExplosiveBombCost;
             case 2:
-                return Settings.Zone2.ExplosiveBombCost;
-            case 3:
-                return Settings.Zone3.ExplosiveBombCost;
-            case 4:
-                return Settings.Zone4.ExplosiveBombCost;
+                return Settings.World2.ExplosiveBombCost;
         }
         return 1;
     }
 
     public static int GetBaseDefenseLevelPrice()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.BaseDefenseLevelCost;
+                return Settings.World1.BaseDefenseLevelCost;
             case 2:
-                return Settings.Zone2.BaseDefenseLevelCost;
-            case 3:
-                return Settings.Zone3.BaseDefenseLevelCost;
-            case 4:
-                return Settings.Zone4.BaseDefenseLevelCost;
+                return Settings.World2.BaseDefenseLevelCost;
         }
         return 1;
     }
+    public static int GetTNTUpgradePrice()
+    {
+        //TODO
+        return 1;
+    }
+    public static int GetFrostUpgradePrice()
+    {
+        //TODO
+        return 1;
+    }
+    public static int GetBarbwireUpgradePrice()
+    {
+        //TODO
+        return 1;
+    }
+    public static int GetTurretUpgradePrice()
+    {
+        //TODO
+        return 1;
+    }
+    /*
     public static int GetTrapCapacityPrice()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.TrapCapacityCost;
+                return Settings.World1.TrapCapacityCost;
             case 2:
-                return Settings.Zone2.TrapCapacityCost;
-            case 3:
-                return Settings.Zone3.TrapCapacityCost;
-            case 4:
-                return Settings.Zone4.TrapCapacityCost;
+                return Settings.World2.TrapCapacityCost;
         }
         return 1;
     }
     public static int GetTurretCapacityPrice()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.TurretCapacityCost;
+                return Settings.World1.TurretCapacityCost;
             case 2:
-                return Settings.Zone2.TurretCapacityCost;
-            case 3:
-                return Settings.Zone3.TurretCapacityCost;
-            case 4:
-                return Settings.Zone4.TurretCapacityCost;
+                return Settings.World2.TurretCapacityCost;
         }
         return 1;
     }
+    */
     public static int GetSoldierMergeLevelPrice()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.SoldierMergeLevelCost;
+                return Settings.World1.SoldierMergeLevelCost;
             case 2:
-                return Settings.Zone2.SoldierMergeLevelCost;
-            case 3:
-                return Settings.Zone3.SoldierMergeLevelCost;
-            case 4:
-                return Settings.Zone4.SoldierMergeLevelCost;
+                return Settings.World2.SoldierMergeLevelCost;
         }
         return 1;
     }
 
     public static int GetIncomeCost()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.IncomeCost;
+                return Settings.World1.IncomeCost;
             case 2:
-                return Settings.Zone2.IncomeCost;
-            case 3:
-                return Settings.Zone3.IncomeCost;
-            case 4:
-                return Settings.Zone4.IncomeCost;
+                return Settings.World2.IncomeCost;
         }
         return 1;
     }
@@ -133,32 +135,24 @@ public static class CostManager
 
     public static int GetMergeCost()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.MergeCost;
+                return Settings.World1.MergeCost;
             case 2:
-                return Settings.Zone2.MergeCost;
-            case 3:
-                return Settings.Zone3.MergeCost;
-            case 4:
-                return Settings.Zone4.MergeCost;
+                return Settings.World2.MergeCost;
         }
         return 1;
     }
 
     public static int GetSoldierCost()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.SoldierCost;
+                return Settings.World1.SoldierCost;
             case 2:
-                return Settings.Zone2.SoldierCost;
-            case 3:
-                return Settings.Zone3.SoldierCost;
-            case 4:
-                return Settings.Zone4.SoldierCost;
+                return Settings.World2.SoldierCost;
             default:
                 return 1;
         }
@@ -167,16 +161,12 @@ public static class CostManager
 
     public static int GetFireRateCost()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.FireRateCost;
+                return Settings.World1.FireRateCost;
             case 2:
-                return Settings.Zone2.FireRateCost;
-            case 3:
-                return Settings.Zone3.FireRateCost;
-            case 4:
-                return Settings.Zone4.FireRateCost;
+                return Settings.World2.FireRateCost;
         }
         return 1;
     }

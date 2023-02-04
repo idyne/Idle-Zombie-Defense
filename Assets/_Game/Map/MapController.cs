@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using static LevelManager;
 public class MapController : MonoBehaviour
 {
     [SerializeField] private Animator[] routes;
@@ -17,7 +17,7 @@ public class MapController : MonoBehaviour
     }
     private void Start()
     {
-        InitLastPath(WaveController.ZoneLevel - 2);
+        InitLastPath(ZoneLevel - 2);
     }
 
     /*void Update()

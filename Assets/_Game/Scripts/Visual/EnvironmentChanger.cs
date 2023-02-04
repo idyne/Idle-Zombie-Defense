@@ -1,33 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static LevelManager;
 
 public class EnvironmentChanger : MonoBehaviour
 {
-    [SerializeField] private GameObject swamp, forest, desert, city;
+    [SerializeField] private GameObject supermarket, hospital, airport, shoppingMall, church, militaryBase;
 
-    public void SetZone(int zoneLevel)
+    public void SetEnvironment()
     {
-        swamp.SetActive(false);
-        forest.SetActive(false);
-        desert.SetActive(false);
-        city.SetActive(false);
-        switch (zoneLevel)
+        supermarket.SetActive(false);
+        hospital.SetActive(false);
+        airport.SetActive(false);
+        shoppingMall.SetActive(false);
+        church.SetActive(false);
+        militaryBase.SetActive(false);
+
+        if (WorldLevel == 1)
         {
-            case 1:
-                swamp.SetActive(true);
-                break;
-            case 2:
-                forest.SetActive(true);
-                break;
-            case 3:
-                desert.SetActive(true);
-                break;
-            case 4:
-                city.SetActive(true);
-                break;
-            default:
-                break;
+            switch (ZoneLevel)
+            {
+                case 1:
+                    supermarket.SetActive(true);
+                    break;
+                case 2:
+                    hospital.SetActive(true);
+                    break;
+                case 3:
+                    airport.SetActive(true);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (WorldLevel == 2)
+        {
+            switch (ZoneLevel)
+            {
+                case 1:
+                    shoppingMall.SetActive(true);
+                    break;
+                case 2:
+                    church.SetActive(true);
+                    break;
+                case 3:
+                    militaryBase.SetActive(true);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

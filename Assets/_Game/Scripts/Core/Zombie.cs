@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using FateGames;
 using UnityEngine.Events;
 using DG.Tweening;
+using static LevelManager;
 using FSG.MeshAnimator;
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -67,7 +68,7 @@ public class Zombie : MonoBehaviour, IPooledObject
         barriers.Clear();
     }
 
-    public void SlowDown()
+    public void SlowDown(float t = 15)
     {
         if (slowedDown) return;
         if (slowDownTween != null)
@@ -80,7 +81,7 @@ public class Zombie : MonoBehaviour, IPooledObject
         meshAnimator.speed *= 0.4f;
         hitCooldownDuration *= 2.5f;
         SetColor(slowedDownColor);
-        slowDownTween = DOVirtual.DelayedCall(15, CancelSlowDown);
+        slowDownTween = DOVirtual.DelayedCall(t, CancelSlowDown);
     }
 
     public void CancelSlowDown()
@@ -101,48 +102,36 @@ public class Zombie : MonoBehaviour, IPooledObject
 
     private int GetDamage()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.ZombieDamage(level, isBoss);
+                return Settings.World1.ZombieDamage(level, isBoss);
             case 2:
-                return Settings.Zone2.ZombieDamage(level, isBoss);
-            case 3:
-                return Settings.Zone3.ZombieDamage(level, isBoss);
-            case 4:
-                return Settings.Zone4.ZombieDamage(level, isBoss);
+                return Settings.World2.ZombieDamage(level, isBoss);
         }
         return 1;
     }
 
     private int GetMaxHealth()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.ZombieHealth(level, isBoss);
+                return Settings.World1.ZombieHealth(level, isBoss);
             case 2:
-                return Settings.Zone2.ZombieHealth(level, isBoss);
-            case 3:
-                return Settings.Zone3.ZombieHealth(level, isBoss);
-            case 4:
-                return Settings.Zone4.ZombieHealth(level, isBoss);
+                return Settings.World2.ZombieHealth(level, isBoss);
         }
         return 1;
     }
 
     private int GetGain()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.ZombieGain(level, isBoss);
+                return Settings.World1.ZombieGain(level, isBoss);
             case 2:
-                return Settings.Zone2.ZombieGain(level, isBoss);
-            case 3:
-                return Settings.Zone3.ZombieGain(level, isBoss);
-            case 4:
-                return Settings.Zone4.ZombieGain(level, isBoss);
+                return Settings.World2.ZombieGain(level, isBoss);
         }
         return 1;
     }

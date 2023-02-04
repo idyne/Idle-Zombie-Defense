@@ -32,6 +32,23 @@ public class UpgradeController : MonoBehaviour
             OnBaseDefenseUpgrade.Invoke();
         }
     }
+    public void UpgradeTNT()
+    {
+
+    }
+    public void UpgradeFrost()
+    {
+
+    }
+    public void UpgradeBarbwire()
+    {
+
+    }
+    public void UpgradeTurret()
+    {
+
+    }
+    /*
     public void UpgradeTrapCapacity()
     {
         int price = CostManager.GetTrapCapacityPrice();
@@ -50,7 +67,7 @@ public class UpgradeController : MonoBehaviour
             PlayerProgression.PlayerData.TurretCapacity++;
             PlayerProgression.MONEY -= price;
         }
-    }
+    }*/
 
     public void UpgradeSoldierMergeLevel()
     {

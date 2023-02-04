@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FateGames;
 using UnityEngine.EventSystems;
-
+using static LevelManager;
 public class ExplosiveBomb : Bomb
 {
     private int damage { get => GetDamage(); }
@@ -12,10 +12,10 @@ public class ExplosiveBomb : Bomb
         get
         {
             float result = CostManager.GetTNTPrice() / 4;
-            switch (WaveController.ZoneLevel)
+            switch (ZoneLevel)
             {
                 case 2:
-                    result = CostManager.GetTNTPrice() / 4 + Mathf.Pow(WaveController.NormalizedDay, 1.2f) * 11;
+                    result = CostManager.GetTNTPrice() / 4 + Mathf.Pow(NormalizedDay, 1.2f) * 11;
                     break;
                 default:
                     break;
@@ -25,7 +25,7 @@ public class ExplosiveBomb : Bomb
     }
     private int GetDamage()
     {
-        return WaveController.NormalizedDay * 75;
+        return NormalizedDay * 75;
     }
 
     protected override bool Explode()

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using static WaveController;
+using static LevelManager;
 
 public class UIAnimationSequencer : MonoBehaviour
 {
@@ -46,16 +46,10 @@ public class UIAnimationSequencer : MonoBehaviour
         switch (ZoneLevel)
         {
             case 1:
-                money = Settings.Zone1.FinishDayPrize;
+                money = Settings.World1.FinishDayPrize;
                 break;
             case 2:
-                money = Settings.Zone2.FinishDayPrize;
-                break;
-            case 3:
-                money = Settings.Zone3.FinishDayPrize;
-                break;
-            case 4:
-                money = Settings.Zone4.FinishDayPrize;
+                money = Settings.World2.FinishDayPrize;
                 break;
         }
         areaCleared.Show(Mathf.CeilToInt(money));
@@ -93,14 +87,14 @@ public class UIAnimationSequencer : MonoBehaviour
         PlayerProgression.MONEY = PlayerProgression.MONEY;
 
         //Oyuna yeni baþlama
-        if (isNewSession && Day == 1 && CurrentTimePeriod == TimePeriod.Morning)
+        if (isNewSession && Day == 1 && NewDay)
         {
             print("start new game");
             surviveText.SetActive(ZoneLevel == 1);
             dayCycler.SetTimePeriodWithoutAnimation(CurrentTimePeriod);
-            environmentChanger.SetZone(ZoneLevel);
+            environmentChanger.SetEnvironment();
             uiDayBar.SetPercent(((int)CurrentTimePeriod) * 0.25f, false);
-            uiDayBar.SetDay(NormalizedDay);
+            uiDayBar.SetDay(WorldDay);
             UILevelBar.Instance.SetDay(NormalizedDay);
             tutorialManager.Show();
             uiDayBar.Show();
@@ -120,9 +114,9 @@ public class UIAnimationSequencer : MonoBehaviour
                 tower.TurnOnLights();
             surviveText.SetActive(ZoneLevel == 1);
             dayCycler.SetTimePeriodWithoutAnimation(CurrentTimePeriod);
-            environmentChanger.SetZone(ZoneLevel);
+            environmentChanger.SetEnvironment();
             uiDayBar.SetPercent(((int)CurrentTimePeriod) * 0.25f, false);
-            uiDayBar.SetDay(NormalizedDay);
+            uiDayBar.SetDay(WorldDay);
             UILevelBar.Instance.SetDay(NormalizedDay);
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
             uiDayBar.Show();
@@ -134,8 +128,26 @@ public class UIAnimationSequencer : MonoBehaviour
             UIButtonManager.Instance.ShowOutWaveButtons();
             OnOutWaveUIActivated.Invoke();
         }
+        //Sonraki worlde geçme
+        else if (!isNewSession && NewWorld)
+        {
+            print("newworld");
+            yield return FinishDay();
+            yield return GoCurrentWorld();
+            yield return GoCurrentDay();
+            UIContainer.SetActive(true);
+            uiDayBar.Show();
+            uiDayBar.GoDown(false);
+            UILevelBar.Instance.Show();
+            UILevelBar.Instance.SetDay(NormalizedDay);
+            yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
+            UIButtonManager.Instance.UpdateStartButton();
+            UIButtonManager.Instance.UpdateUpgradesButton();
+            UIButtonManager.Instance.ShowOutWaveButtons();
+            OnOutWaveUIActivated.Invoke();
+        }
         //Sonraki zonea geçme
-        else if (!isNewSession && CurrentTimePeriod == TimePeriod.Morning && (Day == 8 || Day == 22 || Day == 42))
+        else if (!isNewSession && NewZone)
         {
             print("newZone");
             yield return FinishDay();
@@ -152,8 +164,9 @@ public class UIAnimationSequencer : MonoBehaviour
             UIButtonManager.Instance.ShowOutWaveButtons();
             OnOutWaveUIActivated.Invoke();
         }
+        
         //Sonraki güne geçme
-        else if (!isNewSession && CurrentTimePeriod == TimePeriod.Morning && !(Day == 8 || Day == 22 || Day == 42))
+        else if (!isNewSession && NewDay && !NewZone)
         {
             print("next day");
             yield return FinishDay();
@@ -195,7 +208,7 @@ public class UIAnimationSequencer : MonoBehaviour
     private void SetBars()
     {
         uiDayBar.SetPercent(((int)CurrentTimePeriod) * 0.25f, true);
-        uiDayBar.SetDay(NormalizedDay);
+        uiDayBar.SetDay(WorldDay);
         if (!isNewSession)
         {
             uiDayBar.GoDown().OnComplete(() =>
@@ -216,24 +229,31 @@ public class UIAnimationSequencer : MonoBehaviour
     {
         dayCycler.SetTimePeriodWithoutAnimation(CurrentTimePeriod);
         uiDayBar.SetPercent(0, false);
-        uiDayBar.SetDay(NormalizedDay);
+        uiDayBar.SetDay(WorldDay);
         tower.TurnOffLights();
         yield return PlayDayAnimation();
     }
-    private IEnumerator GoCurrentZone()
+
+    private void ResetProgress()
     {
-        mapController.Show();
         Barracks.Instance.ClearSoldiers();
         PlayerProgression.PlayerData.IncomeLevel = 1;
         PlayerProgression.PlayerData.FireRateLevel = 1;
         PlayerProgression.PlayerData.BaseDefenseLevel = 1;
-        PlayerProgression.PlayerData.TrapCapacity = 1;
-        PlayerProgression.PlayerData.TurretCapacity = 1;
+        PlayerProgression.PlayerData.TNTLevel = 1;
+        PlayerProgression.PlayerData.FrostLevel = 1;
+        PlayerProgression.PlayerData.BarbwireLevel = 1;
+        PlayerProgression.PlayerData.TurretLevel = 1;
         PlayerProgression.PlayerData.SoldierMergeLevel = 1;
         PlayerProgression.PlayerData.Traps.Clear();
         PlayerProgression.PlayerData.Turrets.Clear();
         PlayerProgression.MONEY = 0;
-        environmentChanger.SetZone(ZoneLevel);
+    }
+    private IEnumerator GoCurrentZone()
+    {
+        mapController.Show();
+        //ResetProgress();
+        environmentChanger.SetEnvironment();
         tower.SetTower();
         surviveText.SetActive(ZoneLevel == 1);
         mapController.GoPosition(ZoneLevel - 2);
@@ -251,9 +271,31 @@ public class UIAnimationSequencer : MonoBehaviour
         yield return new WaitUntil(() => soldierUnlockedHide);
         soldierUnlockedHide = false;
     }
+    private IEnumerator GoCurrentWorld()
+    {
+        mapController.Show();
+        ResetProgress();
+        environmentChanger.SetEnvironment();
+        tower.SetTower();
+        surviveText.SetActive(ZoneLevel == 1);
+        mapController.GoPosition(1);
+        mapAnimator.SetTrigger("Fade");
+        yield return new WaitForSeconds(1);
+        yield return regionColorChanger.AnimateRegion(ZoneLevel - 1);
+        mapControllerButton.SetActive(true);
+        yield return new WaitUntil(() => goNext);
+        goNext = false;
+        mapControllerButton.SetActive(false);
+        mapController.FillPath(ZoneLevel - 2);
+        yield return new WaitForSeconds(2);
+        mapController.Hide();
+        /*soldierUnlocked.Show(ZoneLevel + 3);
+        yield return new WaitUntil(() => soldierUnlockedHide);
+        soldierUnlockedHide = false;*/
+    }
     private IEnumerator PlayDayAnimation()
     {
-        dayText.text = "DAY " + NormalizedDay;
+        dayText.text = "DAY " + WorldDay;
         dayAnimator.SetTrigger("Day");
         yield return new WaitForSeconds(3.183f);
     }

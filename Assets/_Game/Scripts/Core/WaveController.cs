@@ -5,6 +5,7 @@ using FateGames;
 using DG.Tweening;
 using UnityEngine.Events;
 using TMPro;
+using static LevelManager;
 
 public class WaveController : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class WaveController : MonoBehaviour
         }
     }
     public static int WaveLevel { get => PlayerProgression.PlayerData.WaveLevel; set => PlayerProgression.PlayerData.WaveLevel = value; }
-    public enum TimePeriod { Morning, Noon, Evening, Night }
+    
     public Wave CurrentWave { get; private set; } = null;
     public static WaveState State { get; private set; }
 
@@ -32,48 +33,15 @@ public class WaveController : MonoBehaviour
     public UnityEvent OnWaveEnd { get; private set; } = new();
     private int CurrentBossLevel { get => CurrentTimePeriod == TimePeriod.Night ? NormalizedDay : -1; }
 
-    public static TimePeriod CurrentTimePeriod
-    {
-        get => (TimePeriod)((WaveLevel - 1) % 4);
-    }
-
-    public static int Day { get => (WaveLevel - 1) / 4 + 1; }
-    public static int NormalizedDay
-    {
-        get
-        {
-            int normalizedDay;
-            if (Day <= 7) normalizedDay = Day;
-            else if (Day <= 21) normalizedDay = Day - 7;
-            else if (Day <= 41) normalizedDay = Day - 21;
-            else normalizedDay = Day - 41;
-            return normalizedDay;
-        }
-    }
-
-    public static int ZoneLevel
-    {
-        get
-        {
-            if (Day <= 7) return 1;
-            if (Day <= 21) return 2;
-            if (Day <= 41) return 3;
-            return 4;
-        }
-    }
-
+    
     private int GetCurrentLevelPower()
     {
-        switch (ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.WavePower;
+                return Settings.World1.WavePower;
             case 2:
-                return Settings.Zone2.WavePower;
-            case 3:
-                return Settings.Zone3.WavePower;
-            case 4:
-                return Settings.Zone4.WavePower;
+                return Settings.World2.WavePower;
         }
         return 1;
     }
@@ -81,16 +49,12 @@ public class WaveController : MonoBehaviour
     private int GetCurrentMaxZombieLevel()
     {
 
-        switch (ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.MaxZombieLevel;
+                return Settings.World1.MaxZombieLevel;
             case 2:
-                return Settings.Zone2.MaxZombieLevel;
-            case 3:
-                return Settings.Zone3.MaxZombieLevel;
-            case 4:
-                return Settings.Zone4.MaxZombieLevel;
+                return Settings.World2.MaxZombieLevel;
         }
         return 1;
     }
@@ -252,7 +216,19 @@ public class WaveController : MonoBehaviour
         {
             Vector3 position = GenerateSpawnPosition(30, 5);
             string bossTag = "Boss";
-            if (Day == 7 || Day == 21 || Day == 41 || Day == 71)
+            bool bigBoss = false;
+            for (int i = 0; i < Settings.CumulativeZoneLengths.Length; i++)
+            {
+                for (int j = 0; j < Settings.CumulativeZoneLengths[i].Length; j++)
+                {
+                    if (CycleDay == Settings.CumulativeZoneLengths[i][j])
+                    {
+                        bigBoss = true;
+                        break;
+                    }
+                }
+            }
+            if (bigBoss)
             {
                 level *= 2;
                 bossTag = "Big Boss";
