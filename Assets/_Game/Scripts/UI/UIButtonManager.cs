@@ -5,6 +5,7 @@ using UnityEngine;
 using FateGames;
 using static Settings;
 using System.Linq;
+using static LevelManager;
 
 public class UIButtonManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class UIButtonManager : MonoBehaviour
     [SerializeField] private UIBetweenPhase UIBetweenPhase;
     [SerializeField] private UIButton baseDefenseButton, trapCapacityButton, turretCapacityButton, soldierMergeLevelButton;
     [SerializeField] private TextMeshProUGUI baseDefenseLevelText, trapCapacityLevelText, turretCapacityLevelText, soldierMergeLevelText;
-    [SerializeField] private UIPlacementButton frostButton, turretButton, tntButton;
+    [SerializeField] private UIPlacementButton frostButton, turretButton, tntButton, barbwireButton;
     [SerializeField] private PlacementController turretPlacementController, trapPlacementController;
 
     private void Awake()
@@ -45,8 +46,8 @@ public class UIButtonManager : MonoBehaviour
     {
         UpdateFireRateButton();
         UpdateBaseDefenseButton();
-        UpdateTrapCapacityButton();
-        UpdateTurretCapacityButton();
+        /*UpdateTrapCapacityButton();
+        UpdateTurretCapacityButton();*/
         UpdateSoldierMergeLevelButton();
         UpdateFrostButton();
         UpdateIncomeButton();
@@ -54,6 +55,7 @@ public class UIButtonManager : MonoBehaviour
         UpdateSoldierButton();
         UpdateTNTButton();
         UpdateTurretButton();
+        UpdateBarbwireButton();
     }
 
     public void SwitchInWave()
@@ -93,7 +95,7 @@ public class UIButtonManager : MonoBehaviour
     public void ShowStartAndUpgradeButtons()
     {
         startButton.Show();
-        if (WaveController.Day > 1)
+        if (Day > 1)
             upgradesButton.Show();
     }
 
@@ -104,7 +106,7 @@ public class UIButtonManager : MonoBehaviour
         if (!isMaxedOut)
             fireRateButton.SetText(UIMoney.FormatMoney(cost));
         else
-            fireRateButton.SetText("Maxed Out");
+            fireRateButton.SetText("Max");
         if (!PlayerProgression.CanAfford(cost) || isMaxedOut) fireRateButton.Deactivate();
         else fireRateButton.Activate();
     }
@@ -126,7 +128,7 @@ public class UIButtonManager : MonoBehaviour
     public void UpdateUpgradesButton()
     {
         if (WaveController.State == WaveController.WaveState.RUNNING) upgradesButton.Hide();
-        else if (WaveController.State == WaveController.WaveState.WAITING && WaveController.Day > 1) upgradesButton.Show();
+        else if (WaveController.State == WaveController.WaveState.WAITING && Day > 1) upgradesButton.Show();
     }
 
     public void UpdateMergeButton()
@@ -146,7 +148,7 @@ public class UIButtonManager : MonoBehaviour
         bool maxedOut = PlayerProgression.PlayerData.BaseDefenseLevel >= LimitManager.GetBaseDefenseLimit();
         if (!maxedOut)
             baseDefenseButton.SetText(UIMoney.FormatMoney(cost));
-        else baseDefenseButton.SetText("Maxed Out");
+        else baseDefenseButton.SetText("Max");
         if (!PlayerProgression.CanAfford(cost) || maxedOut) baseDefenseButton.Deactivate();
         else if (!baseDefenseButton.Active)
         {
@@ -155,20 +157,21 @@ public class UIButtonManager : MonoBehaviour
         }
         baseDefenseLevelText.text = "Level " + PlayerProgression.PlayerData.BaseDefenseLevel.ToString();
     }
+    /*
     public void UpdateTrapCapacityButton()
     {
         int cost = CostManager.GetTrapCapacityPrice();
         bool maxedOut = PlayerProgression.PlayerData.TrapCapacity >= LimitManager.GetTrapLimit();
         int unlockDay = Mathf.Min(FrostUnlockDay, TNTUnlockDay);
-        bool locked = WaveController.Day < unlockDay;
+        bool locked = Day < unlockDay;
         if (locked)
         {
-            int remainingDays = unlockDay - WaveController.Day;
+            int remainingDays = unlockDay - Day;
             trapCapacityButton.SetText("Unlocks " + (remainingDays > 1 ? "after " + remainingDays + " days" : "the next day"));
         }
         else if (!maxedOut)
             trapCapacityButton.SetText(UIMoney.FormatMoney(cost));
-        else trapCapacityButton.SetText("Maxed Out");
+        else trapCapacityButton.SetText("Max");
         if (!PlayerProgression.CanAfford(cost) || maxedOut || locked) trapCapacityButton.Deactivate();
         else if (!trapCapacityButton.Active)
         {
@@ -176,22 +179,23 @@ public class UIButtonManager : MonoBehaviour
             trapCapacityButton.Activate();
         }
         trapCapacityLevelText.text = "Level " + (PlayerProgression.PlayerData.TrapCapacity + 1);
-    }
+    }*/
+    /*
     public void UpdateTurretCapacityButton()
     {
         int cost = CostManager.GetTurretCapacityPrice();
         bool maxedOut = PlayerProgression.PlayerData.TurretCapacity >= LimitManager.GetTurretLimit();
         int unlockDay = TurretUnlockDay;
-        bool locked = WaveController.Day < unlockDay;
+        bool locked = Day < unlockDay;
         if (locked)
         {
-            int remainingDays = unlockDay - WaveController.Day;
+            int remainingDays = unlockDay - Day;
             turretCapacityButton.SetText("Unlocks " + (remainingDays > 1 ? "after " + remainingDays + " days" : "the next day"));
         }
         else
         if (!maxedOut)
             turretCapacityButton.SetText(UIMoney.FormatMoney(cost));
-        else turretCapacityButton.SetText("Maxed Out");
+        else turretCapacityButton.SetText("Max");
         if (!PlayerProgression.CanAfford(cost) || maxedOut || locked) turretCapacityButton.Deactivate();
         else if (!turretCapacityButton.Active)
         {
@@ -199,14 +203,14 @@ public class UIButtonManager : MonoBehaviour
             turretCapacityButton.Activate();
         }
         turretCapacityLevelText.text = "Level " + (PlayerProgression.PlayerData.TurretCapacity + 1);
-    }
+    }*/
     public void UpdateSoldierMergeLevelButton()
     {
         int cost = CostManager.GetSoldierMergeLevelPrice();
         bool maxedOut = PlayerProgression.PlayerData.SoldierMergeLevel >= LimitManager.GetSoldierMergeLimit();
         if (!maxedOut)
             soldierMergeLevelButton.SetText(UIMoney.FormatMoney(cost));
-        else soldierMergeLevelButton.SetText("Maxed Out");
+        else soldierMergeLevelButton.SetText("Max");
         if (!PlayerProgression.CanAfford(cost) || maxedOut) soldierMergeLevelButton.Deactivate();
         else if (!soldierMergeLevelButton.Active)
         {
@@ -215,96 +219,123 @@ public class UIButtonManager : MonoBehaviour
         }
         soldierMergeLevelText.text = "Level " + PlayerProgression.PlayerData.SoldierMergeLevel.ToString();
     }
-
-
-
     public void UpdateFrostButton()
     {
         int unlockDay = FrostUnlockDay;
-        bool locked = WaveController.Day < unlockDay;
-        int capacity = PlayerProgression.PlayerData.TrapCapacity - PlayerProgression.PlayerData.Traps.Where(data => data.Item1 == 1).Count();
-        frostButton.ShowCapacity();
-        frostButton.SetCapacityText(capacity.ToString());
-        bool noCapacity = capacity <= 0;
+        bool locked = Day < unlockDay;
         if (locked)
         {
-            int remainingDays = unlockDay - WaveController.Day;
+            frostButton.Hide();
+            return;
+        }
+        else frostButton.Show();
+        if (locked)
+        {
+            int remainingDays = unlockDay - Day;
             frostButton.SetText("Unlocks " + (remainingDays > 1 ? "after " + remainingDays + " days" : "the next day"));
             frostButton.HideCapacity();
         }
-        else if (noCapacity)
-            frostButton.SetText("No Capacity");
         else
             frostButton.SetText(UIMoney.FormatMoney(CostManager.GetFrostPrice()));
-        if (!PlayerProgression.CanAfford(CostManager.GetFrostPrice()) || noCapacity || locked) frostButton.Deactivate();
+        if (!PlayerProgression.CanAfford(CostManager.GetFrostPrice()) || locked) frostButton.Deactivate();
         else frostButton.Activate();
     }
 
     public void UpdateTurretButton()
     {
         int unlockDay = TurretUnlockDay;
-        bool locked = WaveController.Day < unlockDay;
-        int capacity = PlayerProgression.PlayerData.TurretCapacity - PlayerProgression.PlayerData.Turrets.Count();
-        turretButton.ShowCapacity();
-        turretButton.SetCapacityText(capacity.ToString());
-        bool noCapacity = capacity <= 0;
+        bool locked = Day < unlockDay;
         if (locked)
         {
-            int remainingDays = unlockDay - WaveController.Day;
+            turretButton.Hide();
+            return;
+        }
+        else turretButton.Show();
+        if (locked)
+        {
+            int remainingDays = unlockDay - Day;
             turretButton.SetText("Unlocks " + (remainingDays > 1 ? "after " + remainingDays + " days" : "the next day"));
             turretButton.HideCapacity();
         }
-        else if (noCapacity)
-            turretButton.SetText("No Capacity");
         else
             turretButton.SetText(UIMoney.FormatMoney(CostManager.GetTurretPrice()));
-        if (!PlayerProgression.CanAfford(CostManager.GetTurretPrice()) || noCapacity || locked) turretButton.Deactivate();
+        if (!PlayerProgression.CanAfford(CostManager.GetTurretPrice()) || locked) turretButton.Deactivate();
         else turretButton.Activate();
     }
 
     public void UpdateTNTButton()
     {
         int unlockDay = TNTUnlockDay;
-        bool locked = WaveController.Day < unlockDay;
-        int capacity = PlayerProgression.PlayerData.TrapCapacity - PlayerProgression.PlayerData.Traps.Where(data => data.Item1 == 0).Count();
-        tntButton.ShowCapacity();
-        tntButton.SetCapacityText(capacity.ToString());
-        bool noCapacity = capacity <= 0;
+        bool locked = Day < unlockDay;
         if (locked)
         {
-            int remainingDays = unlockDay - WaveController.Day;
+            tntButton.Hide();
+            return;
+        }
+        else tntButton.Show();
+        if (locked)
+        {
+            int remainingDays = unlockDay - Day;
             tntButton.SetText("Unlocks " + (remainingDays > 1 ? "after " + remainingDays + " days" : "the next day"));
             tntButton.HideCapacity();
         }
-        else if (noCapacity)
-            tntButton.SetText("No Capacity");
         else
             tntButton.SetText(UIMoney.FormatMoney(CostManager.GetTNTPrice()));
-        if (!PlayerProgression.CanAfford(CostManager.GetTNTPrice()) || noCapacity || locked) tntButton.Deactivate();
+        if (!PlayerProgression.CanAfford(CostManager.GetTNTPrice()) || locked) tntButton.Deactivate();
         else tntButton.Activate();
+    }
+
+    public void UpdateBarbwireButton()
+    {
+        int unlockDay = BarbwireUnlockDay;
+        bool locked = Day < unlockDay;
+        if (locked)
+        {
+            barbwireButton.Hide();
+            return;
+        }
+        else barbwireButton.Show();
+        int capacity = 1;
+        barbwireButton.ShowCapacity();
+        barbwireButton.SetCapacityText(capacity.ToString());
+        bool noCapacity = capacity <= 0;
+        if (locked)
+        {
+            int remainingDays = unlockDay - Day;
+            barbwireButton.SetText("Unlocks " + (remainingDays > 1 ? "after " + remainingDays + " days" : "the next day"));
+            barbwireButton.HideCapacity();
+        }
+        else if (noCapacity)
+            barbwireButton.SetText("No Capacity");
+        else
+            barbwireButton.SetText(UIMoney.FormatMoney(CostManager.GetTNTPrice()));
+        if (!PlayerProgression.CanAfford(CostManager.GetTNTPrice()) || noCapacity || locked) barbwireButton.Deactivate();
+        else barbwireButton.Activate();
     }
 
     public void SelectFrostBomb()
     {
-        if (!PlayerProgression.CanAfford(CostManager.GetFrostPrice()) || WaveController.Day < Settings.FrostUnlockDay) return;
-        int capacity = PlayerProgression.PlayerData.TrapCapacity - PlayerProgression.PlayerData.Traps.Where(data => data.Item1 == 1).Count();
-        if (capacity <= 0) return;
+        if (!PlayerProgression.CanAfford(CostManager.GetFrostPrice()) || Day < Settings.FrostUnlockDay) return;
         FrostBomb bomb = ObjectPooler.SpawnFromPool("Frost Bomb", Vector3.up * 100, Quaternion.identity).GetComponent<FrostBomb>();
         trapPlacementController.Select(bomb);
     }
+    public void SelectBarbwire()
+    {
+        if (!PlayerProgression.CanAfford(CostManager.GetBarbwirePrice()) || Day < Settings.BarbwireUnlockDay) return;
+        int capacity = 1;
+        if (capacity <= 0) return;
+        Barbwire barbwire = ObjectPooler.SpawnFromPool("Barbwire", Vector3.up * 100, Quaternion.identity).GetComponent<Barbwire>();
+        trapPlacementController.Select(barbwire);
+    }
     public void SelectExplosiveBomb()
     {
-        if (!PlayerProgression.CanAfford(CostManager.GetTNTPrice()) || WaveController.Day < Settings.TNTUnlockDay) return;
-        int capacity = PlayerProgression.PlayerData.TrapCapacity - PlayerProgression.PlayerData.Traps.Where(data => data.Item1 == 0).Count();
-        if (capacity <= 0) return;
+        if (!PlayerProgression.CanAfford(CostManager.GetTNTPrice()) || Day < Settings.TNTUnlockDay) return;
         ExplosiveBomb bomb = ObjectPooler.SpawnFromPool("Explosive Bomb", Vector3.up * 100, Quaternion.identity).GetComponent<ExplosiveBomb>();
         trapPlacementController.Select(bomb);
     }
     public void SelectTurret()
     {
-        if (!PlayerProgression.CanAfford(CostManager.GetTurretPrice()) || WaveController.Day < Settings.TurretUnlockDay) return;
-        int capacity = PlayerProgression.PlayerData.TurretCapacity - PlayerProgression.PlayerData.Turrets.Count;
-        if (capacity <= 0) return;
+        if (!PlayerProgression.CanAfford(CostManager.GetTurretPrice()) || Day < Settings.TurretUnlockDay) return;
         Turret turret = ObjectPooler.SpawnFromPool("Turret", Vector3.up * 100, Quaternion.identity).GetComponent<Turret>();
         turretPlacementController.Select(turret);
     }
@@ -315,14 +346,19 @@ public class UIButtonManager : MonoBehaviour
         turretButton.Hide();
         frostButton.Hide();
         tntButton.Hide();
+        barbwireButton.Hide();
     }
 
     public void ShowPlacementButtons()
     {
         // TODO
+        return;
         turretButton.Show();
         frostButton.Show();
         tntButton.Show();
+        barbwireButton.Show();
     }
+
+
 
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using DG.Tweening;
 using FateGames;
-
+using static LevelManager;
 public class Barrier : MonoBehaviour
 {
     [SerializeField] private List<Transform> parts;
@@ -32,16 +32,12 @@ public class Barrier : MonoBehaviour
 
     private static int GetMaxHealth()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.BarrierMaxHealth;
+                return Settings.World1.BarrierMaxHealth;
             case 2:
-                return Settings.Zone2.BarrierMaxHealth;
-            case 3:
-                return Settings.Zone3.BarrierMaxHealth;
-            case 4:
-                return Settings.Zone4.BarrierMaxHealth;
+                return Settings.World2.BarrierMaxHealth;
         }
         return 1;
     }

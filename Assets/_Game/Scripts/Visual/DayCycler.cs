@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using FateGames;
-using static WaveController;
-
+using static LevelManager;
 public class DayCycler : MonoBehaviour
 {
     private static DayCycler instance = null;

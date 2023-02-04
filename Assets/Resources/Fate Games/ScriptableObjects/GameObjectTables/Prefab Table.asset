@@ -31,3 +31,5 @@ MonoBehaviour:
     gameObject: {fileID: 2567905047410825368, guid: 12d475007820d47458a7cd674442541b, type: 3}
   - tag: Turret
     gameObject: {fileID: 7779394644475227580, guid: ea67d4a0e0e034141818d399f02c9940, type: 3}
+  - tag: Barbwire
+    gameObject: {fileID: 5355505176278194101, guid: 75d4c14dc055b3649b4e4e652fcab4f1, type: 3}

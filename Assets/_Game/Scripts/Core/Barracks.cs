@@ -5,6 +5,7 @@ using DG.Tweening;
 using FateGames;
 using System;
 using UnityEngine.Events;
+using static LevelManager;
 
 [RequireComponent(typeof(Tower))]
 public class Barracks : MonoBehaviour
@@ -160,8 +161,8 @@ public class Barracks : MonoBehaviour
         if (Merging) return false;
         int i = 1;
         bool canMerge = false;
-        int limitLevel = WaveController.ZoneLevel + 3;
-        if (WaveController.ZoneLevel == 4)
+        int limitLevel = ZoneLevel + 3;
+        if (ZoneLevel == 4)
             limitLevel = 8;
         while (i < limitLevel)
         {
@@ -238,7 +239,7 @@ public class Barracks : MonoBehaviour
         return soldier;
     }
 
-    private void PlaceSoldiers()
+    public void PlaceSoldiers()
     {
         int count = 0;
         for (int i = soldierTable.Count - 1; i >= 1; i--)

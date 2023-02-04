@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using static LevelManager;
 
 public class UIZoneBar : MonoBehaviour
 {
@@ -30,8 +31,8 @@ public class UIZoneBar : MonoBehaviour
         float from, to;
         from = (float)previousDay;
         to = (float)currentDay;
-        fromZone.text = "Zone " + WaveController.ZoneLevel;
-        toZone.text = "Zone " + (WaveController.ZoneLevel + 1);
+        fromZone.text = "Zone " + ZoneLevel;
+        toZone.text = "Zone " + (ZoneLevel + 1);
         DOTween.To((val) =>
         {
             fillSlider.value = val;

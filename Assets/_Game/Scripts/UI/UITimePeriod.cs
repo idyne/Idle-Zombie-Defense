@@ -2,26 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static LevelManager;
 
 public class UITimePeriod : MonoBehaviour
 {
     [SerializeField] private Image morning, noon, evening, night;
 
-    public void SetTimePeriod(WaveController.TimePeriod timePeriod)
+    public void SetTimePeriod(TimePeriod timePeriod)
     {
         HideAll();
         switch (timePeriod)
         {
-            case WaveController.TimePeriod.Morning:
+            case TimePeriod.Morning:
                 ShowMorning();
                 break;
-            case WaveController.TimePeriod.Noon:
+            case TimePeriod.Noon:
                 ShowNoon();
                 break;
-            case WaveController.TimePeriod.Evening:
+            case TimePeriod.Evening:
                 ShowEvening();
                 break;
-            case WaveController.TimePeriod.Night:
+            case TimePeriod.Night:
                 ShowNight();
                 break;
             default:

@@ -23,7 +23,23 @@ public static class ProgressInitializer
         for (int i = 0; i < PlayerProgression.PlayerData.Traps.Count; i++)
         {
             (int, int, bool) data = PlayerProgression.PlayerData.Traps[i];
-            Trap trap = Object.Instantiate(PrefabManager.Prefabs[data.Item1 == 0 ? "Explosive Bomb" : "Frost Bomb"]).GetComponent<Trap>();
+            string trapTag;
+            switch (data.Item1)
+            {
+                case 0:
+                    trapTag = "Explosive Bomb";
+                    break;
+                case 1:
+                    trapTag = "Frost Bomb";
+                    break;
+                case 2:
+                    trapTag = "Barbwire";
+                    break;
+                default:
+                    trapTag = "";
+                    break;
+            }
+            Trap trap = Object.Instantiate(PrefabManager.Prefabs[trapTag]).GetComponent<Trap>();
             Grid grid = grids.Find((grid) => grid.Id == data.Item2);
             trap.Initialize(data.Item3, grid, i);
         }

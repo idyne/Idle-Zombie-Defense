@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using static LevelManager;
 public class TimePeriodAnimation : MonoBehaviour
 {
     [SerializeField] private Animator anim;
@@ -14,7 +14,7 @@ public class TimePeriodAnimation : MonoBehaviour
 
     
 
-    public IEnumerator SetTimePeriod(WaveController.TimePeriod period)
+    public IEnumerator SetTimePeriod(TimePeriod period)
     {
         text.rectTransform.anchoredPosition = new Vector3(0, -50, 0);
         text.enableVertexGradient = false;
@@ -22,16 +22,16 @@ public class TimePeriodAnimation : MonoBehaviour
         text.fontMaterial = originalfontMaterial;
         switch (period)
         {
-            case WaveController.TimePeriod.Morning:
+            case TimePeriod.Morning:
                 text.text = "Morning";
                 break;
-            case WaveController.TimePeriod.Noon:
+            case TimePeriod.Noon:
                 text.text = "Noon";
                 break;
-            case WaveController.TimePeriod.Evening:
+            case TimePeriod.Evening:
                 text.text = "Evening";
                 break;
-            case WaveController.TimePeriod.Night:
+            case TimePeriod.Night:
                 text.font = creepyFont;
                 text.fontMaterial = creepyFontMaterial;
                 text.text = "Night";
@@ -40,7 +40,7 @@ public class TimePeriodAnimation : MonoBehaviour
             default:
                 break;
         }
-        float speed = (period == WaveController.TimePeriod.Night ? 0.5f : 1);
+        float speed = (period == TimePeriod.Night ? 0.5f : 1);
         anim.SetFloat("Speed", speed);
         float delay = animationDuration * (1f / speed);
         anim.SetTrigger("Period");

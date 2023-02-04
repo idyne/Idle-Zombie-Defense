@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FateGames;
-
+using static LevelManager;
 public class Tower : MonoBehaviour
 {
     private static Tower instance;
@@ -25,7 +25,7 @@ public class Tower : MonoBehaviour
     private UIHealthBar healthBar;
     public Transform Transform { get; private set; }
     private int MaxHealth { get => GetMaxHealth(); }
-    public int NumberOfPoints { get => WaveController.ZoneLevel == 1 ? lessPoints.Count : points.Count; }
+    public int NumberOfPoints { get => ZoneLevel == 1 ? lessPoints.Count : points.Count; }
     private int damageTaken = 0;
     [SerializeField] private GameObject seperateSmallTower, seperateBigTower;
 
@@ -76,7 +76,7 @@ public class Tower : MonoBehaviour
     {
         smallTower.SetActive(false);
         bigTower.SetActive(false);
-        if (WaveController.ZoneLevel == 1)
+        if (ZoneLevel == 1)
         {
             seperateSmallTower.SetActive(true);
             Rigidbody[] rbs = seperateSmallTower.GetComponentsInChildren<Rigidbody>();
@@ -100,22 +100,19 @@ public class Tower : MonoBehaviour
 
     public void SetTower()
     {
-        smallTower.SetActive(WaveController.ZoneLevel == 1);
-        bigTower.SetActive(WaveController.ZoneLevel != 1);
+        smallTower.SetActive(ZoneLevel == 1);
+        bigTower.SetActive(ZoneLevel != 1);
+        Barracks.Instance.PlaceSoldiers();
     }
 
     private int GetMaxHealth()
     {
-        switch (WaveController.ZoneLevel)
+        switch (WorldLevel)
         {
             case 1:
-                return Settings.Zone1.TowerMaxHealth;
+                return Settings.World1.TowerMaxHealth;
             case 2:
-                return Settings.Zone2.TowerMaxHealth;
-            case 3:
-                return Settings.Zone3.TowerMaxHealth;
-            case 4:
-                return Settings.Zone4.TowerMaxHealth;
+                return Settings.World2.TowerMaxHealth;
         }
         return 1;
     }
@@ -131,7 +128,7 @@ public class Tower : MonoBehaviour
 
     public Transform GetPoint(int index)
     {
-        List<Transform> pointList = WaveController.ZoneLevel == 1 ? lessPoints : points;
+        List<Transform> pointList = ZoneLevel == 1 ? lessPoints : points;
         if (index < 0 || index >= pointList.Count) return null;
         return pointList[index];
     }
@@ -154,7 +151,7 @@ public class Tower : MonoBehaviour
 
     private void Die()
     {
-        LevelManager.Instance.FinishLevel(false);
+        FateGames.LevelManager.Instance.FinishLevel(false);
     }
 
 }

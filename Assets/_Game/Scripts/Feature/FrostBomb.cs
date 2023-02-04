@@ -2,7 +2,7 @@ using FateGames;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using static LevelManager;
 public class FrostBomb : Bomb
 {
     protected override int price
@@ -10,10 +10,10 @@ public class FrostBomb : Bomb
         get
         {
             float result = CostManager.GetFrostPrice() / 4;
-            switch (WaveController.ZoneLevel)
+            switch (ZoneLevel)
             {
                 case 2:
-                    result = CostManager.GetFrostPrice() / 4 + Mathf.Pow(WaveController.NormalizedDay, 1.2f) * 11;
+                    result = CostManager.GetFrostPrice() / 4 + Mathf.Pow(NormalizedDay, 1.2f) * 11;
                     break;
                 default:
                     break;

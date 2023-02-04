@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static LevelManager;
 namespace FateGames
 {
     public class UILoseScreen : MonoBehaviour
@@ -10,7 +11,7 @@ namespace FateGames
 
         private void Awake()
         {
-            levelText.text = "DAY " + WaveController.NormalizedDay;
+            levelText.text = "DAY " + NormalizedDay;
         }
         // Called by ContinueButton onClick
         public void Continue()

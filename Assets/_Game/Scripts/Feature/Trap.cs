@@ -5,7 +5,7 @@ using FateGames;
 using TMPro;
 public abstract class Trap : Placeable
 {
-    public enum TrapType { EXPLOSIVE, FROST }
+    public enum TrapType { EXPLOSIVE, FROST, BARBWIRE }
     [SerializeField] private TrapType trapType;
     protected virtual int price { get; set; } = 10;
     [SerializeField] private TrapPriceTag priceTag;
@@ -77,6 +77,8 @@ public abstract class Trap : Placeable
                 PlayerProgression.MONEY -= CostManager.GetTNTPrice();
             else if (trapType == TrapType.FROST)
                 PlayerProgression.MONEY -= CostManager.GetFrostPrice();
+            else if (trapType == TrapType.BARBWIRE)
+                PlayerProgression.MONEY -= CostManager.GetBarbwirePrice();
             saveDataIndex = PlayerProgression.PlayerData.Traps.Count;
             PlayerProgression.PlayerData.Traps.Add(((int)trapType, grid.Id, false));
             PlayerProgression.MONEY = PlayerProgression.MONEY;

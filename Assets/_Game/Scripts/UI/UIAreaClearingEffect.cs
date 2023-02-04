@@ -5,6 +5,7 @@ using TMPro;
 using FateGames;
 using DG.Tweening;
 using UnityEngine.UI;
+using static LevelManager;
 
 public class UIAreaClearingEffect : MonoBehaviour
 {
@@ -21,20 +22,7 @@ public class UIAreaClearingEffect : MonoBehaviour
         gameObject.SetActive(true);
         button.interactable = true;
         animator.SetTrigger("Fade In");
-        int day = WaveController.NormalizedDay - 1;
-        if (day == 0)
-        {
-            if (WaveController.ZoneLevel == 2)
-                day = 7;
-            else if (WaveController.ZoneLevel == 3)
-            {
-                day = 14;
-            }
-            else if (WaveController.ZoneLevel == 4)
-            {
-                day = 20;
-            }
-        }
+        int day = GetCycleDay(Day - 1);
         dayText.text = "DAY " + day + "\nCOMPLETED";
         moneyText.text = "+ " + money;
         this.money = money;

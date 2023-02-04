@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using DG.Tweening;
+using static LevelManager;
 
 namespace FateGames
 {
@@ -32,8 +33,8 @@ namespace FateGames
             if (GameManager.Instance.State == GameState.FINISHED) return;
             if (!success)
             {
-                MoonSDK.TrackLevelEvents(MoonSDK.LevelEvents.Fail, WaveController.Day);
-                PlayerProgression.PlayerData.WaveLevel = WaveController.Day * 4 - 3;
+                MoonSDK.TrackLevelEvents(MoonSDK.LevelEvents.Fail, Day);
+                PlayerProgression.PlayerData.WaveLevel = Day * 4 - 3;
             }
             Turret.Stopped = true;
             Tower.Instance.Explode();

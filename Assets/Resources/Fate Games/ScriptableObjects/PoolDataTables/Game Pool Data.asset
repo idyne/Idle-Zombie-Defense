@@ -30,7 +30,7 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Soldier 4
     prefab: {fileID: 6756975525295821979, guid: dedf59ee32d71d24e8921345a33a3ccb, type: 3}
-    size: 2
+    size: 4
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Soldier 5
@@ -45,7 +45,7 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Soldier 7
     prefab: {fileID: 6756975525295821979, guid: ca3ec7c3e62ac2e4796d67bdbf2feb34, type: 3}
-    size: 1
+    size: 8
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Soldier 8
@@ -175,7 +175,7 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Coin
     prefab: {fileID: 61506213663790832, guid: 564ca2f28647a4b4ab9e69124bb9e965, type: 3}
-    size: 40
+    size: 160
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Shotgun Ammo
@@ -195,7 +195,7 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: UI Money Image
     prefab: {fileID: 590420669460658490, guid: 6b0be8a901f7ccc4694c69da8a7c3af7, type: 3}
-    size: 40
+    size: 160
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Turret Ammo
@@ -226,5 +226,10 @@ MonoBehaviour:
   - tag: Explosive Bomb
     prefab: {fileID: 2567905047410825368, guid: 837409f5c2e86794693673801b45905a, type: 3}
     size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Barbwire
+    prefab: {fileID: 5355505176278194101, guid: 75d4c14dc055b3649b4e4e652fcab4f1, type: 3}
+    size: 8
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
