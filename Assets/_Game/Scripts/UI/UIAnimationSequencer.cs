@@ -95,14 +95,15 @@ public class UIAnimationSequencer : MonoBehaviour
             environmentChanger.SetEnvironment();
             uiDayBar.SetPercent(((int)CurrentTimePeriod) * 0.25f, false);
             uiDayBar.SetDay(WorldDay);
-            UILevelBar.Instance.SetDay(NormalizedDay);
+            UILevelBar.Instance.SetDay();
             tutorialManager.Show();
             uiDayBar.Show();
             uiDayBar.GoDown(false);
             UILevelBar.Instance.Show();
-            UILevelBar.Instance.SetDay(NormalizedDay);
+            UILevelBar.Instance.SetDay();
             UIButtonManager.Instance.UpdateStartButton();
-            UIButtonManager.Instance.UpdateUpgradesButton();
+            UIButtonManager.Instance.UpdateBaseUpgradesButton();
+            UIButtonManager.Instance.UpdateTrapUpgradesButton();
             UIButtonManager.Instance.ShowOutWaveButtons();
             OnOutWaveUIActivated.Invoke();
         }
@@ -117,14 +118,15 @@ public class UIAnimationSequencer : MonoBehaviour
             environmentChanger.SetEnvironment();
             uiDayBar.SetPercent(((int)CurrentTimePeriod) * 0.25f, false);
             uiDayBar.SetDay(WorldDay);
-            UILevelBar.Instance.SetDay(NormalizedDay);
+            UILevelBar.Instance.SetDay();
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
             uiDayBar.Show();
             uiDayBar.GoDown(false);
             UILevelBar.Instance.Show();
-            UILevelBar.Instance.SetDay(NormalizedDay);
+            UILevelBar.Instance.SetDay();
             UIButtonManager.Instance.UpdateStartButton();
-            UIButtonManager.Instance.UpdateUpgradesButton();
+            UIButtonManager.Instance.UpdateTrapUpgradesButton();
+            UIButtonManager.Instance.UpdateBaseUpgradesButton();
             UIButtonManager.Instance.ShowOutWaveButtons();
             OnOutWaveUIActivated.Invoke();
         }
@@ -139,10 +141,11 @@ public class UIAnimationSequencer : MonoBehaviour
             uiDayBar.Show();
             uiDayBar.GoDown(false);
             UILevelBar.Instance.Show();
-            UILevelBar.Instance.SetDay(NormalizedDay);
+            UILevelBar.Instance.SetDay();
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
             UIButtonManager.Instance.UpdateStartButton();
-            UIButtonManager.Instance.UpdateUpgradesButton();
+            UIButtonManager.Instance.UpdateTrapUpgradesButton();
+            UIButtonManager.Instance.UpdateBaseUpgradesButton();
             UIButtonManager.Instance.ShowOutWaveButtons();
             OnOutWaveUIActivated.Invoke();
         }
@@ -157,10 +160,11 @@ public class UIAnimationSequencer : MonoBehaviour
             uiDayBar.Show();
             uiDayBar.GoDown(false);
             UILevelBar.Instance.Show();
-            UILevelBar.Instance.SetDay(NormalizedDay);
+            UILevelBar.Instance.SetDay();
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
             UIButtonManager.Instance.UpdateStartButton();
-            UIButtonManager.Instance.UpdateUpgradesButton();
+            UIButtonManager.Instance.UpdateTrapUpgradesButton();
+            UIButtonManager.Instance.UpdateBaseUpgradesButton();
             UIButtonManager.Instance.ShowOutWaveButtons();
             OnOutWaveUIActivated.Invoke();
         }
@@ -175,10 +179,11 @@ public class UIAnimationSequencer : MonoBehaviour
             uiDayBar.Show();
             uiDayBar.GoDown(false);
             UILevelBar.Instance.Show();
-            UILevelBar.Instance.SetDay(NormalizedDay);
+            UILevelBar.Instance.SetDay();
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
             UIButtonManager.Instance.UpdateStartButton();
-            UIButtonManager.Instance.UpdateUpgradesButton();
+            UIButtonManager.Instance.UpdateTrapUpgradesButton();
+            UIButtonManager.Instance.UpdateBaseUpgradesButton();
             UIButtonManager.Instance.ShowOutWaveButtons();
             OnOutWaveUIActivated.Invoke();
         }
@@ -195,9 +200,10 @@ public class UIAnimationSequencer : MonoBehaviour
             uiDayBar.GoDown().OnComplete(() =>
             {
                 UILevelBar.Instance.Show();
-                UILevelBar.Instance.SetDay(NormalizedDay);
+                UILevelBar.Instance.SetDay();
                 UIButtonManager.Instance.UpdateStartButton();
-                UIButtonManager.Instance.UpdateUpgradesButton();
+                UIButtonManager.Instance.UpdateTrapUpgradesButton();
+                UIButtonManager.Instance.UpdateBaseUpgradesButton();
                 UIButtonManager.Instance.ShowOutWaveButtons();
                 OnOutWaveUIActivated.Invoke();
             });
@@ -214,14 +220,14 @@ public class UIAnimationSequencer : MonoBehaviour
             uiDayBar.GoDown().OnComplete(() =>
             {
                 UILevelBar.Instance.Show();
-                UILevelBar.Instance.SetDay(NormalizedDay);
+                UILevelBar.Instance.SetDay();
             });
         }
         else
         {
             uiDayBar.GoDown(false);
             UILevelBar.Instance.Show();
-            UILevelBar.Instance.SetDay(NormalizedDay);
+            UILevelBar.Instance.SetDay();
         }
     }
 
@@ -247,6 +253,7 @@ public class UIAnimationSequencer : MonoBehaviour
         PlayerProgression.PlayerData.SoldierMergeLevel = 1;
         PlayerProgression.PlayerData.Traps.Clear();
         PlayerProgression.PlayerData.Turrets.Clear();
+        PlayerProgression.UPGRADE_POINT = 0;
         PlayerProgression.MONEY = 0;
     }
     private IEnumerator GoCurrentZone()

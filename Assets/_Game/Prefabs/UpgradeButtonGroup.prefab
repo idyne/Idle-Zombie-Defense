@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -163,7 +163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2316280739531695719}
   - component: {fileID: 6008197438326125812}
-  - component: {fileID: 6111046034295787059}
+  - component: {fileID: 7029703912315749442}
   m_Layer: 0
   m_Name: UpgradeButtonGroup
   m_TagString: Untagged
@@ -200,7 +200,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4315556164296025947}
   m_CullTransparentMesh: 1
---- !u!114 &6111046034295787059
+--- !u!114 &7029703912315749442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,13 +209,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4315556164296025947}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47ed06cdcd32ae34c89c27e98600405e, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e7717c15564a014cb883b2293caa802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 7114259289468083361}
   button: {fileID: 7820291281407145706}
   text: {fileID: 7820291281382542062}
   disabledImage: {fileID: 8869182106528655435}
+  levelText: {fileID: 3150601468275102981}
 --- !u!1 &5733867692607564219
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,7 +421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -606,8 +607,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -88, y: -150.1}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -84, y: -150.1}
+  m_SizeDelta: {x: 80.2222, y: 80.2222}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2118345820053775855
 CanvasRenderer:
@@ -631,13 +632,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 49f09b39bc3faf0439df6a9757a41c05, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 29b547746dd6f9646b250adcbfc8641f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -707,7 +708,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

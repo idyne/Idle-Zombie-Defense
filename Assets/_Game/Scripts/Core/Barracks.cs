@@ -35,7 +35,7 @@ public class Barracks : MonoBehaviour
     private void Awake()
     {
         tower = GetComponent<Tower>();
-        UpgradeController.Instance.OnSoldierMergeLevelUpgrade.AddListener(ClearLowLevelSoldiers);
+        UpgradeController.OnSoldierMergeLevelUpgrade.AddListener(ClearLowLevelSoldiers);
     }
 
     private void Start()

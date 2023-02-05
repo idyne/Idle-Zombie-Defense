@@ -4,78 +4,67 @@ using UnityEngine;
 using FateGames;
 using UnityEngine.Events;
 
-public class UpgradeController : MonoBehaviour
+public static class UpgradeController
 {
-    private static UpgradeController instance = null;
-    public static UpgradeController Instance
-    {
-        get
-        {
-            if (instance == null)
-                instance = FindObjectOfType<UpgradeController>();
-            return instance;
-        }
-    }
-    
-    public UnityEvent<int> OnSoldierMergeLevelUpgrade { get; private set; } = new();
-    public UnityEvent OnBaseDefenseUpgrade { get; private set; } = new();
 
-    private bool CanAfford(int price) => price <= PlayerProgression.MONEY;
+    public static UnityEvent<int> OnSoldierMergeLevelUpgrade { get; private set; } = new();
+    public static UnityEvent OnBaseDefenseUpgrade { get; private set; } = new();
 
-    public void UpgradeBaseDefense()
+    private static bool CanAfford(int price) => PlayerProgression.CanAffordUpgrade(price);
+
+    public static void UpgradeBaseDefense()
     {
         int price = CostManager.GetBaseDefenseLevelPrice();
         if (CanAfford(price))
         {
             PlayerProgression.PlayerData.BaseDefenseLevel++;
-            PlayerProgression.MONEY -= price;
+            PlayerProgression.UPGRADE_POINT -= price;
             OnBaseDefenseUpgrade.Invoke();
         }
     }
-    public void UpgradeTNT()
+    public static void UpgradeTNT()
     {
-
-    }
-    public void UpgradeFrost()
-    {
-
-    }
-    public void UpgradeBarbwire()
-    {
-
-    }
-    public void UpgradeTurret()
-    {
-
-    }
-    /*
-    public void UpgradeTrapCapacity()
-    {
-        int price = CostManager.GetTrapCapacityPrice();
+        int price = CostManager.GetTNTUpgradePrice();
         if (CanAfford(price))
         {
-            PlayerProgression.PlayerData.TrapCapacity++;
-            PlayerProgression.MONEY -= price;
+            PlayerProgression.PlayerData.TNTLevel++;
+            PlayerProgression.UPGRADE_POINT -= price;
         }
     }
-
-    public void UpgradeTurretCapacity()
+    public static void UpgradeFrost()
     {
-        int price = CostManager.GetTurretCapacityPrice();
+        int price = CostManager.GetFrostUpgradePrice();
         if (CanAfford(price))
         {
-            PlayerProgression.PlayerData.TurretCapacity++;
-            PlayerProgression.MONEY -= price;
+            PlayerProgression.PlayerData.FrostLevel++;
+            PlayerProgression.UPGRADE_POINT -= price;
         }
-    }*/
-
-    public void UpgradeSoldierMergeLevel()
+    }
+    public static void UpgradeBarbwire()
+    {
+        int price = CostManager.GetBarbwireUpgradePrice();
+        if (CanAfford(price))
+        {
+            PlayerProgression.PlayerData.BarbwireLevel++;
+            PlayerProgression.UPGRADE_POINT -= price;
+        }
+    }
+    public static void UpgradeTurret()
+    {
+        int price = CostManager.GetTNTUpgradePrice();
+        if (CanAfford(price))
+        {
+            PlayerProgression.PlayerData.TurretLevel++;
+            PlayerProgression.UPGRADE_POINT -= price;
+        }
+    }
+    public static void UpgradeSoldierMergeLevel()
     {
         int price = CostManager.GetSoldierMergeLevelPrice();
         if (CanAfford(price))
         {
             PlayerProgression.PlayerData.SoldierMergeLevel++;
-            PlayerProgression.MONEY -= price;
+            PlayerProgression.UPGRADE_POINT -= price;
             OnSoldierMergeLevelUpgrade.Invoke(PlayerProgression.PlayerData.SoldierMergeLevel);
         }
     }

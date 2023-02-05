@@ -17,20 +17,20 @@ public class UILevelBar : MonoBehaviour
             return instance;
         }
     }
-    [SerializeField] private List<UIZoneBar> zoneBars;
+    [SerializeField] private List<UIWorldBar> worldBars;
 
-    public void SetDay(int day)
+    public void SetDay()
     {
         HideZoneBars();
-        UIZoneBar zoneBar = zoneBars[ZoneLevel - 1];
-        zoneBar.Show();
-        zoneBar.SetDay(day);
+        UIWorldBar worldBar = worldBars[WorldLevel - 1];
+        worldBar.Show();
+        worldBar.SetDay();
     }
 
     private void HideZoneBars()
     {
-        for (int i = 0; i < zoneBars.Count; i++)
-            zoneBars[i].Hide();
+        for (int i = 0; i < worldBars.Count; i++)
+            worldBars[i].Hide();
     }
 
     public void Hide() => gameObject.SetActive(false);

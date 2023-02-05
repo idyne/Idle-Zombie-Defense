@@ -20,11 +20,13 @@ public class UIBetweenPhase : MonoBehaviour
 
     public void ShowNotification()
     {
+        Debug.Log("show", notification);
         notification.SetActive(true);
     }
 
     public void HideNotification()
     {
+        Debug.Log("hide", notification);
         notification.SetActive(false);
     }
 

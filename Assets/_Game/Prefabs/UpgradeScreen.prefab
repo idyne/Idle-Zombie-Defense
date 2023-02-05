@@ -466,7 +466,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6713305615374902107}
-  - component: {fileID: 6392797336200990189}
   - component: {fileID: 1880321434802247289}
   m_Layer: 0
   m_Name: UpgradeScreen
@@ -496,18 +495,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.00012207031, y: 0}
   m_SizeDelta: {x: -180.30762, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6392797336200990189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6713305615374902104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bab9dd4926b1af8458ce441dda64ec0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1880321434802247289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,7 +844,7 @@ PrefabInstance:
     - target: {fileID: 7820291281407145706, guid: 933b2978fd6c15c429bd095f5aa18588, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 6392797336200990189}
+      objectReference: {fileID: 0}
     - target: {fileID: 7820291281407145706, guid: 933b2978fd6c15c429bd095f5aa18588, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -999,7 +986,7 @@ PrefabInstance:
     - target: {fileID: 7820291281407145706, guid: 933b2978fd6c15c429bd095f5aa18588, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 6392797336200990189}
+      objectReference: {fileID: 0}
     - target: {fileID: 7820291281407145706, guid: 933b2978fd6c15c429bd095f5aa18588, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1147,7 +1134,7 @@ PrefabInstance:
     - target: {fileID: 7820291281407145706, guid: 933b2978fd6c15c429bd095f5aa18588, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 6392797336200990189}
+      objectReference: {fileID: 0}
     - target: {fileID: 7820291281407145706, guid: 933b2978fd6c15c429bd095f5aa18588, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1295,7 +1282,7 @@ PrefabInstance:
     - target: {fileID: 7820291281407145706, guid: 933b2978fd6c15c429bd095f5aa18588, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 6392797336200990189}
+      objectReference: {fileID: 0}
     - target: {fileID: 7820291281407145706, guid: 933b2978fd6c15c429bd095f5aa18588, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2

@@ -84,30 +84,7 @@ public static class CostManager
         //TODO
         return 1;
     }
-    /*
-    public static int GetTrapCapacityPrice()
-    {
-        switch (WorldLevel)
-        {
-            case 1:
-                return Settings.World1.TrapCapacityCost;
-            case 2:
-                return Settings.World2.TrapCapacityCost;
-        }
-        return 1;
-    }
-    public static int GetTurretCapacityPrice()
-    {
-        switch (WorldLevel)
-        {
-            case 1:
-                return Settings.World1.TurretCapacityCost;
-            case 2:
-                return Settings.World2.TurretCapacityCost;
-        }
-        return 1;
-    }
-    */
+
     public static int GetSoldierMergeLevelPrice()
     {
         switch (WorldLevel)

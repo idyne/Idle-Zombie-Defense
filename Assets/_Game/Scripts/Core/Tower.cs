@@ -50,7 +50,7 @@ public class Tower : MonoBehaviour
                 damageTaken = 0;
             });
         });
-        UpgradeController.Instance.OnBaseDefenseUpgrade.AddListener(() =>
+        UpgradeController.OnBaseDefenseUpgrade.AddListener(() =>
         {
             SetHealth(MaxHealth);
         });

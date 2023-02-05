@@ -31,7 +31,7 @@ public class UIDayBar : MonoBehaviour
     public void GoUp()
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
-        rectTransform.DOAnchorPosY(-266, 0.5f);
+        rectTransform.DOAnchorPosY(-237, 0.5f);
         rectTransform.DOScale(1.25f, 0.5f);
     }
     
