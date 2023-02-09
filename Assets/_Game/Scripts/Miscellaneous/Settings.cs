@@ -93,8 +93,8 @@ public static class Settings
         public static readonly int TurretCapacityLimit = 0;
         public static readonly int BaseDefenseLimit = 7;
         public static readonly int SoldierMergeLevelLimit = 2;
-        public static int BaseDefenseLevelCost { get => Mathf.CeilToInt(PlayerData.BaseDefenseLevel * 100); }
-        public static int SoldierMergeLevelCost { get => Mathf.CeilToInt(PlayerData.SoldierMergeLevel * 1500); }
+        public static int BaseDefenseLevelCost { get => Mathf.CeilToInt(PlayerData.BaseDefenseLevel * 1); }
+        public static int SoldierMergeLevelCost { get => Mathf.CeilToInt(PlayerData.SoldierMergeLevel * 2); }
 
         #endregion
         #region Wave

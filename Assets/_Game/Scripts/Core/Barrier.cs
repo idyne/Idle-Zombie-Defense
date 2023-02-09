@@ -24,7 +24,7 @@ public class Barrier : MonoBehaviour
         healthBar = GetComponentInChildren<UIHealthBar>();
         SetHealth(MaxHealth, false);
         healthBar.Hide();
-        UpgradeController.Instance.OnBaseDefenseUpgrade.AddListener(() =>
+        UpgradeController.OnBaseDefenseUpgrade.AddListener(() =>
         {
             SetHealth(MaxHealth);
         });

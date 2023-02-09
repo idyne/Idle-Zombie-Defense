@@ -17,7 +17,7 @@ public class Barbwire : Trap
 
     protected override bool Explode()
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 
     private void FixedUpdate()

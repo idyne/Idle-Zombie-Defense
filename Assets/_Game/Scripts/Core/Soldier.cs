@@ -56,13 +56,12 @@ public class Soldier : MonoBehaviour, IPooledObject
     {
         if (ragdoll)
         {
-            ragdoll.transform.parent = null;
+            ragdoll.transform.SetParent(null);
             ragdoll.SetActive(true);
             Rigidbody[] rigidbodies = ragdoll.GetComponentsInChildren<Rigidbody>();
             foreach (Rigidbody rb in rigidbodies)
                 rb.AddExplosionForce(5, Vector3.zero, 10, 1, ForceMode.Impulse);
         }
-        
     }
 
     private void LookAtTarget(TweenCallback onComplete)

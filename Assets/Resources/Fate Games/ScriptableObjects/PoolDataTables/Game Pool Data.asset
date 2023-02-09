@@ -98,6 +98,16 @@ MonoBehaviour:
     size: 10
     canActiveObjectsBeDequeued: 1
     container: {fileID: 0}
+  - tag: Airstrike Bomb Effect
+    prefab: {fileID: 271218684912079319, guid: 987390b5420d42e458a3bd7541f468f0, type: 3}
+    size: 40
+    canActiveObjectsBeDequeued: 1
+    container: {fileID: 0}
+  - tag: Airstrike Napalm Effect
+    prefab: {fileID: 271218684912079319, guid: b0ef7a3814eb51a46b0f52a415e15002, type: 3}
+    size: 40
+    canActiveObjectsBeDequeued: 1
+    container: {fileID: 0}
   - tag: Explosive Ammo
     prefab: {fileID: 5388626812233157393, guid: 47ca792297e040f488f8a2ae3c88c479, type: 3}
     size: 10
@@ -198,6 +208,11 @@ MonoBehaviour:
     size: 160
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
+  - tag: UI Upgrade Point Image
+    prefab: {fileID: 590420669460658490, guid: 861e462d8a144f2469c49fe4e62f5dae, type: 3}
+    size: 5
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
   - tag: Turret Ammo
     prefab: {fileID: 5388626812233157393, guid: 20837bf76f116814988b01eae6b31638, type: 3}
     size: 8
@@ -215,7 +230,7 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Turret
     prefab: {fileID: 7779394644475227580, guid: ea67d4a0e0e034141818d399f02c9940, type: 3}
-    size: 1
+    size: 2
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Frost Bomb
@@ -232,4 +247,39 @@ MonoBehaviour:
     prefab: {fileID: 5355505176278194101, guid: 75d4c14dc055b3649b4e4e652fcab4f1, type: 3}
     size: 8
     canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Airstrike Bomb
+    prefab: {fileID: 3519386892853710539, guid: 797c7e3398645cf499b3480a650f022c, type: 3}
+    size: 64
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Soldier 0
+    prefab: {fileID: 7738036716063347438, guid: 1202c134737f99b498d206219e5f2e2e, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Grenade
+    prefab: {fileID: 7985733314237578641, guid: 3ba96e028635fac4bb1afee4b2811de5, type: 3}
+    size: 2
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Molotov
+    prefab: {fileID: 7985733314237578641, guid: 06e0261b4c87cef46a7443283b76195c, type: 3}
+    size: 2
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Airstrike Napalm
+    prefab: {fileID: 3519386892853710539, guid: 584ab6c158efb9c41885008987593942, type: 3}
+    size: 2
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Molotov Effect
+    prefab: {fileID: 2564780315824257392, guid: 5bfe6c48dd072e74cb62fef83978ac70, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Grenade Explosion Effect
+    prefab: {fileID: 271218684912079319, guid: 1e83b3f100b2a09458ac1c4c51bdc0b2, type: 3}
+    size: 2
+    canActiveObjectsBeDequeued: 1
     container: {fileID: 0}

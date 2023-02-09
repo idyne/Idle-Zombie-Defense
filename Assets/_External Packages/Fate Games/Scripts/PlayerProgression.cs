@@ -7,7 +7,9 @@ namespace FateGames
     {
         public static PlayerData PlayerData { get; private set; }
         public static readonly UnityEvent<int, int> OnMoneyChanged = new();
+        public static readonly UnityEvent<int, int> OnUpgradePointChanged = new();
         public static bool CanAfford(int cost) => MONEY >= cost;
+        public static bool CanAffordUpgrade(int cost) => UPGRADE_POINT >= cost;
 
         public static int CurrentLevel
         {
@@ -27,6 +29,15 @@ namespace FateGames
                 OnMoneyChanged.Invoke(value, value - previous);
             }
         }
+        public static int UPGRADE_POINT
+        {
+            get => PlayerData.UpgradePoint; set
+            {
+                int previous = PlayerData.UpgradePoint;
+                PlayerData.UpgradePoint = value;
+                OnUpgradePointChanged.Invoke(value, value - previous);
+            }
+        }
 
         public static void InitializePlayerData()
         {
@@ -37,6 +48,7 @@ namespace FateGames
                 SaveManager.Save(PlayerData);
             }
             OnMoneyChanged.Invoke(MONEY, 0);
+            OnUpgradePointChanged.Invoke(UPGRADE_POINT, 0);
             Debug.Log("Player Data is initialized");
         }
     }

@@ -33,3 +33,5 @@ MonoBehaviour:
     gameObject: {fileID: 7779394644475227580, guid: ea67d4a0e0e034141818d399f02c9940, type: 3}
   - tag: Barbwire
     gameObject: {fileID: 5355505176278194101, guid: 75d4c14dc055b3649b4e4e652fcab4f1, type: 3}
+  - tag: Throwable Weapons Guy
+    gameObject: {fileID: 7738036716063347438, guid: 1202c134737f99b498d206219e5f2e2e, type: 3}
