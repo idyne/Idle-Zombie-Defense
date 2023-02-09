@@ -30,7 +30,7 @@ public class UIUpgradePoints : MonoBehaviour
     private void SetMoney(int money, int change = 0)
     {
         moneyText.text = UIMoney.FormatMoney(PlayerProgression.UPGRADE_POINT);
-        if (animating || money <= 0) return;
+        if (animating || change == 0) return;
         animating = true;
         Transform.DOScale(1.1f, 0.05f).SetLoops(2, LoopType.Yoyo).OnComplete(() => { animating = false; });
     }

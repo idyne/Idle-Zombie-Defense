@@ -13,10 +13,14 @@ public class UIButtonManager : MonoBehaviour
     [SerializeField] private UIButton soldierButton, fireRateButton, incomeButton, mergeButton, startButton, baseUpgradesButton, trapUpgradesButton;
     [SerializeField] private GameObject inWaveButtons, outWaveButtons;
     [SerializeField] private UIBetweenPhase baseButton, trapButton;
-    [SerializeField] private UIUpgradeButton baseDefenseButton, soldierMergeLevelButton;
+    [SerializeField] private UIUpgradeButton baseDefenseButton, soldierMergeLevelButton, throwableWeaponsGuyButton, airstrikeLevelButton;
     [SerializeField] private UIUpgradeButton tntUpgradeButton, frostUpgradeButton, barbwireUpgradeButton, turretUpgradeButton;
     [SerializeField] private UIPlacementButton frostButton, turretButton, tntButton, barbwireButton;
     [SerializeField] private PlacementController turretPlacementController, trapPlacementController;
+    private bool canAffordBaseDefenseUpgrade = false, canAffordSoldierMergeUpgrade = false, canAfforThrowableGuyUpgrade = false, canAffordAirstrikeUpgrade = false;
+    private bool canAffordTNTUpgrade = false, canAffordFrostUpgrade = false, canAffordBarbwireUpgrade = false, canAffordTurretUpgrade = false;
+    private bool notifyBaseUpgrades { get => canAffordBaseDefenseUpgrade || canAffordSoldierMergeUpgrade; }
+    private bool notifyTrapUpgrades { get => canAffordTNTUpgrade || canAffordFrostUpgrade || canAffordBarbwireUpgrade || canAffordTurretUpgrade; }
 
     private void Awake()
     {
@@ -34,26 +38,23 @@ public class UIButtonManager : MonoBehaviour
         PauseButton.OnResume.AddListener(() => { if (WaveController.State == WaveController.WaveState.RUNNING) ShowInWaveButtons(); });
         PlayerProgression.OnMoneyChanged.AddListener((money, change) =>
         {
-            UpdateAllButtons();
+            UpdateAllButtonsExceptUpgrades();
+        });
+        PlayerProgression.OnUpgradePointChanged.AddListener((money, change) =>
+        {
+            UpdateUpgradeButtons();
         });
     }
 
     private void Start()
     {
-        UpdateAllButtons();
+        UpdateAllButtonsExceptUpgrades();
+        UpdateUpgradeButtons();
     }
 
-    public void UpdateAllButtons()
+    public void UpdateAllButtonsExceptUpgrades()
     {
         UpdateFireRateButton();
-        UpdateBaseDefenseButton();
-        /*UpdateTrapCapacityButton();
-        UpdateTurretCapacityButton();*/
-        UpdateTNTUpgradeButton();
-        UpdateFrostUpgradeButton();
-        UpdateBarbwireUpgradeButton();
-        UpdateTurretUpgradeButton();
-        UpdateSoldierMergeLevelButton();
         UpdateFrostButton();
         UpdateIncomeButton();
         UpdateMergeButton();
@@ -61,6 +62,18 @@ public class UIButtonManager : MonoBehaviour
         UpdateTNTButton();
         UpdateTurretButton();
         UpdateBarbwireButton();
+    }
+
+    public void UpdateUpgradeButtons()
+    {
+        UpdateBaseDefenseButton();
+        UpdateTNTUpgradeButton();
+        UpdateFrostUpgradeButton();
+        UpdateBarbwireUpgradeButton();
+        UpdateTurretUpgradeButton();
+        UpdateSoldierMergeLevelButton();
+        UpdateThrowableWeaponsGuyUpgradeButton();
+        UpdateAirstrikeUpgradeButton();
     }
 
     public void SwitchInWave()
@@ -168,13 +181,88 @@ public class UIButtonManager : MonoBehaviour
         if (!maxedOut)
             baseDefenseButton.SetText(UIMoney.FormatMoney(cost));
         else baseDefenseButton.SetText("Max");
-        if (!PlayerProgression.CanAfford(cost) || maxedOut) baseDefenseButton.Deactivate();
+        if (!PlayerProgression.CanAffordUpgrade(cost) || maxedOut)
+        {
+            baseDefenseButton.Deactivate();
+            canAffordBaseDefenseUpgrade = false;
+            if (!notifyBaseUpgrades)
+                baseButton.HideNotification();
+        }
         else if (!baseDefenseButton.Active)
         {
+            canAffordBaseDefenseUpgrade = true;
             baseButton.ShowNotification();
             baseDefenseButton.Activate();
         }
         baseDefenseButton.SetLevel(PlayerProgression.PlayerData.BaseDefenseLevel);
+    }
+
+    public void UpdateSoldierMergeLevelButton()
+    {
+        int cost = CostManager.GetSoldierMergeLevelPrice();
+        bool maxedOut = PlayerProgression.PlayerData.SoldierMergeLevel >= LimitManager.GetSoldierMergeLimit();
+        if (!maxedOut)
+            soldierMergeLevelButton.SetText(UIMoney.FormatMoney(cost));
+        else soldierMergeLevelButton.SetText("Max");
+        if (!PlayerProgression.CanAffordUpgrade(cost) || maxedOut)
+        {
+            soldierMergeLevelButton.Deactivate();
+            canAffordSoldierMergeUpgrade = false;
+            if (!notifyBaseUpgrades)
+                baseButton.HideNotification();
+        }
+        else if (!soldierMergeLevelButton.Active)
+        {
+            canAffordSoldierMergeUpgrade = true;
+            baseButton.ShowNotification();
+            soldierMergeLevelButton.Activate();
+        }
+        soldierMergeLevelButton.SetLevel(PlayerProgression.PlayerData.SoldierMergeLevel);
+    }
+
+    public void UpdateThrowableWeaponsGuyUpgradeButton()
+    {
+        int cost = CostManager.GetThrowableWeaponsGuyLevelPrice();
+        bool maxedOut = PlayerProgression.PlayerData.ThrowableWeaponsGuyLevel >= LimitManager.GetThrowableWeaponsGuyLevelLimit();
+        if (!maxedOut)
+            throwableWeaponsGuyButton.SetText(UIMoney.FormatMoney(cost));
+        else throwableWeaponsGuyButton.SetText("Max");
+        if (!PlayerProgression.CanAffordUpgrade(cost) || maxedOut)
+        {
+            throwableWeaponsGuyButton.Deactivate();
+            canAfforThrowableGuyUpgrade = false;
+            if (!notifyBaseUpgrades)
+                baseButton.HideNotification();
+        }
+        else if (!throwableWeaponsGuyButton.Active)
+        {
+            canAfforThrowableGuyUpgrade = true;
+            baseButton.ShowNotification();
+            throwableWeaponsGuyButton.Activate();
+        }
+        throwableWeaponsGuyButton.SetLevel(PlayerProgression.PlayerData.ThrowableWeaponsGuyLevel);
+    }
+    public void UpdateAirstrikeUpgradeButton()
+    {
+        int cost = CostManager.GetAirstrikePrice();
+        bool maxedOut = PlayerProgression.PlayerData.AirstrikeLevel >= LimitManager.GetAirstrikeLevelLimit();
+        if (!maxedOut)
+            airstrikeLevelButton.SetText(UIMoney.FormatMoney(cost));
+        else airstrikeLevelButton.SetText("Max");
+        if (!PlayerProgression.CanAffordUpgrade(cost) || maxedOut)
+        {
+            airstrikeLevelButton.Deactivate();
+            canAffordAirstrikeUpgrade = false;
+            if (!notifyBaseUpgrades)
+                baseButton.HideNotification();
+        }
+        else if (!airstrikeLevelButton.Active)
+        {
+            canAffordAirstrikeUpgrade = true;
+            baseButton.ShowNotification();
+            airstrikeLevelButton.Activate();
+        }
+        airstrikeLevelButton.SetLevel(PlayerProgression.PlayerData.AirstrikeLevel);
     }
 
     public void UpdateTNTUpgradeButton()
@@ -184,9 +272,16 @@ public class UIButtonManager : MonoBehaviour
         if (!maxedOut)
             tntUpgradeButton.SetText(UIMoney.FormatMoney(cost));
         else tntUpgradeButton.SetText("Max");
-        if (!PlayerProgression.CanAfford(cost) || maxedOut) tntUpgradeButton.Deactivate();
+        if (!PlayerProgression.CanAffordUpgrade(cost) || maxedOut)
+        {
+            tntUpgradeButton.Deactivate();
+            canAffordTNTUpgrade = false;
+            if (!notifyTrapUpgrades)
+                trapButton.HideNotification();
+        }
         else if (!tntUpgradeButton.Active)
         {
+            canAffordTNTUpgrade = true;
             trapButton.ShowNotification();
             tntUpgradeButton.Activate();
         }
@@ -199,9 +294,16 @@ public class UIButtonManager : MonoBehaviour
         if (!maxedOut)
             frostUpgradeButton.SetText(UIMoney.FormatMoney(cost));
         else frostUpgradeButton.SetText("Max");
-        if (!PlayerProgression.CanAfford(cost) || maxedOut) frostUpgradeButton.Deactivate();
+        if (!PlayerProgression.CanAffordUpgrade(cost) || maxedOut)
+        {
+            canAffordFrostUpgrade = false;
+            frostUpgradeButton.Deactivate();
+            if (!notifyTrapUpgrades)
+                trapButton.HideNotification();
+        }
         else if (!frostUpgradeButton.Active)
         {
+            canAffordFrostUpgrade = true;
             trapButton.ShowNotification();
             frostUpgradeButton.Activate();
         }
@@ -214,9 +316,16 @@ public class UIButtonManager : MonoBehaviour
         if (!maxedOut)
             barbwireUpgradeButton.SetText(UIMoney.FormatMoney(cost));
         else barbwireUpgradeButton.SetText("Max");
-        if (!PlayerProgression.CanAfford(cost) || maxedOut) barbwireUpgradeButton.Deactivate();
+        if (!PlayerProgression.CanAffordUpgrade(cost) || maxedOut)
+        {
+            canAffordBarbwireUpgrade = false;
+            barbwireUpgradeButton.Deactivate();
+            if (!notifyTrapUpgrades)
+                trapButton.HideNotification();
+        }
         else if (!barbwireUpgradeButton.Active)
         {
+            canAffordBarbwireUpgrade = true;
             trapButton.ShowNotification();
             barbwireUpgradeButton.Activate();
         }
@@ -229,9 +338,16 @@ public class UIButtonManager : MonoBehaviour
         if (!maxedOut)
             turretUpgradeButton.SetText(UIMoney.FormatMoney(cost));
         else turretUpgradeButton.SetText("Max");
-        if (!PlayerProgression.CanAfford(cost) || maxedOut) turretUpgradeButton.Deactivate();
+        if (!PlayerProgression.CanAffordUpgrade(cost) || maxedOut)
+        {
+            canAffordTurretUpgrade = false;
+            turretUpgradeButton.Deactivate();
+            if (!notifyTrapUpgrades)
+                trapButton.HideNotification();
+        }
         else if (!turretUpgradeButton.Active)
         {
+            canAffordTurretUpgrade = true;
             trapButton.ShowNotification();
             turretUpgradeButton.Activate();
         }
@@ -245,6 +361,14 @@ public class UIButtonManager : MonoBehaviour
     public void HandleSoldierLevelUpgradeButton()
     {
         UpgradeController.UpgradeSoldierMergeLevel();
+    }
+    public void HandleThrowableWeaponsGuyUpgradeButton()
+    {
+        UpgradeController.UpgradeThrowableWeaponsGuy();
+    }
+    public void HandleAirstrikeUpgradeButton()
+    {
+        UpgradeController.UpgradeAirstrike();
     }
     public void HandleTNTUpgradeButton()
     {
@@ -262,68 +386,8 @@ public class UIButtonManager : MonoBehaviour
     {
         UpgradeController.UpgradeTurret();
     }
-    /*
-    public void UpdateTrapCapacityButton()
-    {
-        int cost = CostManager.GetTrapCapacityPrice();
-        bool maxedOut = PlayerProgression.PlayerData.TrapCapacity >= LimitManager.GetTrapLimit();
-        int unlockDay = Mathf.Min(FrostUnlockDay, TNTUnlockDay);
-        bool locked = Day < unlockDay;
-        if (locked)
-        {
-            int remainingDays = unlockDay - Day;
-            trapCapacityButton.SetText("Unlocks " + (remainingDays > 1 ? "after " + remainingDays + " days" : "the next day"));
-        }
-        else if (!maxedOut)
-            trapCapacityButton.SetText(UIMoney.FormatMoney(cost));
-        else trapCapacityButton.SetText("Max");
-        if (!PlayerProgression.CanAfford(cost) || maxedOut || locked) trapCapacityButton.Deactivate();
-        else if (!trapCapacityButton.Active)
-        {
-            UIBetweenPhase.ShowNotification();
-            trapCapacityButton.Activate();
-        }
-        trapCapacityLevelText.text = "Level " + (PlayerProgression.PlayerData.TrapCapacity + 1);
-    }*/
-    /*
-    public void UpdateTurretCapacityButton()
-    {
-        int cost = CostManager.GetTurretCapacityPrice();
-        bool maxedOut = PlayerProgression.PlayerData.TurretCapacity >= LimitManager.GetTurretLimit();
-        int unlockDay = TurretUnlockDay;
-        bool locked = Day < unlockDay;
-        if (locked)
-        {
-            int remainingDays = unlockDay - Day;
-            turretCapacityButton.SetText("Unlocks " + (remainingDays > 1 ? "after " + remainingDays + " days" : "the next day"));
-        }
-        else
-        if (!maxedOut)
-            turretCapacityButton.SetText(UIMoney.FormatMoney(cost));
-        else turretCapacityButton.SetText("Max");
-        if (!PlayerProgression.CanAfford(cost) || maxedOut || locked) turretCapacityButton.Deactivate();
-        else if (!turretCapacityButton.Active)
-        {
-            UIBetweenPhase.ShowNotification();
-            turretCapacityButton.Activate();
-        }
-        turretCapacityLevelText.text = "Level " + (PlayerProgression.PlayerData.TurretCapacity + 1);
-    }*/
-    public void UpdateSoldierMergeLevelButton()
-    {
-        int cost = CostManager.GetSoldierMergeLevelPrice();
-        bool maxedOut = PlayerProgression.PlayerData.SoldierMergeLevel >= LimitManager.GetSoldierMergeLimit();
-        if (!maxedOut)
-            soldierMergeLevelButton.SetText(UIMoney.FormatMoney(cost));
-        else soldierMergeLevelButton.SetText("Max");
-        if (!PlayerProgression.CanAfford(cost) || maxedOut) soldierMergeLevelButton.Deactivate();
-        else if (!soldierMergeLevelButton.Active)
-        {
-            baseButton.ShowNotification();
-            soldierMergeLevelButton.Activate();
-        }
-        soldierMergeLevelButton.SetLevel(PlayerProgression.PlayerData.SoldierMergeLevel);
-    }
+
+
     public void UpdateFrostButton()
     {
         int unlockDay = FrostUnlockDay;

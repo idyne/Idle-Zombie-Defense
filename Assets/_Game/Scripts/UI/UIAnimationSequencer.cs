@@ -52,7 +52,7 @@ public class UIAnimationSequencer : MonoBehaviour
                 money = Settings.World2.FinishDayPrize;
                 break;
         }
-        areaCleared.Show(Mathf.CeilToInt(money));
+        areaCleared.Show(Mathf.CeilToInt(money), 5);
         yield return new WaitUntil(() => areaClearedNext);
         areaClearedNext = false;
         yield return new WaitForSeconds(3.2f);
@@ -74,7 +74,7 @@ public class UIAnimationSequencer : MonoBehaviour
             default:
                 break;
         }
-        yield return phaseCleared.Show(Mathf.CeilToInt(money));
+        yield return phaseCleared.Show(Mathf.CeilToInt(money),1);
         uiDayBar.Hide();
         UILevelBar.Instance.Hide();
         yield return new WaitForSeconds(0.7f);
@@ -90,7 +90,7 @@ public class UIAnimationSequencer : MonoBehaviour
         if (isNewSession && Day == 1 && NewDay)
         {
             print("start new game");
-            surviveText.SetActive(ZoneLevel == 1);
+            surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
             dayCycler.SetTimePeriodWithoutAnimation(CurrentTimePeriod);
             environmentChanger.SetEnvironment();
             uiDayBar.SetPercent(((int)CurrentTimePeriod) * 0.25f, false);
@@ -113,7 +113,7 @@ public class UIAnimationSequencer : MonoBehaviour
             print("start game");
             if (CurrentTimePeriod == TimePeriod.Night)
                 tower.TurnOnLights();
-            surviveText.SetActive(ZoneLevel == 1);
+            surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
             dayCycler.SetTimePeriodWithoutAnimation(CurrentTimePeriod);
             environmentChanger.SetEnvironment();
             uiDayBar.SetPercent(((int)CurrentTimePeriod) * 0.25f, false);
@@ -168,7 +168,7 @@ public class UIAnimationSequencer : MonoBehaviour
             UIButtonManager.Instance.ShowOutWaveButtons();
             OnOutWaveUIActivated.Invoke();
         }
-        
+
         //Sonraki güne geçme
         else if (!isNewSession && NewDay && !NewZone)
         {
@@ -262,7 +262,7 @@ public class UIAnimationSequencer : MonoBehaviour
         //ResetProgress();
         environmentChanger.SetEnvironment();
         tower.SetTower();
-        surviveText.SetActive(ZoneLevel == 1);
+        surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
         mapController.GoPosition(ZoneLevel - 2);
         mapAnimator.SetTrigger("Fade");
         yield return new WaitForSeconds(1);
@@ -284,7 +284,7 @@ public class UIAnimationSequencer : MonoBehaviour
         ResetProgress();
         environmentChanger.SetEnvironment();
         tower.SetTower();
-        surviveText.SetActive(ZoneLevel == 1);
+        surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
         mapController.GoPosition(1);
         mapAnimator.SetTrigger("Fade");
         yield return new WaitForSeconds(1);

@@ -22,6 +22,24 @@ public static class UpgradeController
             OnBaseDefenseUpgrade.Invoke();
         }
     }
+    public static void UpgradeThrowableWeaponsGuy()
+    {
+        int price = CostManager.GetThrowableWeaponsGuyLevelPrice();
+        if (CanAfford(price))
+        {
+            PlayerProgression.PlayerData.ThrowableWeaponsGuyLevel++;
+            PlayerProgression.UPGRADE_POINT -= price;
+        }
+    }
+    public static void UpgradeAirstrike()
+    {
+        int price = CostManager.GetAirstrikePrice();
+        if (CanAfford(price))
+        {
+            PlayerProgression.PlayerData.AirstrikeLevel++;
+            PlayerProgression.UPGRADE_POINT -= price;
+        }
+    }
     public static void UpgradeTNT()
     {
         int price = CostManager.GetTNTUpgradePrice();

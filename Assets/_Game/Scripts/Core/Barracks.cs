@@ -30,6 +30,7 @@ public class Barracks : MonoBehaviour
     public static int FireRateLevel { get => PlayerProgression.PlayerData.FireRateLevel; }
     private int maxMergeLevel = 0;
     public readonly UnityEvent<int> OnNewMergeUnlocked = new();
+    private ThrowableWeaponsGuy throwableWeaponsGuy = null;
 
 
     private void Awake()
@@ -40,7 +41,7 @@ public class Barracks : MonoBehaviour
 
     private void Start()
     {
-        for (int i = soldierTable.Count - 1; i >= 0; i--)
+        for (int i = soldierTable.Count - 1; i >= 1; i--)
         {
             if (soldierTable[i].Count > 0)
             {
@@ -48,6 +49,13 @@ public class Barracks : MonoBehaviour
                 break;
             }
         }
+        SpawnThrowableWeaponsGuy();
+    }
+
+    public void SpawnThrowableWeaponsGuy()
+    {
+        if (throwableWeaponsGuy) return;
+        throwableWeaponsGuy = Instantiate(PrefabManager.Prefabs["Throwable Weapons Guy"], tower.GetPoint(0).position, Quaternion.identity).GetComponent<ThrowableWeaponsGuy>();
     }
 
     private void ClearLowLevelSoldiers(int level)
@@ -81,7 +89,7 @@ public class Barracks : MonoBehaviour
 
             OnNewMergeUnlocked.Invoke(maxMergeLevel);
         }
-        
+
     }
 
 
@@ -113,6 +121,8 @@ public class Barracks : MonoBehaviour
                 soldierTable[i][j].Deactivate();
             }
         }
+        throwableWeaponsGuy.ActivateRagdoll();
+        throwableWeaponsGuy.Deactivate();
     }
 
     public void BuySoldier()
@@ -241,7 +251,7 @@ public class Barracks : MonoBehaviour
 
     public void PlaceSoldiers()
     {
-        int count = 0;
+        int count = 1;
         for (int i = soldierTable.Count - 1; i >= 1; i--)
         {
             List<Soldier> soldiers = soldierTable[i];

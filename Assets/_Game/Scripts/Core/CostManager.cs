@@ -64,6 +64,30 @@ public static class CostManager
         }
         return 1;
     }
+    public static int GetThrowableWeaponsGuyLevelPrice()
+    {
+        //TODO
+        switch (WorldLevel)
+        {
+            case 1:
+                return Settings.World1.BaseDefenseLevelCost;
+            case 2:
+                return Settings.World2.BaseDefenseLevelCost;
+        }
+        return 1;
+    }
+    public static int GetAirstrikePrice()
+    {
+        //TODO
+        switch (WorldLevel)
+        {
+            case 1:
+                return Settings.World1.BaseDefenseLevelCost;
+            case 2:
+                return Settings.World2.BaseDefenseLevelCost;
+        }
+        return 1;
+    }
     public static int GetTNTUpgradePrice()
     {
         //TODO
