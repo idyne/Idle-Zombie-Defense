@@ -23,8 +23,11 @@ public class Airstrike : MonoBehaviour
         bombPoints.Sort((a, b) => Mathf.CeilToInt(b.position.x - a.position.x));
         WaveController.Instance.OnWaveStart.AddListener(() =>
         {
-            ResetCooldown();
-            ShowButton();
+            if (PlayerProgression.PlayerData.AirstrikeLevel >= 1)
+            {
+                ResetCooldown();
+                ShowButton();
+            }
         });
         WaveController.Instance.OnWaveEnd.AddListener(() => { HideButton(); });
     }

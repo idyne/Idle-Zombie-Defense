@@ -16,6 +16,13 @@ namespace FateGames
         // Called by ContinueButton onClick
         public void Continue()
         {
+            StartCoroutine(ContinueCoroutine());
+        }
+
+        private IEnumerator ContinueCoroutine()
+        {
+            if (RemoteConfigValues.show_int_if_fail)
+                yield return AdManager.ShowInterstitial();
             SceneManager.LoadCurrentLevel();
         }
     }

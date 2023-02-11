@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4464613669252742}
   - component: {fileID: 1874120793}
-  - component: {fileID: 571463858920773670}
   - component: {fileID: 189419046258654721}
   - component: {fileID: 644709054034633073}
   - component: {fileID: 8637497708650172298}
@@ -49,24 +48,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startManually: 0
+  appToken: '{Your App Token}'
+  environment: 1
+  logLevel: 3
   eventBuffering: 0
   sendInBackground: 0
   launchDeferredDeeplink: 1
-  appToken: '{Your App Token}'
-  logLevel: 3
-  environment: 1
---- !u!114 &571463858920773670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384633641988006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b85377514e0d9cf478cb1adf967145b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  needsCost: 0
+  coppaCompliant: 0
+  linkMe: 0
+  defaultTracker: 
+  urlStrategy: 0
+  startDelay: 0
+  secretId: 0
+  info1: 0
+  info2: 0
+  info3: 0
+  info4: 0
+  preinstallTracking: 0
+  preinstallFilePath: 
+  playStoreKidsApp: 0
+  iadInfoReading: 1
+  adServicesInfoReading: 1
+  idfaInfoReading: 1
+  skAdNetworkHandling: 1
 --- !u!114 &189419046258654721
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ using UnityEngine;
 
 public static class MoonSDK
 {
-    public const string Version = "1.1.7";
+    public const string Version = "1.2.3";
     public static string token = "";
 
     public static void TrackCustomEvent(string eventName, AnalyticsProvider analyticsProviders = AnalyticsProvider.Firebase)

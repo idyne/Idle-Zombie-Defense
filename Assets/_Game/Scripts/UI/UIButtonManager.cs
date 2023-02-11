@@ -224,6 +224,12 @@ public class UIButtonManager : MonoBehaviour
     {
         int cost = CostManager.GetThrowableWeaponsGuyLevelPrice();
         bool maxedOut = PlayerProgression.PlayerData.ThrowableWeaponsGuyLevel >= LimitManager.GetThrowableWeaponsGuyLevelLimit();
+        bool isLocked = Settings.ThrowableWeaponsUnlockDay > Day;
+        if (isLocked)
+        {
+            throwableWeaponsGuyButton.Lock(Settings.ThrowableWeaponsUnlockDay);
+            return;
+        }
         if (!maxedOut)
             throwableWeaponsGuyButton.SetText(UIMoney.FormatMoney(cost));
         else throwableWeaponsGuyButton.SetText("Max");
@@ -246,6 +252,12 @@ public class UIButtonManager : MonoBehaviour
     {
         int cost = CostManager.GetAirstrikePrice();
         bool maxedOut = PlayerProgression.PlayerData.AirstrikeLevel >= LimitManager.GetAirstrikeLevelLimit();
+        bool isLocked = Settings.AirstrikeUnlockDay > Day;
+        if (isLocked)
+        {
+            airstrikeLevelButton.Lock(Settings.AirstrikeUnlockDay);
+            return;
+        }
         if (!maxedOut)
             airstrikeLevelButton.SetText(UIMoney.FormatMoney(cost));
         else airstrikeLevelButton.SetText("Max");
@@ -269,6 +281,12 @@ public class UIButtonManager : MonoBehaviour
     {
         int cost = CostManager.GetTNTUpgradePrice();
         bool maxedOut = PlayerProgression.PlayerData.TNTLevel >= LimitManager.GetTNTUpgradeLimit();
+        bool isLocked = Settings.TNTUnlockDay > Day;
+        if (isLocked)
+        {
+            tntUpgradeButton.Lock(Settings.TNTUnlockDay);
+            return;
+        }
         if (!maxedOut)
             tntUpgradeButton.SetText(UIMoney.FormatMoney(cost));
         else tntUpgradeButton.SetText("Max");
@@ -291,6 +309,12 @@ public class UIButtonManager : MonoBehaviour
     {
         int cost = CostManager.GetFrostUpgradePrice();
         bool maxedOut = PlayerProgression.PlayerData.FrostLevel >= LimitManager.GetFrostUpgradeLimit();
+        bool isLocked = Settings.FrostUnlockDay > Day;
+        if (isLocked)
+        {
+            frostUpgradeButton.Lock(Settings.FrostUnlockDay);
+            return;
+        }
         if (!maxedOut)
             frostUpgradeButton.SetText(UIMoney.FormatMoney(cost));
         else frostUpgradeButton.SetText("Max");
@@ -313,6 +337,12 @@ public class UIButtonManager : MonoBehaviour
     {
         int cost = CostManager.GetBarbwireUpgradePrice();
         bool maxedOut = PlayerProgression.PlayerData.BarbwireLevel >= LimitManager.GetBarbwireUpgradeLimit();
+        bool isLocked = Settings.BarbwireUnlockDay > Day;
+        if (isLocked)
+        {
+            barbwireUpgradeButton.Lock(Settings.BarbwireUnlockDay);
+            return;
+        }
         if (!maxedOut)
             barbwireUpgradeButton.SetText(UIMoney.FormatMoney(cost));
         else barbwireUpgradeButton.SetText("Max");
@@ -335,6 +365,12 @@ public class UIButtonManager : MonoBehaviour
     {
         int cost = CostManager.GetTurretUpgradePrice();
         bool maxedOut = PlayerProgression.PlayerData.TurretLevel >= LimitManager.GetTurretUpgradeLimit();
+        bool isLocked = Settings.TurretUnlockDay > Day;
+        if (isLocked)
+        {
+            turretUpgradeButton.Lock(Settings.TurretUnlockDay);
+            return;
+        }
         if (!maxedOut)
             turretUpgradeButton.SetText(UIMoney.FormatMoney(cost));
         else turretUpgradeButton.SetText("Max");

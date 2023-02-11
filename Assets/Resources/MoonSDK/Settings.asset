@@ -17,8 +17,8 @@ MonoBehaviour:
   int_grace_level: 0
   cooldown_between_INTs: 0
   cooldown_after_RVs: 0
-  Show_int_if_fail: 0
-  INT_in_stage: 0
+  show_int_if_fail: 0
+  int_in_stage: 0
   GameAnalytics: 1
   gameAnalyticsIosGameKey: 
   gameAnalyticsIosSecretKey: 
@@ -30,11 +30,21 @@ MonoBehaviour:
   Adjust: 1
   adjustToken: hhxn04vok0lc
   adjustIAPRevenueToken: 2llw5e
+  adjustTestEventToken: o54vsw
   IronSource: 0
   ironSourceIOSAppKey: 
   ironSourceAndroidAppKey: 
+  AdMob: 0
   adMobIOSAppKey: 
   adMobAndroidAppKey: 
+  Applovin: 1
+  maxSDKKey: EghIU8MPrS5yShsp12hFZTN2T0sysd9F-mpr9MgBKNplGKZGGPVnpldaKrIrxV3vqXdmcNDl2FyCHT-KIC2hC2
+  applovinInterstitialAndroidAdUnit: 6a45aeb457612a6d
+  applovinRewardedVideoAndroidAdUnit: 9d90b19198ff26a4
+  applovinBannerAndroidAdUnit: 46fb917001d964a0
+  applovinInterstitialIOSAdUnit: 
+  applovinRewardedVideoIOSAdUnit: 
+  applovinBannerIOSAdUnit: 
   GDPR: 0
   appIcon: {fileID: 0}
   StudioLogo: 0

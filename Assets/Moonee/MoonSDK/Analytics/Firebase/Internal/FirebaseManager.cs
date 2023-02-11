@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Firebase.RemoteConfig;
 using Firebase.Extensions;
+using com.adjust.sdk;
 
 namespace Moonee.MoonSDK.Internal.Analytics
 {
@@ -18,9 +19,32 @@ namespace Moonee.MoonSDK.Internal.Analytics
                 Initialize();
             }
             else Destroy(this);
-        }
 
-        // Update is called once per frame
+            OnRemoteConfigValuesReceived += () =>
+            {
+                if (string.IsNullOrEmpty(settings.adjustTestEventToken) == false)
+                {
+                    string firebase_test = FirebaseRemoteConfig.DefaultInstance.GetValue("firebase_test").StringValue;
+                    string test_name = FirebaseRemoteConfig.DefaultInstance.GetValue("test_name").StringValue;
+                    string test_id = FirebaseRemoteConfig.DefaultInstance.GetValue("test_id").StringValue;
+                    string test_parameter = FirebaseRemoteConfig.DefaultInstance.GetValue("test_parameter").StringValue;
+                    bool is_baseline = FirebaseRemoteConfig.DefaultInstance.GetValue("is_baseline").BooleanValue;
+                    double test_value = FirebaseRemoteConfig.DefaultInstance.GetValue("test_value").DoubleValue;
+
+                    AdjustEvent adjustEvent = new AdjustEvent(settings.adjustTestEventToken);
+                    adjustEvent.addCallbackParameter("firebase_test", firebase_test);
+                    adjustEvent.addCallbackParameter("test_name", test_name);
+                    adjustEvent.addCallbackParameter("test_id", test_id);
+                    adjustEvent.addCallbackParameter("test_parameter", test_parameter);
+                    adjustEvent.addCallbackParameter("is_baseline", is_baseline.ToString());
+                    adjustEvent.addCallbackParameter("test_value", test_value.ToString());
+
+                    Adjust.trackEvent(adjustEvent);
+
+                    Debug.Log("Adjust Event Was Sent");
+                };
+            };
+        }
         void Initialize()
         {
             Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
@@ -54,10 +78,16 @@ namespace Moonee.MoonSDK.Internal.Analytics
                {"int_grace_level", settings.int_grace_level},
                {"cooldown_between_INTs", settings.cooldown_between_INTs},
                {"cooldown_after_RVs", settings.cooldown_after_RVs},
-               {"Show_int_if_fail", false},
-               {"INT_in_stage", false},
+               {"show_int_if_fail", false},
+               {"int_in_stage", false},
+               {"firebase_test","firebase_test"},
+               {"test_name","value"},
+               {"test_id", "value"},
+               {"test_parameter", "grace"},
+               {"is_baseline", true},
+               {"test_value", 120},
 
-            }).ContinueWithOnMainThread(task =>
+        }).ContinueWithOnMainThread(task =>
             {
                 remoteConfig.FetchAndActivateAsync().ContinueWithOnMainThread(task =>
                 {
@@ -65,8 +95,8 @@ namespace Moonee.MoonSDK.Internal.Analytics
                     RemoteConfigValues.int_grace_level = FirebaseRemoteConfig.DefaultInstance.GetValue("int_grace_level").LongValue;
                     RemoteConfigValues.cooldown_between_INTs = FirebaseRemoteConfig.DefaultInstance.GetValue("cooldown_between_INTs").DoubleValue;
                     RemoteConfigValues.cooldown_after_RVs = FirebaseRemoteConfig.DefaultInstance.GetValue("cooldown_after_RVs").DoubleValue;
-                    RemoteConfigValues.Show_int_if_fail = FirebaseRemoteConfig.DefaultInstance.GetValue("Show_int_if_fail").BooleanValue;
-                    RemoteConfigValues.INT_in_stage = FirebaseRemoteConfig.DefaultInstance.GetValue("INT_in_stage").BooleanValue;
+                    RemoteConfigValues.show_int_if_fail = FirebaseRemoteConfig.DefaultInstance.GetValue("show_int_if_fail").BooleanValue;
+                    RemoteConfigValues.int_in_stage = FirebaseRemoteConfig.DefaultInstance.GetValue("int_in_stage").BooleanValue;
 
                     OnRemoteConfigValuesReceived?.Invoke();
                     OnRemoteConfigValuesReceived = null;

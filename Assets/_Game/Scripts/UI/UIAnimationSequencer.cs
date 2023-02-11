@@ -74,7 +74,7 @@ public class UIAnimationSequencer : MonoBehaviour
             default:
                 break;
         }
-        yield return phaseCleared.Show(Mathf.CeilToInt(money),1);
+        yield return phaseCleared.Show(Mathf.CeilToInt(money), 1);
         uiDayBar.Hide();
         UILevelBar.Instance.Hide();
         yield return new WaitForSeconds(0.7f);
@@ -181,6 +181,7 @@ public class UIAnimationSequencer : MonoBehaviour
             UILevelBar.Instance.Show();
             UILevelBar.Instance.SetDay();
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
+            yield return AdManager.ShowInterstitial();
             UIButtonManager.Instance.UpdateStartButton();
             UIButtonManager.Instance.UpdateTrapUpgradesButton();
             UIButtonManager.Instance.UpdateBaseUpgradesButton();
@@ -194,6 +195,15 @@ public class UIAnimationSequencer : MonoBehaviour
             yield return FinishPhase();
             StartCoroutine(dayCycler.SetTimePeriod(CurrentTimePeriod));
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
+            if (WaveLevel > RemoteConfigValues.int_grace_level)
+            {
+                bool isAdDone = false;
+                void PauseGame() => Time.timeScale = 0;
+                void ContinueAfterAd() { isAdDone = true; Time.timeScale = 1; }
+                if (AdvertisementManager.IsCanShowInterstital && AdvertisementManager.IsInterstitialdAdReady())
+                    AdvertisementManager.ShowInterstitial(OnStartAdEvent: PauseGame, OnFinishAdEvent: ContinueAfterAd, OnFailedAdEvent: ContinueAfterAd);
+                yield return new WaitUntil(() => isAdDone);
+            }
             if (CurrentTimePeriod == TimePeriod.Night)
                 tower.TurnOnLights();
             uiDayBar.Show();

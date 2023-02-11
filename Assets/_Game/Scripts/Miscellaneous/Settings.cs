@@ -11,6 +11,9 @@ public static class Settings
     public static readonly int TurretUnlockDay = 14;
     public static readonly int TNTUnlockDay = 2;
     public static readonly int BarbwireUnlockDay = 6;
+    public static readonly int AirstrikeUnlockDay = 13;
+    public static readonly int ThrowableWeaponsUnlockDay = 4;
+
 
     private static int NumberOfFrostBombs { get => PlayerData.Traps.Where(trapData => trapData.Item1 == 1).Count(); }
     private static int NumberOfTurrets { get => PlayerData.Turrets.Count; }
