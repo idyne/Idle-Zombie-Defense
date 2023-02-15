@@ -251,6 +251,7 @@ public class Barracks : MonoBehaviour
 
     public void PlaceSoldiers()
     {
+        if (throwableWeaponsGuy) throwableWeaponsGuy.transform.position = tower.GetPoint(0).position;
         int count = 1;
         for (int i = soldierTable.Count - 1; i >= 1; i--)
         {

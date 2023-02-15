@@ -365,6 +365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoTag: Shotgun Ammo
   barrel: {fileID: 5196063545363816599}
+  soundFXTag: Shotgun Sound
 --- !u!1 &923346723197217792
 GameObject:
   m_ObjectHideFlags: 0

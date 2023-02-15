@@ -57,6 +57,9 @@ public class ThrowableWeaponsGuy : MonoBehaviour
             }
         });
         WaveController.Instance.OnWaveEnd.AddListener(() => { HideButton(); });
+        PauseButton.OnPause.AddListener(() => { if (WaveController.State == WaveController.WaveState.RUNNING) HideButton(); });
+        PauseButton.OnResume.AddListener(() => { if (WaveController.State == WaveController.WaveState.RUNNING && PlayerProgression.PlayerData.ThrowableWeaponsGuyLevel >= 1) ShowButton(); });
+
     }
 
     private void Start()
@@ -80,8 +83,10 @@ public class ThrowableWeaponsGuy : MonoBehaviour
             // Perform the raycast for 'Trap' layermask
             if (Physics.Raycast(ray, out RaycastHit hit, 100, zombieLayerMask))
             {
-                Zombie zombie = hit.transform.GetComponent<Zombie>();
-                SetTarget(zombie);
+                /*Zombie zombie = hit.transform.GetComponent<Zombie>();
+                SetTarget(zombie);*/
+                ZombieTargetHitbox zombieTargetHitbox = hit.transform.GetComponent<ZombieTargetHitbox>();
+                SetTarget(zombieTargetHitbox.Zombie);
             }
         }
         cooldownLayerImage.fillAmount = Mathf.Clamp(remainingCooldown / cooldown, 0, 1);

@@ -17,9 +17,9 @@ public class UIButtonManager : MonoBehaviour
     [SerializeField] private UIUpgradeButton tntUpgradeButton, frostUpgradeButton, barbwireUpgradeButton, turretUpgradeButton;
     [SerializeField] private UIPlacementButton frostButton, turretButton, tntButton, barbwireButton;
     [SerializeField] private PlacementController turretPlacementController, trapPlacementController;
-    private bool canAffordBaseDefenseUpgrade = false, canAffordSoldierMergeUpgrade = false, canAfforThrowableGuyUpgrade = false, canAffordAirstrikeUpgrade = false;
+    private bool canAffordBaseDefenseUpgrade = false, canAffordSoldierMergeUpgrade = false, canAffordThrowableGuyUpgrade = false, canAffordAirstrikeUpgrade = false;
     private bool canAffordTNTUpgrade = false, canAffordFrostUpgrade = false, canAffordBarbwireUpgrade = false, canAffordTurretUpgrade = false;
-    private bool notifyBaseUpgrades { get => canAffordBaseDefenseUpgrade || canAffordSoldierMergeUpgrade; }
+    private bool notifyBaseUpgrades { get => canAffordBaseDefenseUpgrade || canAffordSoldierMergeUpgrade || canAffordThrowableGuyUpgrade || canAffordAirstrikeUpgrade; }
     private bool notifyTrapUpgrades { get => canAffordTNTUpgrade || canAffordFrostUpgrade || canAffordBarbwireUpgrade || canAffordTurretUpgrade; }
 
     private void Awake()
@@ -34,6 +34,7 @@ public class UIButtonManager : MonoBehaviour
         WaveController.Instance.OnWaveStart.AddListener(UpdateTrapUpgradesButton);
         WaveController.Instance.OnWaveStart.AddListener(UpdateBaseUpgradesButton);
         WaveController.Instance.OnWaveEnd.AddListener(HideInWaveButtons);
+        UpgradeController.OnSoldierMergeLevelUpgrade.AddListener((level) => { UpdateSoldierButton(); UpdateMergeButton(); });
         PauseButton.OnPause.AddListener(() => { if (WaveController.State == WaveController.WaveState.RUNNING) HideInWaveButtons(); });
         PauseButton.OnResume.AddListener(() => { if (WaveController.State == WaveController.WaveState.RUNNING) ShowInWaveButtons(); });
         PlayerProgression.OnMoneyChanged.AddListener((money, change) =>
@@ -44,6 +45,7 @@ public class UIButtonManager : MonoBehaviour
         {
             UpdateUpgradeButtons();
         });
+        WaveController.Instance.OnWaveEnd.AddListener(UpdateUpgradeButtons);
     }
 
     private void Start()
@@ -236,13 +238,13 @@ public class UIButtonManager : MonoBehaviour
         if (!PlayerProgression.CanAffordUpgrade(cost) || maxedOut)
         {
             throwableWeaponsGuyButton.Deactivate();
-            canAfforThrowableGuyUpgrade = false;
+            canAffordThrowableGuyUpgrade = false;
             if (!notifyBaseUpgrades)
                 baseButton.HideNotification();
         }
         else if (!throwableWeaponsGuyButton.Active)
         {
-            canAfforThrowableGuyUpgrade = true;
+            canAffordThrowableGuyUpgrade = true;
             baseButton.ShowNotification();
             throwableWeaponsGuyButton.Activate();
         }
@@ -577,12 +579,10 @@ public class UIButtonManager : MonoBehaviour
 
     public void ShowPlacementButtons()
     {
-        // TODO
-        return;
-        turretButton.Show();
-        frostButton.Show();
-        tntButton.Show();
-        barbwireButton.Show();
+        UpdateTurretButton();
+        UpdateTNTButton();
+        UpdateBarbwireButton();
+        UpdateFrostButton();
     }
 
 

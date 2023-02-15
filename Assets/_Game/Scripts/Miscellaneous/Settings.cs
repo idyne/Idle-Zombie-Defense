@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using static FateGames.PlayerProgression;
 using static LevelManager;
 
@@ -13,7 +14,9 @@ public static class Settings
     public static readonly int BarbwireUnlockDay = 6;
     public static readonly int AirstrikeUnlockDay = 13;
     public static readonly int ThrowableWeaponsUnlockDay = 4;
-
+    public static bool SoundOn { get => soundOn; set { soundOn = value; OnSoundChange.Invoke(soundOn); } }
+    private static bool soundOn = true;
+    public static UnityEvent<bool> OnSoundChange { get; private set; } = new();
 
     private static int NumberOfFrostBombs { get => PlayerData.Traps.Where(trapData => trapData.Item1 == 1).Count(); }
     private static int NumberOfTurrets { get => PlayerData.Turrets.Count; }
@@ -31,7 +34,7 @@ public static class Settings
         private static readonly float BaseMergeRateCost = 15.14f;
         public static int MaxFireRateLevel = 14;
         public static int MergeCost { get => Mathf.CeilToInt(BaseMergeRateCost * (Barracks.Instance.TotalMerge + 1)); }
-        public static int SoldierCost { get => Mathf.CeilToInt(BaseSoldierCost * ((Barracks.Instance.Power) * 2f)); }
+        public static int SoldierCost { get => Mathf.CeilToInt(BaseSoldierCost * ((Barracks.Instance.Power + 1) * 2f)); }
         public static int FireRateCost { get => Mathf.CeilToInt(BaseFireRateCost * (PlayerData.FireRateLevel) * 4); }
         #endregion
         #region Base

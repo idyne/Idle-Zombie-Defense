@@ -30,6 +30,8 @@ public class Airstrike : MonoBehaviour
             }
         });
         WaveController.Instance.OnWaveEnd.AddListener(() => { HideButton(); });
+        PauseButton.OnPause.AddListener(() => { if (WaveController.State == WaveController.WaveState.RUNNING) HideButton(); });
+        PauseButton.OnResume.AddListener(() => { if (WaveController.State == WaveController.WaveState.RUNNING && PlayerProgression.PlayerData.AirstrikeLevel >= 1) ShowButton(); });
     }
 
     private void Start()

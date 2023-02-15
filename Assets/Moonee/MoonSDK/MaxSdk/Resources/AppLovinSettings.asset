@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AppLovinSettings
   m_EditorClassIdentifier: 
   qualityServiceEnabled: 1
-  sdkKey: EghIU8MPrS5yShsp12hFZTN2T0sysd9F-mpr9MgBKNplGKZGGPVnpldaKrIrxV3vqXdmcNDl2FyCHT-KIC2hC2
+  sdkKey: MrvHDnCHZF9AE2uvgJzWuxUDcZPa8u7ocF2vLrH47PwZF67iviGu618x6T_gOyccRO_FMH5P1GlbpTIPXcDBWk
   setAttributionReportEndpoint: 0
   consentFlowEnabled: 0
   consentFlowPrivacyPolicyUrl: 
@@ -27,5 +27,5 @@ MonoBehaviour:
   userTrackingUsageDescriptionKo: 
   userTrackingUsageDescriptionZhHans: 
   userTrackingUsageDescriptionZhHant: 
-  adMobAndroidAppId: ca-app-pub-4378539905949356~9715388088
+  adMobAndroidAppId: 
   adMobIosAppId: 

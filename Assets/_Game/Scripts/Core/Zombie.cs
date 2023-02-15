@@ -26,6 +26,7 @@ public class Zombie : MonoBehaviour, IPooledObject
     private int currentHealth = 100;
     private List<Barrier> barriers = new();
     public UnityEvent OnDeath { get; private set; } = new();
+    public UnityEvent OnSpawn { get; private set; } = new();
     public Transform ShotPoint { get => shotPoint; }
 
     private bool canHit = true;
@@ -48,6 +49,9 @@ public class Zombie : MonoBehaviour, IPooledObject
         else
             originalColor = rend.materials[1].color;
         healthBar.Hide();
+        ZombieTargetHitbox zombieTargetHitbox = Instantiate(PrefabManager.Prefabs["Zombie Target Hitbox"]).GetComponent<ZombieTargetHitbox>();
+        zombieTargetHitbox.SetZombie(this);
+        ZombieTargetHitboxUpdater.Instance.Register(zombieTargetHitbox);
     }
 
     public void SetLevel(int level)
@@ -190,6 +194,7 @@ public class Zombie : MonoBehaviour, IPooledObject
         agent.SetDestination(Vector3.zero);
         CancelSlowDown();
         SetColor(originalColor);
+        OnSpawn.Invoke();
     }
     private void SetHealth(int health, bool showBar = true)
     {

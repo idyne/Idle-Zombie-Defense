@@ -35,3 +35,5 @@ MonoBehaviour:
     gameObject: {fileID: 5355505176278194101, guid: 75d4c14dc055b3649b4e4e652fcab4f1, type: 3}
   - tag: Throwable Weapons Guy
     gameObject: {fileID: 7738036716063347438, guid: 1202c134737f99b498d206219e5f2e2e, type: 3}
+  - tag: Zombie Target Hitbox
+    gameObject: {fileID: 9090020845078616552, guid: 90bca36e5b10f2a46988f4737337855e, type: 3}

@@ -6,6 +6,7 @@ public class TargetIndicator : MonoBehaviour
 {
     [SerializeField] private Animator animator;
     [SerializeField] private RectTransform indicatorTransform;
+    [SerializeField] private GameObject canvas;
     Camera _mainCamera = null;
     private Zombie target = null;
     Camera mainCamera
@@ -34,6 +35,6 @@ public class TargetIndicator : MonoBehaviour
         animator.SetTrigger("Target");
     }
 
-    public void Show() => gameObject.SetActive(true);
-    public void Hide() => gameObject.SetActive(false);
+    public void Show() => canvas.SetActive(true);
+    public void Hide() => canvas.SetActive(false);
 }
