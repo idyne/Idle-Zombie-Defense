@@ -13,12 +13,10 @@ namespace Moonee.MoonSDK.Internal
 
         public static MoonSDKSettings Load() => Resources.Load<MoonSDKSettings>(SETTING_RESOURCES_PATH);
 
-        [Header("Moon SDK version 1.1.7", order = 0)]
+        [Header("Moon SDK version 1.2.3", order = 0)]
 
         [Space(10)]
         public bool Firebase;
-
-        [Space(10)]
         [ConditionalHide("Firebase")]
         public double int_grace_time = 0;
         [ConditionalHide("Firebase")]
@@ -28,9 +26,9 @@ namespace Moonee.MoonSDK.Internal
         [ConditionalHide("Firebase")]
         public double cooldown_after_RVs = 0;
         [ConditionalHide("Firebase")]
-        public bool Show_int_if_fail = false;
+        public bool show_int_if_fail = false;
         [ConditionalHide("Firebase")]
-        public bool INT_in_stage = false;
+        public bool int_in_stage = false;
 
         [Space(10)]
         public bool GameAnalytics;
@@ -68,9 +66,14 @@ namespace Moonee.MoonSDK.Internal
         [ConditionalHide("Adjust")]
         [Tooltip("The Adjust App token of your game")]
         public string adjustToken;
+
         [ConditionalHide("Adjust")]
-        [Tooltip("The Adjust iAP revenue tocekn")]
+        [Tooltip("The Adjust iAP revenue token")]
         public string adjustIAPRevenueToken;
+
+        [ConditionalHide("Adjust")]
+        [Tooltip("Firebase test event for Adjust token")]
+        public string adjustTestEventToken;
 
         [Space(10)]
         public bool IronSource;
@@ -78,15 +81,52 @@ namespace Moonee.MoonSDK.Internal
         [ConditionalHide("IronSource")]
         [Tooltip("The IOS Iron Source App key of your game")]
         public string ironSourceIOSAppKey;
+
         [ConditionalHide("IronSource")]
         [Tooltip("The Android Adjust App token of your game")]
         public string ironSourceAndroidAppKey;
+
+        [Space(10)]
+        public bool AdMob;
+
+        [ConditionalHide("AdMob")]
         [Tooltip("The IOS Ad Mob Adapter key of your game")]
-        [ConditionalHide("IronSource")]
         public string adMobIOSAppKey;
+       
+        [ConditionalHide("AdMob")]
         [Tooltip("The Android Ad Mob Adapter key of your game")]
-        [ConditionalHide("IronSource")]
         public string adMobAndroidAppKey;
+
+        [Space(10)]
+        public bool Applovin;
+
+        [ConditionalHide("Applovin")]
+        [Tooltip("Max SDK Key")]
+        public string maxSDKKey;
+
+        [ConditionalHide("Applovin")]
+        [Tooltip("Applovin Interstitial Android Ad Unit of your game Key")]
+        public string applovinInterstitialAndroidAdUnit;
+
+        [ConditionalHide("Applovin")]
+        [Tooltip("Applovin Rewarded Video Android Ad Unit of your game Key")]
+        public string applovinRewardedVideoAndroidAdUnit;
+
+        [ConditionalHide("Applovin")]
+        [Tooltip("Applovin Banner Android Ad Unit of your game Key")]
+        public string applovinBannerAndroidAdUnit;
+
+        [ConditionalHide("Applovin")]
+        [Tooltip("Applovin Interstitial iOS Ad Unit of your game Key")]
+        public string applovinInterstitialIOSAdUnit;
+
+        [ConditionalHide("Applovin")]
+        [Tooltip("Applovin Rewarded Video iOS Ad Unit of your game Key")]
+        public string applovinRewardedVideoIOSAdUnit;
+
+        [ConditionalHide("Applovin")]
+        [Tooltip("Applovin Banner iOS Ad Unit of your game Key")]
+        public string applovinBannerIOSAdUnit;
 
         [Space(10)]
         [Tooltip("App Icon For GDPR")]

@@ -31,6 +31,7 @@ public class ThrowableWeaponsGuy : MonoBehaviour
     [SerializeField] private GameObject skillActiveEffect;
     [SerializeField] private Sprite grenadeSprite, molotovSprite;
     private Vector3 grenadePoint;
+    [SerializeField] private TargetIndicator targetIndicator;
 
     private void ResetCooldown() => remainingCooldown = 0;
 
@@ -48,11 +49,17 @@ public class ThrowableWeaponsGuy : MonoBehaviour
         weapon = GetComponentInChildren<Weapon>();
         WaveController.Instance.OnWaveStart.AddListener(() =>
         {
-            DeactivateSkill();
-            ResetCooldown();
-            ShowButton();
+            if (PlayerProgression.PlayerData.ThrowableWeaponsGuyLevel >= 1)
+            {
+                DeactivateSkill();
+                ResetCooldown();
+                ShowButton();
+            }
         });
         WaveController.Instance.OnWaveEnd.AddListener(() => { HideButton(); });
+        PauseButton.OnPause.AddListener(() => { if (WaveController.State == WaveController.WaveState.RUNNING) HideButton(); });
+        PauseButton.OnResume.AddListener(() => { if (WaveController.State == WaveController.WaveState.RUNNING && PlayerProgression.PlayerData.ThrowableWeaponsGuyLevel >= 1) ShowButton(); });
+
     }
 
     private void Start()
@@ -76,8 +83,10 @@ public class ThrowableWeaponsGuy : MonoBehaviour
             // Perform the raycast for 'Trap' layermask
             if (Physics.Raycast(ray, out RaycastHit hit, 100, zombieLayerMask))
             {
-                Zombie zombie = hit.transform.GetComponent<Zombie>();
-                SetTarget(zombie);
+                /*Zombie zombie = hit.transform.GetComponent<Zombie>();
+                SetTarget(zombie);*/
+                ZombieTargetHitbox zombieTargetHitbox = hit.transform.GetComponent<ZombieTargetHitbox>();
+                SetTarget(zombieTargetHitbox.Zombie);
             }
         }
         cooldownLayerImage.fillAmount = Mathf.Clamp(remainingCooldown / cooldown, 0, 1);
@@ -104,12 +113,16 @@ public class ThrowableWeaponsGuy : MonoBehaviour
     {
         if (WaveController.Instance.CurrentWave == null || WaveController.State != WaveController.WaveState.RUNNING) return;
         if (zombie == null || Vector3.Distance(zombie.Transform.position, transform.position) > range) return;
+        if (zombie == target) return;
+        if (target)
+            RemoveTarget();
         target = zombie;
         zombie.OnDeath.AddListener(OnTargetDeath);
         if (lastShootTime + shootingPeriod > Time.time)
             DOVirtual.DelayedCall(lastShootTime + shootingPeriod - Time.time, StartShooting);
         else
             StartShooting();
+        targetIndicator.SetTarget(target);
     }
 
     public void ActivateRagdoll()
@@ -177,8 +190,11 @@ public class ThrowableWeaponsGuy : MonoBehaviour
     {
         target?.OnDeath.RemoveListener(OnTargetDeath);
         target = null;
+        targetIndicator.Hide();
         if (!throwing)
+        {
             StopShooting();
+        }
     }
 
     public void HandleSkillButton()
@@ -202,6 +218,7 @@ public class ThrowableWeaponsGuy : MonoBehaviour
 
     public void GetGrenadeToHand()
     {
+
         string weaponTag;
         switch (PlayerProgression.PlayerData.ThrowableWeaponsGuyLevel)
         {
@@ -224,6 +241,9 @@ public class ThrowableWeaponsGuy : MonoBehaviour
         throwableWeapon.transform.SetParent(null);
         throwableWeapon.Throw(!target ? grenadePoint : target.Transform.position);
         throwing = false;
-        if (!target) StopShooting();
+        if (!target)
+        {
+            StopShooting();
+        }
     }
 }

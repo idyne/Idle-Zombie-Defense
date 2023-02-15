@@ -33,6 +33,7 @@ public class UIAnimationSequencer : MonoBehaviour
     private bool soldierUnlockedHide = false;
     private bool isNewSession = true;
     private bool areaClearedNext = false;
+
     private IEnumerator FinishDay()
     {
         yield return new WaitForSeconds(1);
@@ -74,7 +75,7 @@ public class UIAnimationSequencer : MonoBehaviour
             default:
                 break;
         }
-        yield return phaseCleared.Show(Mathf.CeilToInt(money),1);
+        yield return phaseCleared.Show(Mathf.CeilToInt(money), 1);
         uiDayBar.Hide();
         UILevelBar.Instance.Hide();
         yield return new WaitForSeconds(0.7f);
@@ -85,7 +86,7 @@ public class UIAnimationSequencer : MonoBehaviour
     public IEnumerator GoCurrentTimePeriod()
     {
         PlayerProgression.MONEY = PlayerProgression.MONEY;
-
+        PlayerProgression.UPGRADE_POINT = PlayerProgression.UPGRADE_POINT;
         //Oyuna yeni baþlama
         if (isNewSession && Day == 1 && NewDay)
         {
@@ -162,6 +163,8 @@ public class UIAnimationSequencer : MonoBehaviour
             UILevelBar.Instance.Show();
             UILevelBar.Instance.SetDay();
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
+            if (Day == 4)
+                MoonSDK.OpenRateUsScreen();
             UIButtonManager.Instance.UpdateStartButton();
             UIButtonManager.Instance.UpdateTrapUpgradesButton();
             UIButtonManager.Instance.UpdateBaseUpgradesButton();
@@ -181,6 +184,7 @@ public class UIAnimationSequencer : MonoBehaviour
             UILevelBar.Instance.Show();
             UILevelBar.Instance.SetDay();
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
+            yield return AdManager.ShowInterstitial();
             UIButtonManager.Instance.UpdateStartButton();
             UIButtonManager.Instance.UpdateTrapUpgradesButton();
             UIButtonManager.Instance.UpdateBaseUpgradesButton();
@@ -194,6 +198,7 @@ public class UIAnimationSequencer : MonoBehaviour
             yield return FinishPhase();
             StartCoroutine(dayCycler.SetTimePeriod(CurrentTimePeriod));
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
+            yield return AdManager.ShowInterstitial();
             if (CurrentTimePeriod == TimePeriod.Night)
                 tower.TurnOnLights();
             uiDayBar.Show();

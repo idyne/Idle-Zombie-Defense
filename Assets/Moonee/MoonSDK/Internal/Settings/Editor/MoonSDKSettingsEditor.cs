@@ -61,7 +61,8 @@ namespace Moonee.MoonSDK.Internal.Editor
             GameAnalyticsPreBuild.CheckAndUpdateGameAnalyticsSettings(settings);
             FacebookPreBuild.CheckAndUpdateFacebookSettings(settings);
             AdjustBuildPrebuild.CheckAndUpdateAdjustSettings(settings);
-            IronSourcePreBuild.CheckAndUpdateFacebookSettings(settings);
+            IronSourcePreBuild.CheckAndUpdateIronSourceSettings(settings);
+            ApplovinPreBuild.CheckAndUpdateApplovinSettings(settings);
             global::MoonSDK.UpdateAdjustToken(settings);
         }
     }

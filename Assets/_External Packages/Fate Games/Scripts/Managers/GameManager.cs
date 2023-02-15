@@ -51,6 +51,7 @@ namespace FateGames
             {
                 ObjectPooler.CreatePools();
                 ProgressInitializer.Initialize();
+                AdvertisementManager.ShowBanner();
             }
         }
 

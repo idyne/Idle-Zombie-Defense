@@ -32,6 +32,7 @@ namespace FateGames
 
         private static IEnumerator LoadSceneAsynchronously(int sceneIndex)
         {
+            AdvertisementManager.HideBanner();
             GameManager.Instance.UpdateGameState(GameState.LOADING_SCREEN);
             UIManager.CreateUILoadingScreen();
             GlobalEventDispatcher.Clear();

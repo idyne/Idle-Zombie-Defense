@@ -15,6 +15,14 @@ namespace Moonee.MoonSDK.Internal.Editor
             NoIOSAdMobKey,
             NoAndroidIronSourceKey,
             NoAndroidAdMobKey,
+            NoMaxSDKKey,
+            NoAndroidInterstitialAdUnitSDKKey,
+            NoAndroidRewardedAdUnitSDKKey,
+            NoAndroidBannerAdUnitSDKKey,
+            NoIOSInterstitialAdUnitSDKKey,
+            NoIOSRewardedAdUnitSDKKey,
+            NoIOSBannerAdUnitSDKKey,
+
             INVALID_PLATFORM
         }
 
@@ -29,7 +37,14 @@ namespace Moonee.MoonSDK.Internal.Editor
              {ErrorID.NoIOSIronSourceKey, "Moon SDK Settings is missing iOS Iron Source App Key"},
              {ErrorID.NoIOSAdMobKey, "Moon SDK Settings is missing iOS Ad Mob Adapter Key"},
              {ErrorID.NoAndroidIronSourceKey, "Moon SDK Settings is missing Android Iron Source App Key"},
-             {ErrorID.NoAndroidAdMobKey, "Moon SDK Settings is missing Android Ad Mob Adapter Key"}
+             {ErrorID.NoAndroidAdMobKey, "Moon SDK Settings is missing Android Ad Mob Adapter Key"},
+             {ErrorID.NoMaxSDKKey, "Moon SDK Settings is missing Max SDK Key"},
+             {ErrorID.NoAndroidInterstitialAdUnitSDKKey, "Moon SDK Settings is missing Android Interstitial Ad Unit Key"},
+             {ErrorID.NoAndroidRewardedAdUnitSDKKey, "Moon SDK Settings is missing Android Rewarded Ad Unit Key"},
+             {ErrorID.NoAndroidBannerAdUnitSDKKey, "Moon SDK Settings is missing Android Banner Ad Unit Key"},
+             {ErrorID.NoIOSInterstitialAdUnitSDKKey, "Moon SDK Settings is missing iOS Interstitial Ad Unit Key"},
+             {ErrorID.NoIOSRewardedAdUnitSDKKey, "Moon SDK Settings is missing iOS Rewarded Ad Unit Key"},
+             {ErrorID.NoIOSBannerAdUnitSDKKey, "Moon SDK Settings is missing iOS Banner Ad Unit Key"}
          };
     }
 }

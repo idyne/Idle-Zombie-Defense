@@ -14,9 +14,9 @@ namespace Moonee.MoonSDK.Internal.Advertisement.Editor
 
         public void OnPreprocessBuild(BuildReport report)
         {
-            CheckAndUpdateFacebookSettings(MoonSDKSettings.Load());
+            CheckAndUpdateIronSourceSettings(MoonSDKSettings.Load());
         }
-        public static void CheckAndUpdateFacebookSettings(MoonSDKSettings settings)
+        public static void CheckAndUpdateIronSourceSettings(MoonSDKSettings settings)
         {
             if (!settings.IronSource) return;
 #if UNITY_IOS

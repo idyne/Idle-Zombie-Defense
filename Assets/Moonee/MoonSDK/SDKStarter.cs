@@ -12,10 +12,15 @@ namespace Moonee.MoonSDK
         [SerializeField] private GameObject moonSDK;
         [SerializeField] private GameObject intro;
 
+        private AsyncOperation asyncOperation;
+
         private void Start()
         {
             gdpr.gameObject.SetActive(false);
             intro.gameObject.SetActive(false);
+
+            asyncOperation = SceneManager.LoadSceneAsync(1);
+            asyncOperation.allowSceneActivation = false;
 
             StartCoroutine(Starter());
         }
@@ -27,7 +32,7 @@ namespace Moonee.MoonSDK
         {
             moonSDK.SetActive(true);
             DontDestroyOnLoad(moonSDK);
-            SceneManager.LoadScene(1);
+            asyncOperation.allowSceneActivation = true;
         }
         private IEnumerator Starter()
         {

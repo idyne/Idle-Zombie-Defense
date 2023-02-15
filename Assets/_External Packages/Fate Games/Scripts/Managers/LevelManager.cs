@@ -31,11 +31,13 @@ namespace FateGames
         public void FinishLevel(bool success)
         {
             if (GameManager.Instance.State == GameState.FINISHED) return;
+            PlayerPrefs.SetInt("AnchorWaveLevel", WaveLevel);
             if (!success)
             {
                 MoonSDK.TrackLevelEvents(MoonSDK.LevelEvents.Fail, Day);
                 PlayerProgression.PlayerData.WaveLevel = Day * 4 - 3;
             }
+            UIButtonManager.Instance.HideInWaveButtons();
             Turret.Stopped = true;
             Tower.Instance.Explode();
             WaveController.Instance.StopWave();

@@ -7,26 +7,75 @@ namespace com.adjust.sdk
 {
     public class Adjust : MonoBehaviour
     {
-        private const string errorMsgEditor= "[Adjust]: SDK can not be used in Editor.";
+        private const string errorMsgEditor = "[Adjust]: SDK can not be used in Editor.";
         private const string errorMsgStart = "[Adjust]: SDK not started. Start it manually using the 'start' method.";
         private const string errorMsgPlatform = "[Adjust]: SDK can only be used in Android, iOS, Windows Phone 8.1, Windows Store or Universal Windows apps.";
 
+        // [Header("SDK SETTINGS:")]
+        // [Space(5)]
+        // [Tooltip("If selected, it is expected from you to initialize Adjust SDK from your app code. " +
+        //     "Any SDK configuration settings from prefab will be ignored in that case.")]
         [HideInInspector]
-        public bool startManually= false;
+        public bool startManually = true;
+        [HideInInspector]
+        public string appToken;
+        [HideInInspector]
+        public AdjustEnvironment environment = AdjustEnvironment.Sandbox;
+        [HideInInspector]
+        public AdjustLogLevel logLevel = AdjustLogLevel.Info;
+        [HideInInspector]
+        public bool eventBuffering = false;
+        [HideInInspector]
+        public bool sendInBackground = false;
+        [HideInInspector]
+        public bool launchDeferredDeeplink = true;
+        [HideInInspector]
+        public bool needsCost = false;
+        [HideInInspector]
+        public bool coppaCompliant = false;
+        [HideInInspector]
+        public bool linkMe = false;
+        [HideInInspector]
+        public string defaultTracker;
+        [HideInInspector]
+        public AdjustUrlStrategy urlStrategy = AdjustUrlStrategy.Default;
+        [HideInInspector]
+        public double startDelay = 0;
 
+        // [Header("APP SECRET:")]
+        // [Space(5)]
         [HideInInspector]
-        public bool eventBuffering= false;
+        public long secretId = 0;
+        [HideInInspector]
+        public long info1 = 0;
+        [HideInInspector]
+        public long info2 = 0;
+        [HideInInspector]
+        public long info3 = 0;
+        [HideInInspector]
+        public long info4 = 0;
 
+        // [Header("ANDROID SPECIFIC FEATURES:")]
+        // [Space(5)]
         [HideInInspector]
-        public bool sendInBackground= false;
+        public bool preinstallTracking = false;
+        [HideInInspector]
+        public string preinstallFilePath;
+        [HideInInspector]
+        public bool playStoreKidsApp = false;
 
+        // [Header("iOS SPECIFIC FEATURES:")]
+        // [Space(5)]
         [HideInInspector]
-        public bool launchDeferredDeeplink= true;
+        public bool iadInfoReading = true;
         [HideInInspector]
-        public string appToken= "{Your App Token}";
+        public bool adServicesInfoReading = true;
+        [HideInInspector]
+        public bool idfaInfoReading = true;
+        [HideInInspector]
+        public bool skAdNetworkHandling = true;
 
-        public AdjustLogLevel logLevel= AdjustLogLevel.Info;
-        public AdjustEnvironment environment= AdjustEnvironment.Production;
+
 
 #if UNITY_IOS
         // Delegate references for iOS callback triggering
@@ -38,36 +87,34 @@ namespace com.adjust.sdk
         private static Action<AdjustSessionFailure> sessionFailureDelegate = null;
         private static Action<AdjustAttribution> attributionChangedDelegate = null;
         private static Action<int> conversionValueUpdatedDelegate = null;
+        private static Action<int, string, bool> skad4ConversionValueUpdatedDelegate = null;
+        private static Action<string> skadUpdateConversionValueDelegate = null;
+        private static Action<string> skad4UpdateConversionValueDelegate = null;
 #endif
 
-        private void Start()
+        void Awake()
         {
-            MoonSDKSettings settings = MoonSDKSettings.Load();
-
-            if (settings.Adjust == false)
+            var settings = MoonSDKSettings.Load();
+            if (IsEditor() )
+            {
+                return;
+            }
+            if(settings.Adjust == false)
             {
                 Destroy(this);
-            }
-            else InitAdjust();
-        }
-        public void InitAdjust()
-        {
-            appToken = MoonSDK.getToken();
-
-            if(appToken == "")
-            {
-                throw new MissingFieldException("Go here", new Exception("No Adjust token found please add it to your moon sdk settings"));
-                Debug.Break();
                 return;
             }
-            
-            if (IsEditor()) 
-            {
-                return;
-            }
-
             DontDestroyOnLoad(transform.gameObject);
 
+#if UNITY_ANDROID && UNITY_2019_2_OR_NEWER
+            Application.deepLinkActivated += Adjust.appWillOpenUrl;
+            if (!string.IsNullOrEmpty(Application.absoluteURL))
+            {
+                // Cold start and Application.absoluteURL not null so process Deep Link.
+                Adjust.appWillOpenUrl(Application.absoluteURL);
+            }
+#endif
+            this.appToken = MoonSDK.getToken();
             if (!this.startManually)
             {
                 AdjustConfig adjustConfig = new AdjustConfig(this.appToken, this.environment, (this.logLevel == AdjustLogLevel.Suppress));
@@ -75,13 +122,30 @@ namespace com.adjust.sdk
                 adjustConfig.setSendInBackground(this.sendInBackground);
                 adjustConfig.setEventBufferingEnabled(this.eventBuffering);
                 adjustConfig.setLaunchDeferredDeeplink(this.launchDeferredDeeplink);
+                adjustConfig.setDefaultTracker(this.defaultTracker);
+                adjustConfig.setUrlStrategy(this.urlStrategy.ToLowerCaseString());
+                adjustConfig.setAppSecret(this.secretId, this.info1, this.info2, this.info3, this.info4);
+                adjustConfig.setDelayStart(this.startDelay);
+                adjustConfig.setNeedsCost(this.needsCost);
+                adjustConfig.setPreinstallTrackingEnabled(this.preinstallTracking);
+                adjustConfig.setPreinstallFilePath(this.preinstallFilePath);
+                adjustConfig.setAllowiAdInfoReading(this.iadInfoReading);
+                adjustConfig.setAllowAdServicesInfoReading(this.adServicesInfoReading);
+                adjustConfig.setAllowIdfaReading(this.idfaInfoReading);
+                adjustConfig.setCoppaCompliantEnabled(this.coppaCompliant);
+                adjustConfig.setPlayStoreKidsAppEnabled(this.playStoreKidsApp);
+                adjustConfig.setLinkMeEnabled(this.linkMe);
+                if (!skAdNetworkHandling)
+                {
+                    adjustConfig.deactivateSKAdNetworkHandling();
+                }
                 Adjust.start(adjustConfig);
             }
         }
 
         void OnApplicationPause(bool pauseStatus)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -89,14 +153,14 @@ namespace com.adjust.sdk
 #if UNITY_IOS
                 // No action, iOS SDK is subscribed to iOS lifecycle notifications.
 #elif UNITY_ANDROID
-                if (pauseStatus)
-                {
-                    AdjustAndroid.OnPause();
-                }
-                else
-                {
-                    AdjustAndroid.OnResume();
-                }
+            if (pauseStatus)
+            {
+                AdjustAndroid.OnPause();
+            }
+            else
+            {
+                AdjustAndroid.OnResume();
+            }
 #elif (UNITY_WSA || UNITY_WP8)
                 if (pauseStatus)
                 {
@@ -113,7 +177,7 @@ namespace com.adjust.sdk
 
         public static void start(AdjustConfig adjustConfig)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -125,26 +189,27 @@ namespace com.adjust.sdk
             }
 
 #if UNITY_IOS
-                Adjust.eventSuccessDelegate = adjustConfig.getEventSuccessDelegate();
-                Adjust.eventFailureDelegate = adjustConfig.getEventFailureDelegate();
-                Adjust.sessionSuccessDelegate = adjustConfig.getSessionSuccessDelegate();
-                Adjust.sessionFailureDelegate = adjustConfig.getSessionFailureDelegate();
-                Adjust.deferredDeeplinkDelegate = adjustConfig.getDeferredDeeplinkDelegate();
-                Adjust.attributionChangedDelegate = adjustConfig.getAttributionChangedDelegate();
-                Adjust.conversionValueUpdatedDelegate = adjustConfig.getConversionValueUpdatedDelegate();
-                AdjustiOS.Start(adjustConfig);
+            Adjust.eventSuccessDelegate = adjustConfig.getEventSuccessDelegate();
+            Adjust.eventFailureDelegate = adjustConfig.getEventFailureDelegate();
+            Adjust.sessionSuccessDelegate = adjustConfig.getSessionSuccessDelegate();
+            Adjust.sessionFailureDelegate = adjustConfig.getSessionFailureDelegate();
+            Adjust.deferredDeeplinkDelegate = adjustConfig.getDeferredDeeplinkDelegate();
+            Adjust.attributionChangedDelegate = adjustConfig.getAttributionChangedDelegate();
+            Adjust.conversionValueUpdatedDelegate = adjustConfig.getConversionValueUpdatedDelegate();
+            Adjust.skad4ConversionValueUpdatedDelegate = adjustConfig.getSkad4ConversionValueUpdatedDelegate();
+            AdjustiOS.Start(adjustConfig);
 #elif UNITY_ANDROID
-                AdjustAndroid.Start(adjustConfig);
+            AdjustAndroid.Start(adjustConfig);
 #elif (UNITY_WSA || UNITY_WP8)
-                AdjustWindows.Start(adjustConfig);
+            AdjustWindows.Start(adjustConfig);
 #else
-                Debug.Log(errorMsgPlatform);
+            Debug.Log(errorMsgPlatform);
 #endif
         }
 
         public static void trackEvent(AdjustEvent adjustEvent)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -167,7 +232,7 @@ namespace com.adjust.sdk
 
         public static void setEnabled(bool enabled)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -204,7 +269,7 @@ namespace com.adjust.sdk
 
         public static void setOfflineMode(bool enabled)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -222,7 +287,7 @@ namespace com.adjust.sdk
 
         public static void setDeviceToken(string deviceToken)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -240,7 +305,7 @@ namespace com.adjust.sdk
 
         public static void gdprForgetMe()
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -258,7 +323,7 @@ namespace com.adjust.sdk
 
         public static void disableThirdPartySharing()
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -276,7 +341,7 @@ namespace com.adjust.sdk
 
         public static void appWillOpenUrl(string url)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -294,7 +359,7 @@ namespace com.adjust.sdk
 
         public static void sendFirstPackages()
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -312,7 +377,7 @@ namespace com.adjust.sdk
 
         public static void addSessionPartnerParameter(string key, string value)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -330,7 +395,7 @@ namespace com.adjust.sdk
 
         public static void addSessionCallbackParameter(string key, string value)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -348,7 +413,7 @@ namespace com.adjust.sdk
 
         public static void removeSessionPartnerParameter(string key)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -366,7 +431,7 @@ namespace com.adjust.sdk
 
         public static void removeSessionCallbackParameter(string key)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -384,7 +449,7 @@ namespace com.adjust.sdk
 
         public static void resetSessionPartnerParameters()
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -402,7 +467,7 @@ namespace com.adjust.sdk
 
         public static void resetSessionCallbackParameters()
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -420,7 +485,7 @@ namespace com.adjust.sdk
 
         public static void trackAdRevenue(string source, string payload)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -438,7 +503,7 @@ namespace com.adjust.sdk
 
         public static void trackAdRevenue(AdjustAdRevenue adRevenue)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -456,7 +521,7 @@ namespace com.adjust.sdk
 
         public static void trackAppStoreSubscription(AdjustAppStoreSubscription subscription)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -474,7 +539,7 @@ namespace com.adjust.sdk
 
         public static void trackPlayStoreSubscription(AdjustPlayStoreSubscription subscription)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -492,7 +557,7 @@ namespace com.adjust.sdk
 
         public static void trackThirdPartySharing(AdjustThirdPartySharing thirdPartySharing)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -510,7 +575,7 @@ namespace com.adjust.sdk
 
         public static void trackMeasurementConsent(bool measurementConsent)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -528,7 +593,7 @@ namespace com.adjust.sdk
 
         public static void requestTrackingAuthorizationWithCompletionHandler(Action<int> statusCallback, string sceneName = "Adjust")
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -551,7 +616,7 @@ namespace com.adjust.sdk
 
         public static void updateConversionValue(int conversionValue)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -562,6 +627,62 @@ namespace com.adjust.sdk
             Debug.Log("[Adjust]: Updating SKAdNetwork conversion value is only supported for iOS platform.");
 #elif (UNITY_WSA || UNITY_WP8)
             Debug.Log("[Adjust]: Updating SKAdNetwork conversion value is only supported for iOS platform.");
+#else
+            Debug.Log(errorMsgPlatform);
+#endif
+        }
+
+        public static void updateConversionValue(int conversionValue, Action<string> completionCallback, string sceneName = "Adjust")
+        {
+            if (IsEditor())
+            {
+                return;
+            }
+
+#if UNITY_IOS
+            Adjust.skadUpdateConversionValueDelegate = completionCallback;
+            AdjustiOS.UpdateConversionValue(conversionValue, sceneName);
+#elif UNITY_ANDROID
+            Debug.Log("[Adjust]: Updating SKAdNetwork conversion value is only supported for iOS platform.");
+#elif (UNITY_WSA || UNITY_WP8)
+            Debug.Log("[Adjust]: Updating SKAdNetwork conversion value is only supported for iOS platform.");
+#else
+            Debug.Log(errorMsgPlatform);
+#endif
+        }
+
+        public static void updateConversionValue(int conversionValue, string coarseValue, bool lockWindow, Action<string> completionCallback, string sceneName = "Adjust")
+        {
+            if (IsEditor())
+            {
+                return;
+            }
+
+#if UNITY_IOS
+            Adjust.skad4UpdateConversionValueDelegate = completionCallback;
+            AdjustiOS.UpdateConversionValue(conversionValue, coarseValue, lockWindow, sceneName);
+#elif UNITY_ANDROID
+            Debug.Log("[Adjust]: Updating SKAdNetwork conversion value is only supported for iOS platform.");
+#elif (UNITY_WSA || UNITY_WP8)
+            Debug.Log("[Adjust]: Updating SKAdNetwork conversion value is only supported for iOS platform.");
+#else
+            Debug.Log(errorMsgPlatform);
+#endif
+        }
+
+        public static void checkForNewAttStatus()
+        {
+            if (IsEditor())
+            {
+                return;
+            }
+
+#if UNITY_IOS
+            AdjustiOS.CheckForNewAttStatus();
+#elif UNITY_ANDROID
+            Debug.Log("[Adjust]: Checking for new ATT status is only supported for iOS platform.");
+#elif (UNITY_WSA || UNITY_WP8)
+            Debug.Log("[Adjust]: Checking for new ATT status is only supported for iOS platform.");
 #else
             Debug.Log(errorMsgPlatform);
 #endif
@@ -690,7 +811,7 @@ namespace com.adjust.sdk
         [Obsolete("This method is intended for testing purposes only. Do not use it.")]
         public static void setReferrer(string referrer)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -708,7 +829,7 @@ namespace com.adjust.sdk
 
         public static void getGoogleAdId(Action<string> onDeviceIdsRead)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -747,10 +868,31 @@ namespace com.adjust.sdk
 #endif
         }
 
+        public static string getLastDeeplink()
+        {
+            if (IsEditor())
+            {
+                return string.Empty;
+            }
+
+#if UNITY_IOS
+            return AdjustiOS.GetLastDeeplink();
+#elif UNITY_ANDROID
+            Debug.Log("[Adjust]: Error! Last deeplink getter is not available on Android platform.");
+            return string.Empty;
+#elif (UNITY_WSA || UNITY_WP8)
+            Debug.Log("[Adjust]: Error! Last deeplink getter is not available on Windows platform.");
+            return string.Empty;
+#else
+            Debug.Log(errorMsgPlatform);
+            return string.Empty;
+#endif
+        }
+
 #if UNITY_IOS
         public void GetNativeAttribution(string attributionData)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -767,7 +909,7 @@ namespace com.adjust.sdk
 
         public void GetNativeEventSuccess(string eventSuccessData)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -784,7 +926,7 @@ namespace com.adjust.sdk
 
         public void GetNativeEventFailure(string eventFailureData)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -801,7 +943,7 @@ namespace com.adjust.sdk
 
         public void GetNativeSessionSuccess(string sessionSuccessData)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -818,7 +960,7 @@ namespace com.adjust.sdk
 
         public void GetNativeSessionFailure(string sessionFailureData)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -835,7 +977,7 @@ namespace com.adjust.sdk
 
         public void GetNativeDeferredDeeplink(string deeplinkURL)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -851,7 +993,7 @@ namespace com.adjust.sdk
 
         public void GetNativeConversionValueUpdated(string conversionValue)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -872,9 +1014,67 @@ namespace com.adjust.sdk
             }
         }
 
+        public void GetNativeSkad4ConversionValueUpdated(string conversionValueUpdate)
+        {
+            if (IsEditor())
+            {
+                return;
+            }
+
+            if (Adjust.skad4ConversionValueUpdatedDelegate == null)
+            {
+                Debug.Log("[Adjust]: SKAD4 Conversion value updated delegate was not set.");
+                return;
+            }
+
+            int conversionValue = AdjustUtils.GetSkad4ConversionValue(conversionValueUpdate);
+            string coarseValue = AdjustUtils.GetSkad4CoarseValue(conversionValueUpdate);
+            bool lockWindow = AdjustUtils.GetSkad4LockWindow(conversionValueUpdate);
+
+            Adjust.skad4ConversionValueUpdatedDelegate(conversionValue, coarseValue, lockWindow);
+        }
+
+        public void GetNativeSkadCompletionDelegate(string message)
+        {
+            if (IsEditor())
+            {
+                return;
+            }
+
+            if (Adjust.skadUpdateConversionValueDelegate == null)
+            {
+                Debug.Log("[Adjust]: SKAD completion delegate was not set.");
+                return;
+            }
+
+            if (message != null)
+            {
+                Adjust.skadUpdateConversionValueDelegate(message);
+            }
+        }
+
+        public void GetNativeSkad4CompletionDelegate(string message)
+        {
+            if (IsEditor())
+            {
+                return;
+            }
+
+            if (Adjust.skad4UpdateConversionValueDelegate == null)
+            {
+                Debug.Log("[Adjust]: SKAD4 completion delegate was not set.");
+                return;
+            }
+
+            if (message != null)
+            {
+                Adjust.skad4UpdateConversionValueDelegate(message);
+            }
+        }
+
         public void GetAuthorizationStatus(string authorizationStatus)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }
@@ -905,7 +1105,7 @@ namespace com.adjust.sdk
 
         public static void SetTestOptions(Dictionary<string, string> testOptions)
         {
-            if (IsEditor()) 
+            if (IsEditor())
             {
                 return;
             }

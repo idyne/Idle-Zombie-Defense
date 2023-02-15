@@ -259,6 +259,8 @@ public class CheckGDPRCountry : MonoBehaviour
     {
         bool isGDPRCountry = false;
 
+        if (RegionIdentifier.region == null) RegionIdentifier.region = new System.Globalization.RegionInfo("US");
+
         foreach (var country in countryCodesMapping)
         {
             if (country.Key == RegionIdentifier.region.EnglishName)

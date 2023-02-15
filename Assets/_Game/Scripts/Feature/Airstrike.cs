@@ -23,10 +23,15 @@ public class Airstrike : MonoBehaviour
         bombPoints.Sort((a, b) => Mathf.CeilToInt(b.position.x - a.position.x));
         WaveController.Instance.OnWaveStart.AddListener(() =>
         {
-            ResetCooldown();
-            ShowButton();
+            if (PlayerProgression.PlayerData.AirstrikeLevel >= 1)
+            {
+                ResetCooldown();
+                ShowButton();
+            }
         });
         WaveController.Instance.OnWaveEnd.AddListener(() => { HideButton(); });
+        PauseButton.OnPause.AddListener(() => { if (WaveController.State == WaveController.WaveState.RUNNING) HideButton(); });
+        PauseButton.OnResume.AddListener(() => { if (WaveController.State == WaveController.WaveState.RUNNING && PlayerProgression.PlayerData.AirstrikeLevel >= 1) ShowButton(); });
     }
 
     private void Start()

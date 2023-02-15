@@ -200,7 +200,7 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Smoke Effect
     prefab: {fileID: 8971224939505514978, guid: 9da7726ce0b72e4469daf478b358be44, type: 3}
-    size: 3
+    size: 6
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: UI Money Image
@@ -240,7 +240,7 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Explosive Bomb
     prefab: {fileID: 2567905047410825368, guid: 837409f5c2e86794693673801b45905a, type: 3}
-    size: 1
+    size: 4
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Barbwire
@@ -251,11 +251,6 @@ MonoBehaviour:
   - tag: Airstrike Bomb
     prefab: {fileID: 3519386892853710539, guid: 797c7e3398645cf499b3480a650f022c, type: 3}
     size: 64
-    canActiveObjectsBeDequeued: 0
-    container: {fileID: 0}
-  - tag: Soldier 0
-    prefab: {fileID: 7738036716063347438, guid: 1202c134737f99b498d206219e5f2e2e, type: 3}
-    size: 1
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Grenade
@@ -282,4 +277,34 @@ MonoBehaviour:
     prefab: {fileID: 271218684912079319, guid: 1e83b3f100b2a09458ac1c4c51bdc0b2, type: 3}
     size: 2
     canActiveObjectsBeDequeued: 1
+    container: {fileID: 0}
+  - tag: Pistol Sound
+    prefab: {fileID: 81140555504399712, guid: 2f74e2153b9ed7e4ea48ffb8878e3923, type: 3}
+    size: 4
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Uzi Ammo
+    prefab: {fileID: 5388626812233157393, guid: 038b9f638c8cf544fa50751539712dab, type: 3}
+    size: 8
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Uzi Sound
+    prefab: {fileID: 81140555504399712, guid: c3a24c33782184f4780d0adb845c4c54, type: 3}
+    size: 8
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Shotgun Sound
+    prefab: {fileID: 81140555504399712, guid: 4cf9a58bfe2f1f64aa112184a5733016, type: 3}
+    size: 8
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Sniper Sound
+    prefab: {fileID: 81140555504399712, guid: 3182b3369bed29047b5123e084c14c38, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: M249 Sound
+    prefab: {fileID: 81140555504399712, guid: 4899b355aa8eb054ba3d1b0792b560c6, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
     container: {fileID: 0}

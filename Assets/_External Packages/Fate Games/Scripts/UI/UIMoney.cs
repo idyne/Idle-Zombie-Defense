@@ -44,7 +44,7 @@ namespace FateGames
             float startSize = 0.2f;
             float endSize = 0.8f;
             RectTransform rectTransform = ObjectPooler.SpawnFromPool("UI Money Image", Camera.main.WorldToScreenPoint(position), Quaternion.identity).GetComponent<RectTransform>();
-            rectTransform.parent = moneyCanvas;
+            rectTransform.SetParent(moneyCanvas);
             rectTransform.localScale = Vector3.one * startSize;
             rectTransform.DOScale(endSize, duration);
             rectTransform.DOMove(moneyImage.position, duration).OnStepComplete(() =>

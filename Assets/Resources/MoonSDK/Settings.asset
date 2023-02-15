@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c151705efef5748b9a8ff640aafdf0, type: 3}
   m_Name: Settings
   m_EditorClassIdentifier: 
-  Firebase: 0
+  Firebase: 1
   int_grace_time: 0
-  int_grace_level: 0
-  cooldown_between_INTs: 0
-  cooldown_after_RVs: 0
-  Show_int_if_fail: 0
-  INT_in_stage: 0
+  int_grace_level: 12
+  cooldown_between_INTs: 180
+  cooldown_after_RVs: 180
+  show_int_if_fail: 1
+  int_in_stage: 0
   GameAnalytics: 1
   gameAnalyticsIosGameKey: 
   gameAnalyticsIosSecretKey: 
@@ -30,15 +30,25 @@ MonoBehaviour:
   Adjust: 1
   adjustToken: hhxn04vok0lc
   adjustIAPRevenueToken: 2llw5e
+  adjustTestEventToken: o54vsw
   IronSource: 0
   ironSourceIOSAppKey: 
   ironSourceAndroidAppKey: 
+  AdMob: 1
   adMobIOSAppKey: 
-  adMobAndroidAppKey: 
+  adMobAndroidAppKey: ca-app-pub-4378539905949356~9715388088
+  Applovin: 1
+  maxSDKKey: EghIU8MPrS5yShsp12hFZTN2T0sysd9F-mpr9MgBKNplGKZGGPVnpldaKrIrxV3vqXdmcNDl2FyCHT-KIC2hC2
+  applovinInterstitialAndroidAdUnit: 6a45aeb457612a6d
+  applovinRewardedVideoAndroidAdUnit: 9d90b19198ff26a4
+  applovinBannerAndroidAdUnit: 46fb917001d964a0
+  applovinInterstitialIOSAdUnit: 
+  applovinRewardedVideoIOSAdUnit: 
+  applovinBannerIOSAdUnit: 
   GDPR: 0
   appIcon: {fileID: 0}
   StudioLogo: 0
-  studioLogoSprite: {fileID: 0}
-  rateUsScreen: 0
-  googlePlayLink: 
+  studioLogoSprite: {fileID: 21300000, guid: ae8a5bdf1b3a4f646b47c8aeebd9d598, type: 3}
+  rateUsScreen: 1
+  googlePlayLink: https://play.google.com/store/apps/details?id=com.FateGames.IdleZombieDefense
   appStoreLink: 
