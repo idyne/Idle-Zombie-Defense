@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Turret : Placeable
 {
+    [SerializeField] private string shootingSoundTag;
     public static bool Stopped = false;
     [SerializeField] private float shootingPeriod = 1;
     [SerializeField] private float range = 20;
@@ -39,14 +40,14 @@ public class Turret : Placeable
         if (DOTween.Kill(this) > 0) print("Turret hiderangeindicator tween killded");
         rangeIndicatorTransform.gameObject.SetActive(false);
         if (duration > 0)
-            DOVirtual.DelayedCall(duration, () => { ShowRangeIndicator(); });
+            DOVirtual.DelayedCall(duration, () => { ShowRangeIndicator(); }, false);
     }
     private void ShowRangeIndicator(float duration = -1)
     {
         if (DOTween.Kill(this) > 0) print("Turret showrangeindicator tween killed");
         rangeIndicatorTransform.gameObject.SetActive(true);
         if (duration > 0)
-            DOVirtual.DelayedCall(duration, () => { HideRangeIndicator(); });
+            DOVirtual.DelayedCall(duration, () => { HideRangeIndicator(); }, false);
     }
 
     private void Update()
@@ -66,7 +67,7 @@ public class Turret : Placeable
     public void Initialize(Grid grid, int saveDataIndex)
     {
         this.saveDataIndex = saveDataIndex;
-        Attach(grid);
+        Attach(grid, init: true);
     }
     private void FindTarget()
     {
@@ -82,7 +83,7 @@ public class Turret : Placeable
         target = closestZombie;
         closestZombie.OnDeath.AddListener(OnTargetDeath);
         if (lastShootTime + shootingPeriod > Time.time)
-            DOVirtual.DelayedCall(lastShootTime + shootingPeriod - Time.time, StartShooting);
+            DOVirtual.DelayedCall(lastShootTime + shootingPeriod - Time.time, StartShooting, false);
         else
             StartShooting();
     }
@@ -111,15 +112,16 @@ public class Turret : Placeable
         lastShootTime = Time.time;
         Projectile projectile = ObjectPooler.SpawnFromPool(ammoTag, barrel.position, barrel.rotation).GetComponent<Projectile>();
         projectile.StartMovement(target);
+        SoundFX.PlaySound(shootingSoundTag, barrel.position);
     }
     private void StopShooting()
     {
         animator.SetFloat("Speed", 0.15f);
         CancelInvoke(nameof(Shoot));
     }
-    public override void Attach(Grid grid)
+    public override void Attach(Grid grid, bool sound = true, bool init = false)
     {
-        base.Attach(grid);
+        base.Attach(grid, sound, init);
         if (!bought)
         {
             saveDataIndex = PlayerProgression.PlayerData.Turrets.Count;

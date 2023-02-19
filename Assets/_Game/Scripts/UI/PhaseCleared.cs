@@ -18,6 +18,7 @@ public class PhaseCleared : MonoBehaviour
 
     public IEnumerator Show(int money, int upgradePoints)
     {
+        SoundFX.PlaySound("Phase Cleared Sound");
         phaseClearedText.SetActive(true);
         this.money = money;
         this.upgradePoints = upgradePoints;

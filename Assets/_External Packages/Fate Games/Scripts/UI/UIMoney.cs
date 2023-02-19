@@ -36,6 +36,8 @@ namespace FateGames
             if (animating || change == 0) return;
             animating = true;
             Transform.DOScale(1.1f, 0.05f).SetLoops(2, LoopType.Yoyo).OnComplete(() => { animating = false; });
+            if (change > 0)
+                SoundFX.PlaySound("Money Sound");
         }
 
         public void AddMoneyEffect(Vector3 position, int gain)

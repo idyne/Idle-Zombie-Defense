@@ -1,36 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using FateGames;
 using static LevelManager;
 public class Tower : MonoBehaviour
 {
-    private static Tower instance;
-    public static Tower Instance
-    {
-        get
-        {
-            if (instance == null)
-                instance = FindObjectOfType<Tower>();
-            return instance;
-        }
-    }
     private int currentHealth = 100;
+    [SerializeField] private int towerWorldLevel = 1;
+    [SerializeField] private int towerZoneLevel = 1;
     [SerializeField] private BaseSpotlight[] spotlights;
     [SerializeField] private Transform pointContainer;
-    [SerializeField] private Transform smallPointContainer;
-    [SerializeField] private GameObject smallTower, bigTower;
+    [SerializeField] private GameObject tower;
+    [SerializeField] private GameObject seperateTower;
+    [SerializeField] private List<Barrier> barriers;
+    [SerializeField] private PlacementController turretPlacementController, trapPlacementController;
+    [SerializeField] private Transform bombPointContainer;
+    [SerializeField] private Transform zombieSpawnPointContainer;
+    [SerializeField] private bool overrideZombieSpawnPoints = false;
+    [SerializeField] private CameraController cameraController;
+    private List<Transform> bombPoints = new();
+    private List<Transform> zombieSpawnPoints = new();
     private List<Transform> points = new();
-    private List<Transform> lessPoints = new();
     private UIHealthBar healthBar;
     public Transform Transform { get; private set; }
     private int MaxHealth { get => GetMaxHealth(); }
-    public int NumberOfPoints { get => ZoneLevel == 1 ? lessPoints.Count : points.Count; }
+    public int NumberOfPoints { get => points.Count; }
+    public int TowerWorldLevel { get => towerWorldLevel; }
+    public int TowerZoneLevel { get => towerZoneLevel; }
+    public PlacementController TurretPlacementController { get => turretPlacementController; }
+    public PlacementController TrapPlacementController { get => trapPlacementController; }
+    public List<Transform> BombPoints { get => bombPoints; }
+    public bool OverrideZombieSpawnPoints { get => overrideZombieSpawnPoints; }
+    public CameraController CameraController { get => cameraController; }
+
     private int damageTaken = 0;
-    [SerializeField] private GameObject seperateSmallTower, seperateBigTower;
 
     private void Awake()
     {
+        for (int i = 0; i < bombPointContainer.childCount; i++)
+            bombPoints.Add(bombPointContainer.GetChild(i));
+        bombPoints.Sort((a, b) => Mathf.CeilToInt(a.position.z - b.position.z));
+        if (overrideZombieSpawnPoints)
+            for (int i = 0; i < zombieSpawnPointContainer.childCount; i++)
+                zombieSpawnPoints.Add(zombieSpawnPointContainer.GetChild(i));
         TurnOffLights();
         Transform = transform;
         healthBar = GetComponentInChildren<UIHealthBar>();
@@ -41,14 +54,9 @@ public class Tower : MonoBehaviour
 
     private void Start()
     {
-        SetTower();
         WaveController.Instance.OnNewWave.AddListener((wave) =>
         {
-            wave.OnWaveClear.AddListener(() =>
-            {
-                SetHealth(MaxHealth, damageTaken > 0);
-                damageTaken = 0;
-            });
+            wave.OnWaveClear.AddListener(Repair);
         });
         UpgradeController.OnBaseDefenseUpgrade.AddListener(() =>
         {
@@ -56,8 +64,33 @@ public class Tower : MonoBehaviour
         });
     }
 
+    public Transform GetRandomZombieSpawnPoint()
+    {
+        return zombieSpawnPoints[Random.Range(0, zombieSpawnPoints.Count)];
+    }
+
+    public void Repair()
+    {
+        foreach (Barrier barrier in barriers)
+            barrier.Repair();
+        SetHealth(MaxHealth, damageTaken > 0);
+        damageTaken = 0;
+        HapticManager.DoHaptic();
+    }
+
+    public void Activate()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void Deactivate()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void TurnOnLights()
     {
+        print("turnon");
         for (int i = 0; i < spotlights.Length; i++)
         {
             spotlights[i].TurnOn();
@@ -74,35 +107,14 @@ public class Tower : MonoBehaviour
 
     public void Explode()
     {
-        smallTower.SetActive(false);
-        bigTower.SetActive(false);
-        if (ZoneLevel == 1)
+        tower.SetActive(false);
+        seperateTower.SetActive(true);
+        Rigidbody[] rbs = seperateTower.GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rbs)
         {
-            seperateSmallTower.SetActive(true);
-            Rigidbody[] rbs = seperateSmallTower.GetComponentsInChildren<Rigidbody>();
-            foreach (Rigidbody rb in rbs)
-            {
-                rb.isKinematic = false;
-                rb.AddExplosionForce(5, transform.position, 5, 1, ForceMode.Impulse);
-            }
+            rb.isKinematic = false;
+            rb.AddExplosionForce(5, transform.position, 5, 1, ForceMode.Impulse);
         }
-        else
-        {
-            seperateBigTower.SetActive(true);
-            Rigidbody[] rbs = seperateBigTower.GetComponentsInChildren<Rigidbody>();
-            foreach (Rigidbody rb in rbs)
-            {
-                rb.isKinematic = false;
-                rb.AddExplosionForce(5, transform.position, 5, 1, ForceMode.Impulse);
-            }
-        }
-    }
-
-    public void SetTower()
-    {
-        smallTower.SetActive(ZoneLevel == 1);
-        bigTower.SetActive(ZoneLevel != 1);
-        Barracks.Instance.PlaceSoldiers();
     }
 
     private int GetMaxHealth()
@@ -121,16 +133,13 @@ public class Tower : MonoBehaviour
     {
         for (int i = 0; i < pointContainer.childCount; i++)
             points.Add(pointContainer.GetChild(i));
-        for (int i = 0; i < smallPointContainer.childCount; i++)
-            lessPoints.Add(smallPointContainer.GetChild(i));
     }
 
 
     public Transform GetPoint(int index)
     {
-        List<Transform> pointList = ZoneLevel == 1 ? lessPoints : points;
-        if (index < 0 || index >= pointList.Count) return null;
-        return pointList[index];
+        if (index < 0 || index >= points.Count) return null;
+        return points[index];
     }
 
     public void GetHit(int damage)
@@ -153,5 +162,7 @@ public class Tower : MonoBehaviour
     {
         FateGames.LevelManager.Instance.FinishLevel(false);
     }
+
+
 
 }

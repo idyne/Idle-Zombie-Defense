@@ -13,6 +13,7 @@ public class TrapController : MonoBehaviour
     private Tween firstTapTween = null;
     private void Update()
     {
+        if (PauseButton.Paused) return;
         if (Input.GetMouseButtonDown(0) && !(EventSystem.current.IsPointerOverGameObject() && EventSystem.current.currentSelectedGameObject != null))
         {
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -27,7 +28,7 @@ public class TrapController : MonoBehaviour
                         firstTapTween = null;
                     }
                     firstTap = true;
-                    firstTapTween = DOVirtual.DelayedCall(0.6f, () => { firstTap = false; });
+                    firstTapTween = DOVirtual.DelayedCall(0.6f, () => { firstTap = false; }, false);
                     Bomb bomb = hit.transform.GetComponent<Bomb>();
                     if (bomb && !bomb.Exploded)
                         bomb.ShowRangeIndicator(1);

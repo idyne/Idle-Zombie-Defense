@@ -30,6 +30,7 @@ public class PlacementController : MonoBehaviour
 
     private void Update()
     {
+        if (PauseButton.Paused) return;
         if (WaveController.State == WaveController.WaveState.RUNNING) return;
         if (Input.GetMouseButtonDown(0)) Select();
         if (selectedPlaceable && Input.GetMouseButton(0)) Hover();

@@ -1403,6 +1403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoTag: Rocket
   barrel: {fileID: 5500198586065380980}
+  soundFXTag: Rocket Sound
 --- !u!1 &5423578847747686503
 GameObject:
   m_ObjectHideFlags: 0

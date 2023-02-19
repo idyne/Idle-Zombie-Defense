@@ -12,7 +12,7 @@ public class Barbwire : Trap
     public override void Initialize(bool exploded, Grid grid, int saveDataIndex)
     {
         this.saveDataIndex = saveDataIndex;
-        Attach(grid);
+        Attach(grid, init: true);
     }
 
     protected override bool Explode()
@@ -32,7 +32,7 @@ public class Barbwire : Trap
                 zombie.GetHit(Mathf.CeilToInt(damagePerSecond * t));
                 zombie.SlowDown(t);
                 cooldownList.Add(zombie);
-                DOVirtual.DelayedCall(t, () => { cooldownList.Remove(zombie); });
+                DOVirtual.DelayedCall(t, () => { cooldownList.Remove(zombie); }, false);
             }
         }
     }

@@ -7,7 +7,6 @@ using System;
 using UnityEngine.Events;
 using static LevelManager;
 
-[RequireComponent(typeof(Tower))]
 public class Barracks : MonoBehaviour
 {
     private static Barracks instance;
@@ -20,13 +19,13 @@ public class Barracks : MonoBehaviour
             return instance;
         }
     }
-    private Tower tower;
+    private Tower tower { get => TowerController.Instance.GetCurrentTower(); }
     private List<List<Soldier>> soldierTable = new List<List<Soldier>> { null, new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>(), new List<Soldier>() };
     private int numberOfSoldiers = 0;
     public int Power { get; private set; } = 0;
     public bool Merging { get; private set; } = false;
     private int mergingSoldiersPower = 0;
-    public bool Full { get => tower.NumberOfPoints <= numberOfSoldiers; }
+    public bool Full { get => tower.NumberOfPoints <= numberOfSoldiers + 1; }
     public static int FireRateLevel { get => PlayerProgression.PlayerData.FireRateLevel; }
     private int maxMergeLevel = 0;
     public readonly UnityEvent<int> OnNewMergeUnlocked = new();
@@ -35,7 +34,6 @@ public class Barracks : MonoBehaviour
 
     private void Awake()
     {
-        tower = GetComponent<Tower>();
         UpgradeController.OnSoldierMergeLevelUpgrade.AddListener(ClearLowLevelSoldiers);
     }
 
@@ -132,6 +130,7 @@ public class Barracks : MonoBehaviour
         int soldierLevel = PlayerProgression.PlayerData.SoldierMergeLevel;
         AddSoldier(soldierLevel, out _, out _);
         PlayerProgression.MONEY -= cost;
+        SoundFX.PlaySound("Soldier Buying Sound");
         HapticManager.DoHaptic();
     }
 
@@ -219,7 +218,7 @@ public class Barracks : MonoBehaviour
                 newSoldier.Transform.DOMove(position, transitionDuration).OnComplete(() =>
                 {
                     if (isNewMerge)
-                        DOVirtual.DelayedCall(0.4f, () => { OnNewMergeUnlocked.Invoke(soldierLevel + 1); });
+                        DOVirtual.DelayedCall(0.4f, () => { OnNewMergeUnlocked.Invoke(soldierLevel + 1); }, false);
                 });
                 Merging = false;
 

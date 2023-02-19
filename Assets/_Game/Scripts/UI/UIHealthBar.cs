@@ -31,7 +31,7 @@ public class UIHealthBar : MonoBehaviour
         if (tween != null) tween.Kill();
         gameObject.SetActive(false);
         if (duration > 0)
-            tween = DOVirtual.DelayedCall(duration, () => { Show(); });
+            tween = DOVirtual.DelayedCall(duration, () => { Show(); }, false);
     }
 
     public void Show(float duration = -1, bool instant = false)
@@ -41,6 +41,6 @@ public class UIHealthBar : MonoBehaviour
             slider.value = desiredValue;
         gameObject.SetActive(true);
         if (duration > 0)
-            tween = DOVirtual.DelayedCall(duration, () => { Hide(); });
+            tween = DOVirtual.DelayedCall(duration, () => { Hide(); }, false);
     }
 }

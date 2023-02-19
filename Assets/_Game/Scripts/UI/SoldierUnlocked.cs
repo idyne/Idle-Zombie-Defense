@@ -27,7 +27,7 @@ public class SoldierUnlocked : MonoBehaviour
             soldiers[i]?.SetActive(false);
         }
         soldiers[soldierLevel].SetActive(true);
-        DOVirtual.DelayedCall(1, () => { button.SetActive(true); });
+        DOVirtual.DelayedCall(1, () => { button.SetActive(true); }, false);
     }
     public void Hide()
     {

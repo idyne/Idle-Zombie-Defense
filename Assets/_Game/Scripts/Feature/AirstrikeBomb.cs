@@ -30,6 +30,8 @@ public class AirstrikeBomb : MonoBehaviour, IPooledObject
     public void Explode()
     {
         ObjectPooler.SpawnFromPool("Airstrike Bomb Effect", transform.position, Quaternion.identity);
+        if (Random.value > 0.40f)
+            SoundFX.PlaySound("Airstrike Bomb Explosion Sound", transform.position);
         Collider[] colliders = Physics.OverlapSphere(transform.position, range, zombieLayerMask);
         for (int i = 0; i < colliders.Length; i++)
         {

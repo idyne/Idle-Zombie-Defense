@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 6485542668510117462}
-  sound: {fileID: 6485542668532091182}
+  sound: {fileID: 0}
 --- !u!1001 &6159922737178283344
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -176,6 +176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2349277748492617243, guid: 50e5bff118166d142ad518b4e0a1ee4d, type: 3}
+    - {fileID: 1116109469636592766, guid: 50e5bff118166d142ad518b4e0a1ee4d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 50e5bff118166d142ad518b4e0a1ee4d, type: 3}
 --- !u!198 &6485542668510117462 stripped
 ParticleSystem:
@@ -185,10 +186,5 @@ ParticleSystem:
 --- !u!4 &6485542668524301918 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1116109469640205070, guid: 50e5bff118166d142ad518b4e0a1ee4d, type: 3}
-  m_PrefabInstance: {fileID: 6159922737178283344}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &6485542668532091182 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 1116109469636592766, guid: 50e5bff118166d142ad518b4e0a1ee4d, type: 3}
   m_PrefabInstance: {fileID: 6159922737178283344}
   m_PrefabAsset: {fileID: 0}

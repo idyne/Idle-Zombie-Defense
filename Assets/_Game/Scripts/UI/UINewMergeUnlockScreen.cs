@@ -24,6 +24,7 @@ public class UINewMergeUnlockScreen : MonoBehaviour
     private void Open(int level)
     {
         pauseButton.Press();
+        SoundFX.PlaySound("New Merge Unlocked Sound");
         container.SetActive(true);
         bannerText.text = soldierNames[level];
         SoldierRenderController.Instance.Render(level);
@@ -32,6 +33,7 @@ public class UINewMergeUnlockScreen : MonoBehaviour
     // Continue butonunun onclick eventine baðlý
     public void Close()
     {
+        SoundFX.PlaySound("UI Button Sound");
         container.SetActive(false);
         pauseButton.Press();
     }

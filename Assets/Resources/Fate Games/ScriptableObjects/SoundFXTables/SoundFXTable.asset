@@ -1,0 +1,302 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09db9c0f4256705409b1758c6c85f059, type: 3}
+  m_Name: SoundFXTable
+  m_EditorClassIdentifier: 
+  entities:
+  - tag: Barbwire Placement Sound
+    clip: {fileID: 8300000, guid: 232781b579ecca049ad09ad9149fb20f, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.75
+    pitchRangeMax: 1
+    volume: 0.874
+  - tag: Bazooka Sound
+    clip: {fileID: 8300000, guid: 31d4354cef3a92a4481b8c1464e22afd, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.75
+    pitchRangeMax: 1
+    volume: 1
+  - tag: Frost Placement Sound
+    clip: {fileID: 8300000, guid: 3f9b19b5b28f618468026598ce2c52de, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.9
+    pitchRangeMax: 1
+    volume: 0.874
+  - tag: M16 Sound
+    clip: {fileID: 8300000, guid: eea904033193c0c41a784dc49aad9611, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.75
+    pitchRangeMax: 1
+    volume: 0.6
+  - tag: M249 Sound
+    clip: {fileID: 8300000, guid: 177848aa4c0287f48a637ff84751bc6d, type: 3}
+    loop: 0
+    spatialBlend: 0.8
+    pitchRangeMin: 0.8
+    pitchRangeMax: 1
+    volume: 1
+  - tag: Pistol Sound
+    clip: {fileID: 8300000, guid: e1694f66760ca85418567e2dcbd66a0a, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.8
+    pitchRangeMax: 1
+    volume: 1
+  - tag: Rocket Sound
+    clip: {fileID: 8300000, guid: 865e88b4b32e7c44298c5cffdb7a80af, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.8
+    pitchRangeMax: 1
+    volume: 1
+  - tag: Shotgun Sound
+    clip: {fileID: 8300000, guid: a2ce75c4daaa82b4c8fe57a740efdca8, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.75
+    pitchRangeMax: 1
+    volume: 0.6
+  - tag: Sniper Sound
+    clip: {fileID: 8300000, guid: f7368ff6b9b7b6545ad0fd23d120bfe8, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.75
+    pitchRangeMax: 1
+    volume: 0.6
+  - tag: Soldier Buying Sound
+    clip: {fileID: 8300000, guid: 45b719c1e7b02bb48b085d63925c25ae, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.75
+    pitchRangeMax: 1
+    volume: 1.168
+  - tag: TNT Placement Sound
+    clip: {fileID: 8300000, guid: 3f9b19b5b28f618468026598ce2c52de, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.9
+    pitchRangeMax: 1
+    volume: 0.874
+  - tag: Turret Placement Sound
+    clip: {fileID: 8300000, guid: 9f0f59cdefcf0f34eb29bdaa4d11c7d4, type: 3}
+    loop: 0
+    spatialBlend: 0.7
+    pitchRangeMin: 0.96
+    pitchRangeMax: 1
+    volume: 1
+  - tag: Turret Sound
+    clip: {fileID: 8300000, guid: 7628aadaa0631b34ba23c628912e2c94, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.75
+    pitchRangeMax: 1
+    volume: 1
+  - tag: UI Button Click Sound
+    clip: {fileID: 8300000, guid: 32d4b1811dda14a6cb9e059ee8ad17d2, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 1
+    pitchRangeMax: 1
+    volume: 0.5
+  - tag: UI Button Sound
+    clip: {fileID: 8300000, guid: e57748cf35d25f6418e010afeec9be97, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 1
+    pitchRangeMax: 1
+    volume: 0.5
+  - tag: Uzi Sound
+    clip: {fileID: 8300000, guid: 31ea6c5495890634f8f47bfb95e7a8f7, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.75
+    pitchRangeMax: 1
+    volume: 1
+  - tag: Zombie Crowd Sound
+    clip: {fileID: 8300000, guid: 47b24ac0ab39df14fa96c129ab843fc3, type: 3}
+    loop: 1
+    spatialBlend: 0
+    pitchRangeMin: 0.75
+    pitchRangeMax: 1
+    volume: 0.04
+  - tag: Out Wave Button Sound
+    clip: {fileID: 8300000, guid: 00516be3567e5534aa4820e86e73ce91, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 0.54
+    pitchRangeMax: 0.91
+    volume: 0.5
+  - tag: Zombie Dying Sound 1
+    clip: {fileID: 8300000, guid: a3475893eca510c44a02875a7f93501a, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.26
+    pitchRangeMax: 1
+    volume: 0.95
+  - tag: Zombie Dying Sound 2
+    clip: {fileID: 8300000, guid: 76f61949523e51246b04f213c560eca9, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.24
+    pitchRangeMax: 1
+    volume: 0.95
+  - tag: Money Sound
+    clip: {fileID: 8300000, guid: cd42ea3bff42a3f4da3fc14ca03a0298, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 0.86
+    pitchRangeMax: 1
+    volume: 0.5
+  - tag: Upgrade Point Sound
+    clip: {fileID: 8300000, guid: 72b25bc5dbd83574e95229f77aca083c, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 0.86
+    pitchRangeMax: 1
+    volume: 0.5
+  - tag: Tic Tac Sound
+    clip: {fileID: 8300000, guid: c5e2a73ad4706440f93bf05df0b465fe, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 0.7
+    pitchRangeMax: 0.7
+    volume: 0.5
+  - tag: Sound Button Sound
+    clip: {fileID: 8300000, guid: 53876af583398ce4db99173d06b17c3a, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 1
+    pitchRangeMax: 1
+    volume: 0.5
+  - tag: Pause Button Sound
+    clip: {fileID: 8300000, guid: 53876af583398ce4db99173d06b17c3a, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 1
+    pitchRangeMax: 1
+    volume: 0.5
+  - tag: Fail Sound
+    clip: {fileID: 8300000, guid: aa32dee47a661f74e930502073769a3c, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 1
+    pitchRangeMax: 1
+    volume: 0.5
+  - tag: Start Button Sound
+    clip: {fileID: 8300000, guid: 0fad8a942932a5a49a632ccc57bd1fa2, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 1
+    pitchRangeMax: 1
+    volume: 0.5
+  - tag: Trap Price Tag Button Sound
+    clip: {fileID: 8300000, guid: 235869bff196cd84d88ae95cfe9d746f, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 0.9
+    pitchRangeMax: 1
+    volume: 0.5
+  - tag: Upgrade Button Sound
+    clip: {fileID: 8300000, guid: f2593a54280f8b74a98bbc446c26db31, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 1
+    pitchRangeMax: 1
+    volume: 0.5
+  - tag: Bazooka Explosion Sound
+    clip: {fileID: 8300000, guid: a970649270f85524781aecaae72c17d4, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.9
+    pitchRangeMax: 1
+    volume: 1
+  - tag: Rocket Explosion Sound
+    clip: {fileID: 8300000, guid: 3900e0114d300ec44983585f377b93e7, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.9
+    pitchRangeMax: 1
+    volume: 1
+  - tag: Area Cleared Sound
+    clip: {fileID: 8300000, guid: d50112dff621547448ea782c779da414, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 1
+    pitchRangeMax: 1
+    volume: 0.5
+  - tag: Phase Cleared Sound
+    clip: {fileID: 8300000, guid: 622e0fbb5c7c87a40a46ce506713792b, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 1
+    pitchRangeMax: 1
+    volume: 0.5
+  - tag: Fire Rate Button Sound
+    clip: {fileID: 8300000, guid: e886ad2ad95de1e41a1cb7f3948fe5be, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 1
+    pitchRangeMax: 1
+    volume: 0.5
+  - tag: Airstrike Bomb Explosion Sound
+    clip: {fileID: 8300000, guid: 565f92fb3619a734aaab50c8d8264415, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.9
+    pitchRangeMax: 1
+    volume: 0.8
+  - tag: Airstrike Napalm Explosion Sound
+    clip: {fileID: 8300000, guid: 92d3259b6a9732e4ba3fb95331b2c95d, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.9
+    pitchRangeMax: 1
+    volume: 0.8
+  - tag: Grenade Explosion Sound
+    clip: {fileID: 8300000, guid: 79c3cb7a26813d146b07c293b0324039, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.9
+    pitchRangeMax: 1
+    volume: 1
+  - tag: Molotov Impact Sound
+    clip: {fileID: 8300000, guid: 3691574370f4a48998b4c4ae11855c5e, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.9
+    pitchRangeMax: 1
+    volume: 1
+  - tag: Fire Sound
+    clip: {fileID: 8300000, guid: 5fec9ae9029a9455f8b8bff2b5c327a0, type: 3}
+    loop: 1
+    spatialBlend: 0.5
+    pitchRangeMin: 0.9
+    pitchRangeMax: 1
+    volume: 1
+  - tag: Background Music Sound
+    clip: {fileID: 8300000, guid: 92c97c42cb3ca624f89eb2b2214a5862, type: 3}
+    loop: 1
+    spatialBlend: 0
+    pitchRangeMin: 1
+    pitchRangeMax: 1
+    volume: 0
+  - tag: New Merge Unlocked Sound
+    clip: {fileID: 8300000, guid: 46a9a4f3f85c42a4fa1144a48bc80096, type: 3}
+    loop: 0
+    spatialBlend: 0
+    pitchRangeMin: 1
+    pitchRangeMax: 1
+    volume: 0.5

@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using FateGames;
 
 public class Placeable : MonoBehaviour
 {
     [SerializeField] private Grid initialGrid;
+    [SerializeField] private string soundTag;
     public virtual bool CanSelect { get; protected set; } = true;
     public UnityEvent OnSelect { get; private set; } = new();
     public UnityEvent OnDrop { get; private set; } = new();
@@ -38,13 +40,14 @@ public class Placeable : MonoBehaviour
         transform.position = position;
     }
 
-    public virtual void Attach(Grid grid)
+    public virtual void Attach(Grid grid, bool sound = true, bool init = false)
     {
         if (!grid) return;
         Detach();
         this.grid = grid;
         grid.SetPlaceable(this);
         PlaceOnGrid();
+        if (sound && !init) SoundFX.PlaySound(soundTag, transform.position);
     }
 
     public void Detach()

@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine.Events;
 using TMPro;
 using static LevelManager;
+using UnityEngine.AI;
 
 public class WaveController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class WaveController : MonoBehaviour
     [SerializeField] private UIDayBar uiDayBar;
     [SerializeField] private UIAnimationSequencer UIAnimationSequencer;
     private static WaveController instance = null;
+    private SoundFXWorker crowdSoundWorker = null;
     public static WaveController Instance
     {
         get
@@ -23,7 +25,7 @@ public class WaveController : MonoBehaviour
         }
     }
     public static int WaveLevel { get => PlayerProgression.PlayerData.WaveLevel; set => PlayerProgression.PlayerData.WaveLevel = value; }
-    
+
     public Wave CurrentWave { get; private set; } = null;
     public static WaveState State { get; private set; }
 
@@ -33,7 +35,7 @@ public class WaveController : MonoBehaviour
     public UnityEvent OnWaveEnd { get; private set; } = new();
     private int CurrentBossLevel { get => CurrentTimePeriod == TimePeriod.Night ? NormalizedDay : -1; }
 
-    
+
     private int GetCurrentLevelPower()
     {
         switch (WorldLevel)
@@ -61,21 +63,21 @@ public class WaveController : MonoBehaviour
 
     private void Start()
     {
+        TowerController.Instance.GetCurrentTower();
         LoadCurrentLevel();
     }
 
     private void LoadCurrentLevel()
     {
         State = WaveState.WAITING;
-
         CreateWave(GetCurrentLevelPower(), CurrentMaxZombieLevel, CurrentBossLevel);
         PlayerProgression.MONEY = PlayerProgression.MONEY;
         StartCoroutine(UIAnimationSequencer.GoCurrentTimePeriod());
-        BarrierController.Instance.RepairAll();
     }
 
     private void GoNextLevel()
     {
+        crowdSoundWorker.Stop();
         MoonSDK.TrackLevelEvents(MoonSDK.LevelEvents.Complete, WaveLevel);
         WaveLevel++;
         OnWaveEnd.Invoke();
@@ -109,6 +111,7 @@ public class WaveController : MonoBehaviour
         });
         MoonSDK.TrackLevelEvents(MoonSDK.LevelEvents.Start, WaveLevel);
         CurrentWave.Start();
+        crowdSoundWorker = SoundFX.PlaySound("Zombie Crowd Sound");
         State = WaveState.RUNNING;
         UIButtonManager.Instance.UpdateStartButton();
         UILevelBar.Instance.Hide();
@@ -122,6 +125,7 @@ public class WaveController : MonoBehaviour
     public void StopWave()
     {
         CurrentWave.Stop();
+        crowdSoundWorker.Stop();
     }
 
     public void CreateWave(int power, int maxZombieLevel, int bossLevel = -1)
@@ -179,11 +183,11 @@ public class WaveController : MonoBehaviour
                 if (numbersOfZombies[level] > 0)
                 {
                     numbersOfZombies[level]--;
-                    DOVirtual.DelayedCall(++count * period, () => { SpawnZombie(level); });
+                    DOVirtual.DelayedCall(++count * period, () => { SpawnZombie(level); }, false);
                 }
             }
             if (bossLevel > 0)
-                DOVirtual.DelayedCall(++count * period, () => { SpawnBoss(bossLevel); });
+                DOVirtual.DelayedCall(++count * period, () => { SpawnBoss(bossLevel); }, false);
             this.totalNumberOfZombies = totalNumberOfZombies;
         }
 
@@ -201,7 +205,12 @@ public class WaveController : MonoBehaviour
 
         private void SpawnZombie(int level)
         {
-            Vector3 position = GenerateSpawnPosition(30, 5);
+            Tower tower = TowerController.Instance.GetCurrentTower();
+            Vector3 position;
+            if (tower.OverrideZombieSpawnPoints)
+                position = tower.GetRandomZombieSpawnPoint().position;
+            else
+                position = GenerateSpawnPosition(30, 5);
             Zombie zombie = ObjectPooler.SpawnFromPool("Zombie " + level, position, Quaternion.LookRotation(-position)).GetComponent<Zombie>();
             zombies.Add(zombie);
             zombie.OnDeath.AddListener(() =>
@@ -214,7 +223,12 @@ public class WaveController : MonoBehaviour
         }
         private void SpawnBoss(int level)
         {
-            Vector3 position = GenerateSpawnPosition(30, 5);
+            Tower tower = TowerController.Instance.GetCurrentTower();
+            Vector3 position;
+            if (tower.OverrideZombieSpawnPoints)
+                position = tower.GetRandomZombieSpawnPoint().position;
+            else
+                position = GenerateSpawnPosition(30, 5);
             string bossTag = "Boss";
             bool bigBoss = false;
             for (int i = 0; i < Settings.CumulativeZoneLengths.Length; i++)
@@ -249,7 +263,30 @@ public class WaveController : MonoBehaviour
         {
             Vector3 position = Quaternion.Euler(0, Random.Range(0f, 360f), 0) * Vector3.right * circleRadius;
             position += position.normalized * Random.Range(0, circleWidth);
+            int count = 0;
+            while (count++ < 100 && !NavMesh.SamplePosition(position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+            {
+                position = Quaternion.Euler(0, Random.Range(0f, 360f), 0) * Vector3.right * circleRadius;
+                position += position.normalized * Random.Range(0, circleWidth);
+            }
+            if (count == 100) print("error");
             return position;
+        }
+
+        bool RandomPoint(Vector3 center, float range, out Vector3 result)
+        {
+            for (int i = 0; i < 30; i++)
+            {
+                Vector3 randomPoint = center + Random.insideUnitSphere * range;
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+                {
+                    result = hit.position;
+                    return true;
+                }
+            }
+            result = Vector3.zero;
+            return false;
         }
 
         public Zombie GetClosest(Vector3 to)

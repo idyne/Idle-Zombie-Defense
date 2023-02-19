@@ -36,6 +36,7 @@ public class Zombie : MonoBehaviour, IPooledObject
     private bool isStopped = false;
     private bool slowedDown = false;
     private Tween slowDownTween = null;
+    private bool died = false;
 
     private void Awake()
     {
@@ -85,7 +86,7 @@ public class Zombie : MonoBehaviour, IPooledObject
         meshAnimator.speed *= 0.4f;
         hitCooldownDuration *= 2.5f;
         SetColor(slowedDownColor);
-        slowDownTween = DOVirtual.DelayedCall(t, CancelSlowDown);
+        slowDownTween = DOVirtual.DelayedCall(t, CancelSlowDown, false);
     }
 
     public void CancelSlowDown()
@@ -172,7 +173,7 @@ public class Zombie : MonoBehaviour, IPooledObject
     {
         if (!agent.enabled) return;
         value = Mathf.Clamp(value, 0, 1);
-        agent.Move(Transform.position.normalized * value);
+        agent.Move(-Transform.forward.normalized * value);
     }
     private void Die()
     {
@@ -181,6 +182,8 @@ public class Zombie : MonoBehaviour, IPooledObject
         OnDeath.RemoveAllListeners();
         Deactivate();
         ObjectPooler.SpawnFromPool(isBoss ? "Dying Zombie Boss" : ("Dying Zombie " + level), Transform.position, Transform.rotation);
+        SoundFX.PlaySound("Zombie Dying Sound " + (Random.value > 0.5f ? "1" : "2"), ShotPoint.position);
+        died = true;
     }
 
     private void Deactivate()
@@ -191,10 +194,11 @@ public class Zombie : MonoBehaviour, IPooledObject
     public void OnObjectSpawn()
     {
         SetHealth(maxHealth, false);
-        agent.SetDestination(Vector3.zero);
+        agent.SetDestination(TowerController.Instance.GetCurrentTower().Transform.position);
         CancelSlowDown();
         SetColor(originalColor);
         OnSpawn.Invoke();
+        died = false;
     }
     private void SetHealth(int health, bool showBar = true)
     {
@@ -213,14 +217,14 @@ public class Zombie : MonoBehaviour, IPooledObject
         this.tower = tower;
         tower.GetHit(damage);
         canHit = false;
-        DOVirtual.DelayedCall(hitCooldownDuration, () => { canHit = true; });
+        DOVirtual.DelayedCall(hitCooldownDuration, () => { canHit = true; }, false);
     }
     private void HitBarrier(Barrier barrier)
     {
         if (!canHit) return;
         barrier.GetHit(damage);
         canHit = false;
-        DOVirtual.DelayedCall(hitCooldownDuration, () => { canHit = true; });
+        DOVirtual.DelayedCall(hitCooldownDuration, () => { canHit = true; }, false);
     }
 
     private void OnTriggerStay(Collider other)

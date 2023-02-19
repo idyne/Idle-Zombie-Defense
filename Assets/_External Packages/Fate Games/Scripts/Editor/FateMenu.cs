@@ -66,6 +66,13 @@ public class FateMenu : MonoBehaviour
         Selection.activeObject = table;
     }
 
+    [MenuItem("Fate/Tables/SoundFX Table")]
+    static void SelectSoundFXTable()
+    {
+        SoundFXTable table = Resources.Load<SoundFXTable>("Fate Games/ScriptableObjects/SoundFXTables/SoundFXTable");
+        Selection.activeObject = table;
+    }
+
     // Add a menu item called "Double Mass" to a Rigidbody's context menu.
     /*[MenuItem("CONTEXT/Rigidbody/Double Mass")]
     static void DoubleMass(MenuCommand command)

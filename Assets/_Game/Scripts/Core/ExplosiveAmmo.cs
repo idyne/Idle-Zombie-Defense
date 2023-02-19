@@ -8,6 +8,7 @@ public class ExplosiveAmmo : Projectile
 {
     [SerializeField] private float range = 4;
     [SerializeField] private LayerMask affectedLayers;
+    [SerializeField] private string soundFXTag;
     protected override void OnReached(Zombie target)
     {
         ObjectPooler.SpawnFromPool("Explosion Effect", Transform.position, Transform.rotation);
@@ -19,6 +20,7 @@ public class ExplosiveAmmo : Projectile
         }
         //target.GetHit(this);
 
-        DOVirtual.DelayedCall(1, Deactivate);
+        DOVirtual.DelayedCall(1, Deactivate, false);
+        SoundFX.PlaySound(soundFXTag, Transform.position);
     }
 }

@@ -22,4 +22,9 @@ public class TrapPriceTag : MonoBehaviour
     public void Hide() => gameObject.SetActive(false);
     public void Show() => gameObject.SetActive(true);
     public void SetPrice(int price) => priceText.text = UIMoney.FormatMoney(price);
+    
+    public void PlaySound()
+    {
+        SoundFX.PlaySound("Trap Price Tag Button Sound");
+    }
 }

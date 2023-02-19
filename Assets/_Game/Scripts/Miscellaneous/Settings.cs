@@ -320,7 +320,7 @@ public static class Settings
 
         #endregion
         #region Zombie
-        private static readonly int BaseZombieHealth = 40;
+        private static readonly int BaseZombieHealth = 400;
         private static readonly int BaseZombieDamage = 30;
         public static int ZombieHealth(int level, bool boss)
         {
