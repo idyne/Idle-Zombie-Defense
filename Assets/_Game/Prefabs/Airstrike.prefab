@@ -256,7 +256,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ccbe1e5873c47c448a223d1d2583b89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombPointContainer: {fileID: 7663939817392451281}
   animator: {fileID: 8289921571659753969}
   cooldownLayerImage: {fileID: 9125817842177418605}
   button: {fileID: 1244229807342534913}
@@ -298,7 +297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7663939817392451281
 Transform:
   m_ObjectHideFlags: 0

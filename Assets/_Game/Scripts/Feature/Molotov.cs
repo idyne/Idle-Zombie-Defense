@@ -10,7 +10,7 @@ public class Molotov : ThrowableWeapon, IPooledObject
     protected List<Zombie> cooldownList = new();
     [SerializeField] private Collider damageCollider;
     [SerializeField] private GameObject mesh;
-    private float duration = 4;
+    private float duration = 6;
 
     public void OnObjectSpawn()
     {
@@ -23,7 +23,9 @@ public class Molotov : ThrowableWeapon, IPooledObject
         damageCollider.enabled = true;
         DeactivateMesh();
         ObjectPooler.SpawnFromPool("Molotov Effect", transform.position, Quaternion.identity);
-        DOVirtual.DelayedCall(duration, Deactivate);
+        SoundFX.PlaySound("Molotov Impact Sound", transform.position);
+        SoundFXWorker worker = SoundFX.PlaySound("Fire Sound", transform.position);
+        DOVirtual.DelayedCall(duration, () => { worker.Stop(); Deactivate(); }, false);
     }
 
     private void OnTriggerStay(Collider other)
@@ -34,7 +36,7 @@ public class Molotov : ThrowableWeapon, IPooledObject
             float t = 0.5f;
             zombie.GetHit(Mathf.CeilToInt(damagePerSecond * t));
             cooldownList.Add(zombie);
-            DOVirtual.DelayedCall(t, () => { cooldownList.Remove(zombie); });
+            DOVirtual.DelayedCall(t, () => { cooldownList.Remove(zombie); }, false);
         }
     }
 

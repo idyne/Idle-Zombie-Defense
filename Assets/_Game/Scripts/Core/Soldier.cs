@@ -47,7 +47,7 @@ public class Soldier : MonoBehaviour, IPooledObject
         closestZombie.OnDeath.AddListener(OnTargetDeath);
         //LookAtTarget(StartShooting);
         if (lastShootTime + shootingPeriod > Time.time)
-            DOVirtual.DelayedCall(lastShootTime + shootingPeriod - Time.time, StartShooting);
+            DOVirtual.DelayedCall(lastShootTime + shootingPeriod - Time.time, StartShooting, false);
         else
             StartShooting();
     }

@@ -191,6 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoTag: Explosive Ammo
   barrel: {fileID: 2674428569243450749}
+  soundFXTag: Bazooka Sound
 --- !u!1 &1906453570893195079
 GameObject:
   m_ObjectHideFlags: 0

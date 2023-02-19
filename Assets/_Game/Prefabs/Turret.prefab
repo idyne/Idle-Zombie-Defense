@@ -697,6 +697,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialGrid: {fileID: 0}
+  soundTag: Turret Placement Sound
+  shootingSoundTag: Turret Sound
   shootingPeriod: 0.2
   range: 5
   head: {fileID: 6155943871659429300}

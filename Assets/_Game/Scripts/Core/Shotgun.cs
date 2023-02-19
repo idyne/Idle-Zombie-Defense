@@ -13,5 +13,6 @@ public class Shotgun : Weapon
             Vector3 direction = Quaternion.Euler(0, i * 5, 0) * target.ShotPoint.position - projectile.Transform.position;
             projectile.Go(direction);
         }
+        SoundFX.PlaySound(soundFXTag, barrel.position);
     }
 }

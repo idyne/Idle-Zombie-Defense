@@ -33,6 +33,8 @@ public class UIUpgradePoints : MonoBehaviour
         if (animating || change == 0) return;
         animating = true;
         Transform.DOScale(1.1f, 0.05f).SetLoops(2, LoopType.Yoyo).OnComplete(() => { animating = false; });
+        if (change > 0)
+            SoundFX.PlaySound("Upgrade Point Sound");
     }
 
 

@@ -27,7 +27,6 @@ public class Weapon : MonoBehaviour
     {
         Projectile projectile = ObjectPooler.SpawnFromPool(ammoTag, barrel.position, barrel.rotation).GetComponent<Projectile>();
         projectile.StartMovement(target);
-        if (soundFXTag != "")
-            ObjectPooler.SpawnFromPool(soundFXTag, transform.position, Quaternion.identity);
+        SoundFX.PlaySound(soundFXTag, barrel.position);
     }
 }

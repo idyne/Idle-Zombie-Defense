@@ -56,14 +56,14 @@ public abstract class Bomb : Trap
         if (DOTween.Kill(this) > 0) print("Turret hiderangeindicator tween killded");
         rangeIndicatorTransform.gameObject.SetActive(false);
         if (duration > 0)
-            DOVirtual.DelayedCall(duration, () => { ShowRangeIndicator(); });
+            DOVirtual.DelayedCall(duration, () => { ShowRangeIndicator(); }, false);
     }
     public void ShowRangeIndicator(float duration = -1)
     {
         if (DOTween.Kill(this) > 0) print("Turret showrangeindicator tween killed");
         rangeIndicatorTransform.gameObject.SetActive(true);
         if (duration > 0)
-            DOVirtual.DelayedCall(duration, () => { HideRangeIndicator(); });
+            DOVirtual.DelayedCall(duration, () => { HideRangeIndicator(); }, false);
     }
 
     public override void Initialize(bool exploded, Grid grid, int saveDataIndex)
@@ -72,7 +72,7 @@ public abstract class Bomb : Trap
         explodedMesh.SetActive(exploded);
         Exploded = exploded;
         this.saveDataIndex = saveDataIndex;
-        Attach(grid);
+        Attach(grid, init: true);
     }
 
 }

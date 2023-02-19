@@ -6,9 +6,8 @@ using FateGames;
 
 public class Airstrike : MonoBehaviour
 {
-    [SerializeField] private Transform bombPointContainer;
     [SerializeField] private Animator animator;
-    private List<Transform> bombPoints = new();
+    private List<Transform> bombPoints { get => TowerController.Instance.GetCurrentTower().BombPoints; }
     [SerializeField] private Image cooldownLayerImage;
     [SerializeField] private Button button;
     [SerializeField] private Image buttonImage;
@@ -18,9 +17,6 @@ public class Airstrike : MonoBehaviour
 
     private void Awake()
     {
-        for (int i = 0; i < bombPointContainer.childCount; i++)
-            bombPoints.Add(bombPointContainer.GetChild(i));
-        bombPoints.Sort((a, b) => Mathf.CeilToInt(b.position.x - a.position.x));
         WaveController.Instance.OnWaveStart.AddListener(() =>
         {
             if (PlayerProgression.PlayerData.AirstrikeLevel >= 1)
@@ -71,15 +67,16 @@ public class Airstrike : MonoBehaviour
 
     private IEnumerator Bomb(int index = 0, float delay = 0.05f)
     {
-        if (index < bombPoints.Count)
+        List<Transform> points = bombPoints;
+        if (index < points.Count)
         {
-            DropBomb(bombPoints[index].position);
+            DropBomb(points[index]);
             yield return new WaitForSeconds(delay);
             yield return Bomb(index + 1, delay);
         }
     }
 
-    private void DropBomb(Vector3 to)
+    private void DropBomb(Transform point)
     {
         string bombTag;
         switch (PlayerProgression.PlayerData.AirstrikeLevel)
@@ -94,6 +91,6 @@ public class Airstrike : MonoBehaviour
                 bombTag = "Airstrike Napalm";
                 break;
         }
-        ObjectPooler.SpawnFromPool(bombTag, to, Quaternion.identity);
+        ObjectPooler.SpawnFromPool(bombTag, point.position, point.rotation);
     }
 }

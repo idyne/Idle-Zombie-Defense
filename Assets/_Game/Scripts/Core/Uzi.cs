@@ -7,7 +7,7 @@ public class Uzi : Weapon
 {
     public override void Shoot(Zombie target)
     {
-        
+
         StartCoroutine(ShootCoroutine(target, 3, 0.04f));
     }
 
@@ -17,8 +17,7 @@ public class Uzi : Weapon
         {
             Projectile projectile = ObjectPooler.SpawnFromPool(ammoTag, barrel.position, barrel.rotation).GetComponent<Projectile>();
             projectile.StartMovement(target);
-            if (soundFXTag != "")
-                ObjectPooler.SpawnFromPool(soundFXTag, transform.position, Quaternion.identity);
+            SoundFX.PlaySound(soundFXTag, transform.position);
             yield return new WaitForSeconds(delay);
             yield return ShootCoroutine(target, count - 1, delay);
         }

@@ -17,9 +17,14 @@ public class UIAreaClearingEffect : MonoBehaviour
     private int money = 0;
     private int upgradePoints = 0;
 
+    public void PlaySound()
+    {
+        SoundFX.PlaySound("UI Button Sound");
+    }
 
     public void Show(int money, int upgradePoints)
     {
+        SoundFX.PlaySound("Area Cleared Sound");
         gameObject.SetActive(true);
         button.interactable = true;
         animator.SetTrigger("Fade In");
@@ -58,7 +63,7 @@ public class UIAreaClearingEffect : MonoBehaviour
                 });
             });
         }
-        DOVirtual.DelayedCall(3, Hide);
+        DOVirtual.DelayedCall(3, Hide, false);
     }
 
     public void SpreadUpgradePoints(int count)
@@ -94,6 +99,6 @@ public class UIAreaClearingEffect : MonoBehaviour
     public void Hide()
     {
         animator.SetTrigger("Fade Out");
-        DOVirtual.DelayedCall(0.163f, () => { gameObject.SetActive(false); });
+        DOVirtual.DelayedCall(0.163f, () => { gameObject.SetActive(false); }, false);
     }
 }

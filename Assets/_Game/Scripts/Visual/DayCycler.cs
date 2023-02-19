@@ -96,6 +96,7 @@ public class DayCycler : MonoBehaviour
             default:
                 break;
         }
+        SoundFX.PlaySound("Tic Tac Sound");
         yield return new WaitForSeconds(2);
     }
 

@@ -16,7 +16,8 @@ public class UIButtonManager : MonoBehaviour
     [SerializeField] private UIUpgradeButton baseDefenseButton, soldierMergeLevelButton, throwableWeaponsGuyButton, airstrikeLevelButton;
     [SerializeField] private UIUpgradeButton tntUpgradeButton, frostUpgradeButton, barbwireUpgradeButton, turretUpgradeButton;
     [SerializeField] private UIPlacementButton frostButton, turretButton, tntButton, barbwireButton;
-    [SerializeField] private PlacementController turretPlacementController, trapPlacementController;
+    private PlacementController turretPlacementController { get => TowerController.Instance.GetCurrentTower().TurretPlacementController; }
+    private PlacementController trapPlacementController { get => TowerController.Instance.GetCurrentTower().TrapPlacementController; }
     private bool canAffordBaseDefenseUpgrade = false, canAffordSoldierMergeUpgrade = false, canAffordThrowableGuyUpgrade = false, canAffordAirstrikeUpgrade = false;
     private bool canAffordTNTUpgrade = false, canAffordFrostUpgrade = false, canAffordBarbwireUpgrade = false, canAffordTurretUpgrade = false;
     private bool notifyBaseUpgrades { get => canAffordBaseDefenseUpgrade || canAffordSoldierMergeUpgrade || canAffordThrowableGuyUpgrade || canAffordAirstrikeUpgrade; }
@@ -539,6 +540,7 @@ public class UIButtonManager : MonoBehaviour
         if (noCapacity) return;
         FrostBomb bomb = ObjectPooler.SpawnFromPool("Frost Bomb", Vector3.up * 100, Quaternion.identity).GetComponent<FrostBomb>();
         trapPlacementController.Select(bomb);
+        SoundFX.PlaySound("Out Wave Button Sound");
     }
     public void SelectBarbwire()
     {
@@ -548,6 +550,7 @@ public class UIButtonManager : MonoBehaviour
         if (noCapacity) return;
         Barbwire barbwire = ObjectPooler.SpawnFromPool("Barbwire", Vector3.up * 100, Quaternion.identity).GetComponent<Barbwire>();
         trapPlacementController.Select(barbwire);
+        SoundFX.PlaySound("Out Wave Button Sound");
     }
     public void SelectExplosiveBomb()
     {
@@ -557,6 +560,7 @@ public class UIButtonManager : MonoBehaviour
         if (noCapacity) return;
         ExplosiveBomb bomb = ObjectPooler.SpawnFromPool("Explosive Bomb", Vector3.up * 100, Quaternion.identity).GetComponent<ExplosiveBomb>();
         trapPlacementController.Select(bomb);
+        SoundFX.PlaySound("Out Wave Button Sound");
     }
     public void SelectTurret()
     {
@@ -566,6 +570,7 @@ public class UIButtonManager : MonoBehaviour
         if (noCapacity) return;
         Turret turret = ObjectPooler.SpawnFromPool("Turret", Vector3.up * 100, Quaternion.identity).GetComponent<Turret>();
         turretPlacementController.Select(turret);
+        SoundFX.PlaySound("Out Wave Button Sound");
     }
 
     public void HidePlacementButtons()

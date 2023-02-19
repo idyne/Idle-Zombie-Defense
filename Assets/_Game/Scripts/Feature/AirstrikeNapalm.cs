@@ -30,6 +30,8 @@ public class AirstrikeNapalm : MonoBehaviour, IPooledObject
     public void Explode()
     {
         ObjectPooler.SpawnFromPool("Airstrike Napalm Effect", transform.position, Quaternion.identity);
+        if (Random.value > 0.40f)
+            SoundFX.PlaySound("Airstrike Napalm Explosion Sound", transform.position);
         Collider[] colliders = Physics.OverlapSphere(transform.position, range, zombieLayerMask);
         for (int i = 0; i < colliders.Length; i++)
         {

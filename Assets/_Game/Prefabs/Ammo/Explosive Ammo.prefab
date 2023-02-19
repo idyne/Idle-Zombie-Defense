@@ -53,6 +53,7 @@ MonoBehaviour:
   affectedLayers:
     serializedVersion: 2
     m_Bits: 128
+  soundFXTag: Bazooka Explosion Sound
 --- !u!1 &7244865497495016082
 GameObject:
   m_ObjectHideFlags: 0

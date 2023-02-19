@@ -39,15 +39,17 @@ namespace FateGames
             }
             UIButtonManager.Instance.HideInWaveButtons();
             Turret.Stopped = true;
-            Tower.Instance.Explode();
+            Tower tower = TowerController.Instance.GetCurrentTower();
+            tower.Explode();
             WaveController.Instance.StopWave();
             Barracks.Instance.DeactivateSoldiers();
             GameManager.Instance.UpdateGameState(GameState.FINISHED);
-            CameraController.Instance.ZoomOut();
+            tower.CameraController.ZoomOut();
             DOVirtual.DelayedCall(3, () =>
             {
                 if (success) OnSuccess.Invoke();
                 else OnFail.Invoke();
+                if (!success) SoundFX.PlaySound("Fail Sound");
                 SceneManager.FinishLevel(success);
             });
 

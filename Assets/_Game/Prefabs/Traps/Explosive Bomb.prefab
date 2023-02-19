@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialGrid: {fileID: 0}
+  soundTag: TNT Placement Sound
   trapType: 0
   priceTag: {fileID: 3864237668345927210}
   explodedMesh: {fileID: 1338132319767396104}

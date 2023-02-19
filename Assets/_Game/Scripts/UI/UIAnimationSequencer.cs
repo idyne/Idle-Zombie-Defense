@@ -1,5 +1,6 @@
 using DG.Tweening;
 using FateGames;
+using Map;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -19,7 +20,7 @@ public class UIAnimationSequencer : MonoBehaviour
     [SerializeField] private RegionColorChanger regionColorChanger;
     [SerializeField] private GameObject mapControllerButton;
     [SerializeField] private UIDayBar uiDayBar;
-    [SerializeField] private Tower tower;
+    private Tower tower;
     [SerializeField] private SoldierUnlocked soldierUnlocked;
     [SerializeField] private TutorialManager tutorialManager;
     [SerializeField] private GameObject surviveText;
@@ -27,16 +28,19 @@ public class UIAnimationSequencer : MonoBehaviour
     [SerializeField] private PhaseCleared phaseCleared;
     [SerializeField] private GameObject areaClearedText;
     [SerializeField] private GameObject UIContainer;
+    [SerializeField] private ZoneMapController zoneMapController;
     public static UnityEvent OnOutWaveUIActivated = new();
 
     private bool goNext = false;
     private bool soldierUnlockedHide = false;
     private bool isNewSession = true;
     private bool areaClearedNext = false;
+    private SoundFXWorker backgroundMusicSoundWorker;
 
     private IEnumerator FinishDay()
     {
         yield return new WaitForSeconds(1);
+        SoundFX.PlaySound("Phase Cleared Sound");
         areaClearedText.SetActive(true);
         yield return new WaitForSeconds(3f);
         areaClearedText.SetActive(false);
@@ -91,6 +95,11 @@ public class UIAnimationSequencer : MonoBehaviour
         if (isNewSession && Day == 1 && NewDay)
         {
             print("start new game");
+            SetTower();
+            zoneMapController.CleanMap();
+            yield return new WaitForSeconds(0.5f);
+            zoneMapController.BeginingShow();
+            yield return new WaitUntil(() => zoneMapController.Closed);
             surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
             dayCycler.SetTimePeriodWithoutAnimation(CurrentTimePeriod);
             environmentChanger.SetEnvironment();
@@ -112,6 +121,7 @@ public class UIAnimationSequencer : MonoBehaviour
         else if (isNewSession & !(Day == 1 && CurrentTimePeriod == TimePeriod.Morning))
         {
             print("start game");
+            SetTower();
             if (CurrentTimePeriod == TimePeriod.Night)
                 tower.TurnOnLights();
             surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
@@ -214,6 +224,14 @@ public class UIAnimationSequencer : MonoBehaviour
             });
         }
         isNewSession = false;
+        backgroundMusicSoundWorker = SoundFX.PlaySound("Background Music Sound");
+        void StopBackgroundMusic()
+        {
+            backgroundMusicSoundWorker.Stop();
+            WaveController.Instance.OnWaveStart.RemoveListener(StopBackgroundMusic);
+        }
+        WaveController.Instance.OnWaveStart.AddListener(StopBackgroundMusic);
+
     }
 
     private void SetBars()
@@ -245,6 +263,13 @@ public class UIAnimationSequencer : MonoBehaviour
         yield return PlayDayAnimation();
     }
 
+    private void SetTower()
+    {
+        tower?.Deactivate();
+        tower = TowerController.Instance.GetCurrentTower();
+        tower.Activate();
+    }
+
     private void ResetProgress()
     {
         Barracks.Instance.ClearSoldiers();
@@ -266,7 +291,7 @@ public class UIAnimationSequencer : MonoBehaviour
         mapController.Show();
         //ResetProgress();
         environmentChanger.SetEnvironment();
-        tower.SetTower();
+        SetTower();
         surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
         mapController.GoPosition(ZoneLevel - 2);
         mapAnimator.SetTrigger("Fade");
@@ -288,7 +313,7 @@ public class UIAnimationSequencer : MonoBehaviour
         mapController.Show();
         ResetProgress();
         environmentChanger.SetEnvironment();
-        tower.SetTower();
+        SetTower();
         surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
         mapController.GoPosition(1);
         mapAnimator.SetTrigger("Fade");

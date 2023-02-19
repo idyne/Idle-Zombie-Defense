@@ -69,6 +69,7 @@ public class ThrowableWeaponsGuy : MonoBehaviour
 
     private void Update()
     {
+        if (PauseButton.Paused) return;
         if (target)
         {
             Vector3 direction = target.Transform.position - transform.position;
@@ -119,7 +120,7 @@ public class ThrowableWeaponsGuy : MonoBehaviour
         target = zombie;
         zombie.OnDeath.AddListener(OnTargetDeath);
         if (lastShootTime + shootingPeriod > Time.time)
-            DOVirtual.DelayedCall(lastShootTime + shootingPeriod - Time.time, StartShooting);
+            DOVirtual.DelayedCall(lastShootTime + shootingPeriod - Time.time, StartShooting, false);
         else
             StartShooting();
         targetIndicator.SetTarget(target);

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 5412808476675788209}
-  sound: {fileID: 5349555432441053455}
+  sound: {fileID: 0}
 --- !u!1001 &6540765865498658209
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -110,13 +110,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1222735772481045678, guid: f3b75a3ba967f9b4cb7e3160517c9630, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f3b75a3ba967f9b4cb7e3160517c9630, type: 3}
---- !u!82 &5349555432441053455 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 1222735772481045678, guid: f3b75a3ba967f9b4cb7e3160517c9630, type: 3}
-  m_PrefabInstance: {fileID: 6540765865498658209}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5412808476656352535 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1286726881057405110, guid: f3b75a3ba967f9b4cb7e3160517c9630, type: 3}

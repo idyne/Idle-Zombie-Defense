@@ -9,6 +9,7 @@ public class BaseSpotlight : MonoBehaviour
     [SerializeField] private Light light;
     public void TurnOn()
     {
+        Debug.Log("zorn", this);
         if (meshRenderer)
         {
             Material[] materials = meshRenderer.materials;

@@ -15,6 +15,7 @@ public class Grenade : ThrowableWeapon
             zombie.GetHit(damage);
         }
         ObjectPooler.SpawnFromPool("Grenade Explosion Effect", transform.position, Quaternion.identity);
+        SoundFX.PlaySound("Grenade Explosion Sound", transform.position);
         Deactivate();
     }
 }

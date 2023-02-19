@@ -82,6 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialGrid: {fileID: 0}
+  soundTag: Barbwire Placement Sound
   trapType: 2
   priceTag: {fileID: 7452045561201607022}
   explodedMesh: {fileID: 0}

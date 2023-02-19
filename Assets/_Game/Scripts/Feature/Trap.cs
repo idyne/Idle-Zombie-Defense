@@ -62,9 +62,9 @@ public abstract class Trap : Placeable
         PlayerProgression.MONEY -= price;
     }
 
-    public override void Attach(Grid grid)
+    public override void Attach(Grid grid, bool sound = true, bool init = false)
     {
-        base.Attach(grid);
+        base.Attach(grid, sound, init);
         if (bought)
         {
             (int, int, bool) data = PlayerProgression.PlayerData.Traps[saveDataIndex];

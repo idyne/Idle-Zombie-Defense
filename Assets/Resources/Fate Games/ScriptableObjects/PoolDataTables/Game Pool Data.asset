@@ -55,7 +55,7 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Standard Ammo
     prefab: {fileID: 5388626812233157393, guid: 14e416daef346e94984f82014403c126, type: 3}
-    size: 30
+    size: 60
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Levitating Text
@@ -235,7 +235,7 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Frost Bomb
     prefab: {fileID: 2567905047410825368, guid: 12d475007820d47458a7cd674442541b, type: 3}
-    size: 1
+    size: 8
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Explosive Bomb
@@ -278,33 +278,8 @@ MonoBehaviour:
     size: 2
     canActiveObjectsBeDequeued: 1
     container: {fileID: 0}
-  - tag: Pistol Sound
-    prefab: {fileID: 81140555504399712, guid: 2f74e2153b9ed7e4ea48ffb8878e3923, type: 3}
-    size: 4
-    canActiveObjectsBeDequeued: 0
-    container: {fileID: 0}
   - tag: Uzi Ammo
     prefab: {fileID: 5388626812233157393, guid: 038b9f638c8cf544fa50751539712dab, type: 3}
     size: 8
-    canActiveObjectsBeDequeued: 0
-    container: {fileID: 0}
-  - tag: Uzi Sound
-    prefab: {fileID: 81140555504399712, guid: c3a24c33782184f4780d0adb845c4c54, type: 3}
-    size: 8
-    canActiveObjectsBeDequeued: 0
-    container: {fileID: 0}
-  - tag: Shotgun Sound
-    prefab: {fileID: 81140555504399712, guid: 4cf9a58bfe2f1f64aa112184a5733016, type: 3}
-    size: 8
-    canActiveObjectsBeDequeued: 0
-    container: {fileID: 0}
-  - tag: Sniper Sound
-    prefab: {fileID: 81140555504399712, guid: 3182b3369bed29047b5123e084c14c38, type: 3}
-    size: 1
-    canActiveObjectsBeDequeued: 0
-    container: {fileID: 0}
-  - tag: M249 Sound
-    prefab: {fileID: 81140555504399712, guid: 4899b355aa8eb054ba3d1b0792b560c6, type: 3}
-    size: 1
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
