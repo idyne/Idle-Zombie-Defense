@@ -12,6 +12,7 @@ public class ZoneMapController : MonoBehaviour
     [SerializeField] private Transform map = null;
     [SerializeField] private GameObject canvas = null;
     [SerializeField] private GameObject nextButton = null;
+    public bool Closed { get; private set; } = true;
 
     /*private int a = 0;
     void Update()
@@ -41,6 +42,7 @@ public class ZoneMapController : MonoBehaviour
 
     public void Open()
     {
+        Closed = false;
         map.localScale = Vector3.one * 0.25f;
         map.localPosition = Vector3.zero;
         canvas.SetActive(true);
@@ -76,7 +78,7 @@ public class ZoneMapController : MonoBehaviour
         if (fromIndex != zones.Length - 1)
         {
             DrawPath(fromIndex);
-            DOVirtual.DelayedCall(2.5f, () => zones[fromIndex+1].Hop()); // 3 yerine 2.5, neden bilmiyorum
+            DOVirtual.DelayedCall(2.5f, () => zones[fromIndex + 1].Hop()); // 3 yerine 2.5, neden bilmiyorum
         }
     }
 
@@ -90,7 +92,9 @@ public class ZoneMapController : MonoBehaviour
         }
     }
 
-    public void Close() { 
+    public void Close()
+    {
+        Closed = true;
         canvas.SetActive(false);
     }
 

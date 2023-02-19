@@ -1,6 +1,5 @@
 using DG.Tweening;
 using FateGames;
-using Map;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,13 +11,13 @@ public class UIAnimationSequencer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI dayText;
     [SerializeField] private Animator dayAnimator;
-    [SerializeField] private Animator mapAnimator;
+    //[SerializeField] private Animator mapAnimator;
     [SerializeField] private TimePeriodAnimation timePeriodAnimation;
     [SerializeField] private DayCycler dayCycler;
     [SerializeField] private EnvironmentChanger environmentChanger;
-    [SerializeField] private MapController mapController;
-    [SerializeField] private RegionColorChanger regionColorChanger;
-    [SerializeField] private GameObject mapControllerButton;
+    //[SerializeField] private MapController mapController;
+    //[SerializeField] private RegionColorChanger regionColorChanger;
+    //[SerializeField] private GameObject mapControllerButton;
     [SerializeField] private UIDayBar uiDayBar;
     private Tower tower;
     [SerializeField] private SoldierUnlocked soldierUnlocked;
@@ -29,9 +28,10 @@ public class UIAnimationSequencer : MonoBehaviour
     [SerializeField] private GameObject areaClearedText;
     [SerializeField] private GameObject UIContainer;
     [SerializeField] private ZoneMapController zoneMapController;
+    private bool zoneMapSetup = false;
     public static UnityEvent OnOutWaveUIActivated = new();
 
-    private bool goNext = false;
+    //private bool goNext = false;
     private bool soldierUnlockedHide = false;
     private bool isNewSession = true;
     private bool areaClearedNext = false;
@@ -95,11 +95,10 @@ public class UIAnimationSequencer : MonoBehaviour
         if (isNewSession && Day == 1 && NewDay)
         {
             print("start new game");
-            SetTower();
-            zoneMapController.CleanMap();
+            zoneMapController.Open();
             yield return new WaitForSeconds(0.5f);
             zoneMapController.BeginingShow();
-            yield return new WaitUntil(() => zoneMapController.Closed);
+            SetTower();
             surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
             dayCycler.SetTimePeriodWithoutAnimation(CurrentTimePeriod);
             environmentChanger.SetEnvironment();
@@ -288,44 +287,70 @@ public class UIAnimationSequencer : MonoBehaviour
     }
     private IEnumerator GoCurrentZone()
     {
-        mapController.Show();
+        //mapController.Show();
         //ResetProgress();
         environmentChanger.SetEnvironment();
         SetTower();
         surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
-        mapController.GoPosition(ZoneLevel - 2);
-        mapAnimator.SetTrigger("Fade");
-        yield return new WaitForSeconds(1);
-        yield return regionColorChanger.AnimateRegion(ZoneLevel - 1);
-        mapControllerButton.SetActive(true);
-        yield return new WaitUntil(() => goNext);
-        goNext = false;
-        mapControllerButton.SetActive(false);
-        mapController.FillPath(ZoneLevel - 2);
-        yield return new WaitForSeconds(2);
-        mapController.Hide();
+        zoneMapController.Open();
+        if (!zoneMapSetup)
+        {
+            int lastAchievedZoneIndex = (WorldLevel - 1) * 3 + ZoneLevel - 2;
+            zoneMapController.SetupZonesAndPaths(lastAchievedZoneIndex);
+            zoneMapSetup = true;
+        }
+        yield return new WaitForSeconds(0.5f);
+        int previousZoneIndex = (WorldLevel - 1) * 3 + ZoneLevel - 2;
+        zoneMapController.FindNextPathOnWorld(previousZoneIndex);
+        yield return new WaitForSeconds(1.5f);
+        zoneMapController.PlayPath(previousZoneIndex);
+        //mapController.GoPosition(ZoneLevel - 2);
+        //mapAnimator.SetTrigger("Fade");
+        yield return new WaitUntil(() => zoneMapController.Closed);
+
+        //yield return regionColorChanger.AnimateRegion(ZoneLevel - 1);
+        //mapControllerButton.SetActive(true);
+        //yield return new WaitUntil(() => goNext);
+        //goNext = false;
+        //mapControllerButton.SetActive(false);
+        //mapController.FillPath(ZoneLevel - 2);
+        //yield return new WaitForSeconds(2);
+        //mapController.Hide();
         soldierUnlocked.Show(ZoneLevel + 3);
         yield return new WaitUntil(() => soldierUnlockedHide);
         soldierUnlockedHide = false;
     }
     private IEnumerator GoCurrentWorld()
     {
-        mapController.Show();
+        //mapController.Show();
         ResetProgress();
         environmentChanger.SetEnvironment();
         SetTower();
         surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
-        mapController.GoPosition(1);
-        mapAnimator.SetTrigger("Fade");
-        yield return new WaitForSeconds(1);
-        yield return regionColorChanger.AnimateRegion(ZoneLevel - 1);
-        mapControllerButton.SetActive(true);
-        yield return new WaitUntil(() => goNext);
-        goNext = false;
-        mapControllerButton.SetActive(false);
-        mapController.FillPath(ZoneLevel - 2);
-        yield return new WaitForSeconds(2);
-        mapController.Hide();
+        zoneMapController.Open();
+        if (!zoneMapSetup)
+        {
+            int lastAchievedZoneIndex = (WorldLevel - 1) * 3 + ZoneLevel - 2;
+            zoneMapController.SetupZonesAndPaths(lastAchievedZoneIndex);
+            zoneMapSetup = true;
+        }
+        yield return new WaitForSeconds(0.5f);
+        int previousZoneIndex = (WorldLevel - 1) * 3 + ZoneLevel - 2;
+        zoneMapController.FindNextPathOnWorld(previousZoneIndex);
+        yield return new WaitForSeconds(1.5f);
+        zoneMapController.PlayPath(previousZoneIndex);
+        yield return new WaitUntil(() => zoneMapController.Closed);
+        //mapController.GoPosition(1);
+        //mapAnimator.SetTrigger("Fade");
+        //yield return new WaitForSeconds(1);
+        //yield return regionColorChanger.AnimateRegion(ZoneLevel - 1);
+        //mapControllerButton.SetActive(true);
+        //yield return new WaitUntil(() => goNext);
+        //goNext = false;
+        //mapControllerButton.SetActive(false);
+        //mapController.FillPath(ZoneLevel - 2);
+        //yield return new WaitForSeconds(2);
+        //mapController.Hide();
         /*soldierUnlocked.Show(ZoneLevel + 3);
         yield return new WaitUntil(() => soldierUnlockedHide);
         soldierUnlockedHide = false;*/
@@ -338,7 +363,7 @@ public class UIAnimationSequencer : MonoBehaviour
     }
     public void GoNext()
     {
-        goNext = true;
+        //goNext = true;
     }
     public void SoldierUnlockedNext()
     {
