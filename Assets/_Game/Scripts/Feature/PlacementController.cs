@@ -24,8 +24,7 @@ public class PlacementController : MonoBehaviour
             return grids;
         }
     }
-    private Camera _mainCamera = null;
-    private Camera mainCamera { get { if (_mainCamera == null) _mainCamera = Camera.main; return _mainCamera; } }
+    private Camera mainCamera { get => TowerController.Instance.GetCurrentTower().CameraController.Camera; }
     private Placeable selectedPlaceable = null;
 
     private void Update()
@@ -70,9 +69,11 @@ public class PlacementController : MonoBehaviour
             // Show grids for placement
             ShowGrids();
             // Set main camera to placement mode
-            CameraController.InPlacementMode = true;
-            UIButtonManager.Instance.HidePlacementButtons();
-            UIButtonManager.Instance.HideStartAndUpgradeButtons();
+            //CameraController.InPlacementMode = true;
+            //UIButtonManager.Instance.HidePlacementButtons();
+            //UIButtonManager.Instance.HideStartAndUpgradeButtons();
+            PlacementModeController.Instance.HidePlacementButtons();
+            PlacementModeController.Instance.HideExitPlacementModeButton();
         }
     }
 
@@ -132,9 +133,11 @@ public class PlacementController : MonoBehaviour
         hoveredGrid = null;
         HideGrids();
         // Set main camera to not placement mode
-        CameraController.InPlacementMode = false;
-        UIButtonManager.Instance.ShowPlacementButtons();
-        UIButtonManager.Instance.ShowStartAndUpgradeButtons();
+        //CameraController.InPlacementMode = false;
+        //UIButtonManager.Instance.ShowPlacementButtons();
+        //UIButtonManager.Instance.ShowStartAndUpgradeButtons();
+        PlacementModeController.Instance.ShowPlacementButtons();
+        PlacementModeController.Instance.ShowExitPlacementModeButton();
     }
 
     private void ShowGrids()
@@ -147,5 +150,16 @@ public class PlacementController : MonoBehaviour
     {
         foreach (Grid grid in Grids)
             grid.Hide();
+    }
+
+    public Grid GetGrid(int id)
+    {
+        for (int i = 0; i < Grids.Count; i++)
+        {
+            Grid grid = Grids[i];
+            if (grid.Id == id)
+                return grid;
+        }
+        return null;
     }
 }

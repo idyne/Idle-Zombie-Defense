@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 public abstract class CameraController : MonoBehaviour
 {
     [SerializeField] protected Transform camTransform;
-    public static bool InPlacementMode = false;
+    [SerializeField] protected Camera camera;
     private Transform _transform = null;
     public Transform transform
     {
@@ -22,6 +22,7 @@ public abstract class CameraController : MonoBehaviour
     }
 
     public Transform CamTransform { get => camTransform; }
+    public Camera Camera { get => camera;  }
 
     public abstract void ZoomOut();
 

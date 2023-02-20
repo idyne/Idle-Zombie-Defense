@@ -14,7 +14,8 @@ public static class ProgressInitializer
     private static void InitializePlaceables()
     {
         List<Grid> grids = new();
-        PlacementController[] placementControllers = Object.FindObjectsOfType<PlacementController>();
+        Tower tower = TowerController.Instance.GetCurrentTower();
+        PlacementController[] placementControllers = new PlacementController[] { tower.TrapPlacementController, tower.TurretPlacementController };
         for (int i = 0; i < placementControllers.Length; i++)
         {
             grids.AddRange(placementControllers[i].Grids);

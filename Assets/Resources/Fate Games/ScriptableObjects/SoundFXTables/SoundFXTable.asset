@@ -112,7 +112,7 @@ MonoBehaviour:
     pitchRangeMax: 1
     volume: 0.5
   - tag: UI Button Sound
-    clip: {fileID: 8300000, guid: e57748cf35d25f6418e010afeec9be97, type: 3}
+    clip: {fileID: 8300000, guid: 00516be3567e5534aa4820e86e73ce91, type: 3}
     loop: 0
     spatialBlend: 0
     pitchRangeMin: 1
@@ -314,3 +314,10 @@ MonoBehaviour:
     pitchRangeMin: 0.9
     pitchRangeMax: 1
     volume: 1
+  - tag: Barrier Breaking Sound
+    clip: {fileID: 8300000, guid: d4a41bf9b5adc6e46b9e611d273493a1, type: 3}
+    loop: 0
+    spatialBlend: 1
+    pitchRangeMin: 0.7
+    pitchRangeMax: 0.9
+    volume: 0.6

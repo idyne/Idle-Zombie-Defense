@@ -7,16 +7,8 @@ public class TargetIndicator : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private RectTransform indicatorTransform;
     [SerializeField] private GameObject canvas;
-    Camera _mainCamera = null;
     private Zombie target = null;
-    Camera mainCamera
-    {
-        get
-        {
-            if (_mainCamera == null) _mainCamera = Camera.main;
-            return _mainCamera;
-        }
-    }
+    Camera mainCamera { get => TowerController.Instance.GetCurrentTower().CameraController.Camera; }
     private void Start()
     {
         Hide();

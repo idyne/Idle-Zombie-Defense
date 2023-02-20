@@ -25,6 +25,11 @@ public abstract class Trap : Placeable
             else if (money < price && priceTag.ButtonEnabled) priceTag.DisableButton();
             priceTag.SetPrice(price);
         });
+        UIAnimationSequencer.OnNewZone.AddListener(() =>
+        {
+            if (grid)
+                Attach(TowerController.Instance.GetCurrentTower().TrapPlacementController.GetGrid(grid.Id), false, true);
+        });
     }
 
     protected virtual void Start()

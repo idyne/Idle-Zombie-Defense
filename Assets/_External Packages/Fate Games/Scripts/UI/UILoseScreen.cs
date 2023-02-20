@@ -9,6 +9,7 @@ namespace FateGames
     {
         [SerializeField] private Text levelText;
         [SerializeField] private Button continueButton, reviveButton;
+        [SerializeField] private GameObject adIcon, loading;
 
         private void Awake()
         {
@@ -26,8 +27,12 @@ namespace FateGames
         private IEnumerator PrepareReviveButton()
         {
             reviveButton.interactable = false;
+            adIcon.SetActive(false);
+            loading.SetActive(true);
             yield return new WaitUntil(AdvertisementManager.IsRewardedAdReady);
             reviveButton.interactable = true;
+            adIcon.SetActive(true);
+            loading.SetActive(false);
         }
 
         // Called by ContinueButton onClick

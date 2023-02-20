@@ -5415,6 +5415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camTransform: {fileID: 5018764808953553201}
+  camera: {fileID: 5018764808953553200}
   cameraForwardRange: 10
   cameraBackwardRange: -10
   cameraZoomSpeed: 10
@@ -29162,6 +29163,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3129428042744276652, guid: e46f222b77b5b464e895bc629293137a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e46f222b77b5b464e895bc629293137a, type: 3}
+--- !u!20 &5018764808953553200 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3129428042744276655, guid: e46f222b77b5b464e895bc629293137a, type: 3}
+  m_PrefabInstance: {fileID: 7983697113374738335}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5018764808953553201 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3129428042744276654, guid: e46f222b77b5b464e895bc629293137a, type: 3}

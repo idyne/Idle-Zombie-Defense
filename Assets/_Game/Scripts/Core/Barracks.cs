@@ -87,7 +87,7 @@ public class Barracks : MonoBehaviour
 
             OnNewMergeUnlocked.Invoke(maxMergeLevel);
         }
-
+        PlayerProgression.MONEY = PlayerProgression.MONEY;
     }
 
 
@@ -249,9 +249,17 @@ public class Barracks : MonoBehaviour
         return soldier;
     }
 
-    public void PlaceSoldiers()
+    public void PlaceSoldiers(bool rotate = false)
     {
-        if (throwableWeaponsGuy) throwableWeaponsGuy.transform.position = tower.GetPoint(0).position;
+        Transform point;
+        if (throwableWeaponsGuy)
+        {
+            point = tower.GetPoint(0);
+            if (rotate)
+                throwableWeaponsGuy.transform.SetPositionAndRotation(point.position, point.rotation);
+            else
+                throwableWeaponsGuy.transform.position = point.position;
+        }
         int count = 1;
         for (int i = soldierTable.Count - 1; i >= 1; i--)
         {
@@ -259,8 +267,9 @@ public class Barracks : MonoBehaviour
             for (int j = 0; j < soldiers.Count; j++)
             {
                 Soldier soldier = soldiers[j];
-                Transform point = tower.GetPoint(count++);
-                soldier.Transform.SetPositionAndRotation(point.position, soldier.Transform.rotation);
+                point = tower.GetPoint(count++);
+                if (!point) Debug.LogError("Soldier placement error");
+                soldier.Transform.SetPositionAndRotation(point.position, rotate ? point.rotation : soldier.Transform.rotation);
             }
         }
     }

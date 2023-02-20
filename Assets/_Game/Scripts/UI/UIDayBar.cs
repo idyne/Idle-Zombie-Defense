@@ -7,6 +7,15 @@ using DG.Tweening;
 
 public class UIDayBar : MonoBehaviour
 {
+    private static UIDayBar instance = null;
+    public static UIDayBar Instance
+    {
+        get
+        {
+            if (instance == null) instance = FindObjectOfType<UIDayBar>();
+            return instance;
+        }
+    }
     [SerializeField] private Slider slider;
     private float desiredValue = 0;
     [SerializeField] private TextMeshProUGUI dayText;
@@ -34,7 +43,7 @@ public class UIDayBar : MonoBehaviour
         rectTransform.DOAnchorPosY(-237, 0.5f);
         rectTransform.DOScale(1.25f, 0.5f);
     }
-    
+
     public Tween GoDown(bool animate = true)
     {
         RectTransform rectTransform = GetComponent<RectTransform>();

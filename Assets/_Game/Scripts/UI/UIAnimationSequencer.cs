@@ -30,6 +30,7 @@ public class UIAnimationSequencer : MonoBehaviour
     [SerializeField] private ZoneMapController zoneMapController;
     private bool zoneMapSetup = false;
     public static UnityEvent OnOutWaveUIActivated = new();
+    public static UnityEvent OnNewZone = new();
 
     //private bool goNext = false;
     private bool soldierUnlockedHide = false;
@@ -291,6 +292,8 @@ public class UIAnimationSequencer : MonoBehaviour
         //ResetProgress();
         environmentChanger.SetEnvironment();
         SetTower();
+        OnNewZone.Invoke();
+        Barracks.Instance.PlaceSoldiers(true);
         surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
         zoneMapController.Open();
         if (!zoneMapSetup)

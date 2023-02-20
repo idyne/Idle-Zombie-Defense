@@ -37,7 +37,7 @@ public class PointCameraController : CameraController
         swerve.OnStart.AddListener(() => { onUI = EventSystem.current.IsPointerOverGameObject() && EventSystem.current.currentSelectedGameObject != null; });
         swerve.OnSwerve.AddListener(() =>
         {
-            if (zoomingOut || InPlacementMode || onUI) return;
+            if (zoomingOut || PlacementModeController.InPlacementMode || onUI) return;
             angle = anchorAngle + swerve.XRate * 180;
             zoomDistance = Mathf.Clamp(anchorDistance - swerve.YRate * cameraZoomSpeed, cameraBackwardRange, cameraForwardRange);
             DayCycler.Instance.ChangeFogOffset(-zoomDistance);
@@ -56,13 +56,13 @@ public class PointCameraController : CameraController
 
     private void SetAnchorAngle()
     {
-        if (InPlacementMode) return;
+        if (PlacementModeController.InPlacementMode) return;
         anchorAngle = angle;
     }
 
     private void SetAnchorDistance()
     {
-        if (InPlacementMode) return;
+        if (PlacementModeController.InPlacementMode) return;
         anchorDistance = zoomDistance;
     }
 

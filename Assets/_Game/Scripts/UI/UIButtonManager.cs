@@ -168,6 +168,7 @@ public class UIButtonManager : MonoBehaviour
 
     public void UpdateMergeButton()
     {
+        print("UpdateMergeButton");
         int cost = CostManager.GetMergeCost();
         bool canMerge = Barracks.Instance.CanMerge(out _);
         mergeButton.SetText(UIMoney.FormatMoney(cost));

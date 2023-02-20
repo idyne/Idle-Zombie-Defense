@@ -27,6 +27,11 @@ public class Turret : Placeable
         HideRangeIndicator();
         OnSelect.AddListener(() => { ShowRangeIndicator(); });
         OnDrop.AddListener(() => { HideRangeIndicator(); });
+        UIAnimationSequencer.OnNewZone.AddListener(() =>
+        {
+            if (grid)
+                Attach(TowerController.Instance.GetCurrentTower().TurretPlacementController.GetGrid(grid.Id), false, true);
+        });
     }
 
     protected virtual void Start()

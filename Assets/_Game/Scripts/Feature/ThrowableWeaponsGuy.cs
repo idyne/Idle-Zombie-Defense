@@ -12,8 +12,7 @@ public class ThrowableWeaponsGuy : MonoBehaviour
     [SerializeField] private Animator animator;
     private bool usingSkill = false;
     private bool throwing = false;
-    private Camera _mainCamera = null;
-    private Camera mainCamera { get { if (_mainCamera == null) _mainCamera = Camera.main; return _mainCamera; } }
+    private Camera mainCamera { get => TowerController.Instance.GetCurrentTower().CameraController.Camera; }
     private float shootingPeriod = 0.5f;
     private float lastShootTime = -50;
     private Zombie target = null;

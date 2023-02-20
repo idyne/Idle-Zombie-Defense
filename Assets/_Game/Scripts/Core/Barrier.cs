@@ -70,6 +70,7 @@ public class Barrier : MonoBehaviour
             parts[0].DOKill();
             parts[0].DOScale(Vector3.zero, 0.2f);
             ObjectPooler.SpawnFromPool("Wood Effect", Transform.position + Vector3.up, Transform.rotation);
+            //SoundFX.PlaySound("Barrier Breaking Sound", Transform.position);
         }
         if (percent < 0.33f && breakLevel < 2)
         {
@@ -77,6 +78,7 @@ public class Barrier : MonoBehaviour
             parts[1].DOKill();
             parts[1].DOScale(Vector3.zero, 0.2f);
             ObjectPooler.SpawnFromPool("Wood Effect", Transform.position + Vector3.up, Transform.rotation);
+            //SoundFX.PlaySound("Barrier Breaking Sound", Transform.position);
         }
         if (percent <= 0.0f && breakLevel < 3)
         {
@@ -84,6 +86,7 @@ public class Barrier : MonoBehaviour
             parts[2].DOKill();
             parts[2].DOScale(Vector3.zero, 0.2f);
             ObjectPooler.SpawnFromPool("Wood Effect", Transform.position + Vector3.up, Transform.rotation);
+            //SoundFX.PlaySound("Barrier Breaking Sound", Transform.position);
         }
     }
 

@@ -14,12 +14,12 @@ public class LinearCameraController : CameraController
 
     private void Awake()
     {
-        WaveController.Instance.OnWaveStart.AddListener(() =>
+        PlacementModeController.OnExitPlacementMode.AddListener(() =>
         {
             camTransform.DOMove(inWavePoint.position, 1);
             camTransform.DORotateQuaternion(inWavePoint.rotation, 1);
         });
-        WaveController.Instance.OnWaveEnd.AddListener(() =>
+        PlacementModeController.OnEnterPlacementMode.AddListener(() =>
         {
             camTransform.DOMove(outWavePoint.position, 1);
             camTransform.DORotateQuaternion(outWavePoint.rotation, 1);
@@ -28,6 +28,6 @@ public class LinearCameraController : CameraController
 
     private void Start()
     {
-        camTransform.SetPositionAndRotation(outWavePoint.position, outWavePoint.rotation);
+        camTransform.SetPositionAndRotation(inWavePoint.position, inWavePoint.rotation);
     }
 }

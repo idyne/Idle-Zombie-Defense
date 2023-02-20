@@ -7,8 +7,7 @@ using UnityEngine.EventSystems;
 public class TrapController : MonoBehaviour
 {
     [SerializeField] private LayerMask trapLayerMask;
-    private Camera _mainCamera = null;
-    private Camera mainCamera { get { if (_mainCamera == null) _mainCamera = Camera.main; return _mainCamera; } }
+    private Camera mainCamera { get => TowerController.Instance.GetCurrentTower().CameraController.Camera; }
     private bool firstTap = false;
     private Tween firstTapTween = null;
     private void Update()
@@ -42,9 +41,10 @@ public class TrapController : MonoBehaviour
                         firstTapTween = null;
                     }
                     Trap trap = hit.transform.GetComponent<Trap>();
-                   /* if (trap.Exploded && WaveController.State == WaveController.WaveState.WAITING)
-                        trap.Rebuy();
-                    else */if (!trap.Exploded && WaveController.State == WaveController.WaveState.RUNNING)
+                    /* if (trap.Exploded && WaveController.State == WaveController.WaveState.WAITING)
+                         trap.Rebuy();
+                     else */
+                    if (!trap.Exploded && WaveController.State == WaveController.WaveState.RUNNING)
                         trap.Detonate();
                 }
             }

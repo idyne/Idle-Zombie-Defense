@@ -22,6 +22,8 @@ public class Placeable : MonoBehaviour
             return _transform;
         }
     }
+
+    
     public Grid grid { get; private set; } = null;
 
     public void SetGrid(Grid grid)
