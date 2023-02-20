@@ -5416,7 +5416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camTransform: {fileID: 5018764808953553201}
   camera: {fileID: 5018764808953553200}
-  cameraForwardRange: 10
+  cameraForwardRange: -4
   cameraBackwardRange: -10
   cameraZoomSpeed: 10
 --- !u!114 &3827292875435093307

@@ -177,6 +177,8 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2349277748492617243, guid: 50e5bff118166d142ad518b4e0a1ee4d, type: 3}
     - {fileID: 1116109469636592766, guid: 50e5bff118166d142ad518b4e0a1ee4d, type: 3}
+    - {fileID: 1116109469650756026, guid: 50e5bff118166d142ad518b4e0a1ee4d, type: 3}
+    - {fileID: 1116109469650233296, guid: 50e5bff118166d142ad518b4e0a1ee4d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 50e5bff118166d142ad518b4e0a1ee4d, type: 3}
 --- !u!198 &6485542668510117462 stripped
 ParticleSystem:

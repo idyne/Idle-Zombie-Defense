@@ -10,11 +10,12 @@ public class PlacementModeController : MonoBehaviour
     {
         get
         {
-            if (instance == null) instance = FindObjectOfType<PlacementModeController>();
+            if (instance == null) instance = FindObjectOfType<PlacementModeController>(true);
+            print(instance);
             return instance;
         }
     }
-    [SerializeField] private GameObject placementButtonContainer, placementModeButton, exitPlacementModeButton;
+    [SerializeField] private GameObject placementButtonContainer, placementModeButton, exitPlacementModeButton, notification;
     public static bool InPlacementMode { get; private set; } = false;
     public static UnityEvent OnEnterPlacementMode { get; private set; } = new();
     public static UnityEvent OnExitPlacementMode { get; private set; } = new();
@@ -71,4 +72,7 @@ public class PlacementModeController : MonoBehaviour
     {
         exitPlacementModeButton.SetActive(false);
     }
+
+    public void ShowNotification() => notification.SetActive(true);
+    public void HideNotification() => notification.SetActive(false);
 }

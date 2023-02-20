@@ -12,6 +12,7 @@ public class TrapController : MonoBehaviour
     private Tween firstTapTween = null;
     private void Update()
     {
+        if (WaveController.State == WaveController.WaveState.WAITING) return;
         if (PauseButton.Paused) return;
         if (Input.GetMouseButtonDown(0) && !(EventSystem.current.IsPointerOverGameObject() && EventSystem.current.currentSelectedGameObject != null))
         {

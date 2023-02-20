@@ -162,7 +162,6 @@ public class Barracks : MonoBehaviour
                 RemoveSoldier(i);
             }
         }
-        AddSoldier(1, out _, out _);
     }
 
     public bool CanMerge(out int level)

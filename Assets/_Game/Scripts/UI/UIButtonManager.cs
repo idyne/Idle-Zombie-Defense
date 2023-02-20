@@ -19,9 +19,11 @@ public class UIButtonManager : MonoBehaviour
     private PlacementController turretPlacementController { get => TowerController.Instance.GetCurrentTower().TurretPlacementController; }
     private PlacementController trapPlacementController { get => TowerController.Instance.GetCurrentTower().TrapPlacementController; }
     private bool canAffordBaseDefenseUpgrade = false, canAffordSoldierMergeUpgrade = false, canAffordThrowableGuyUpgrade = false, canAffordAirstrikeUpgrade = false;
+    private bool canAffordTNT = false, canAffordFrost = false, canAffordBarbwire = false, canAffordTurret = false;
     private bool canAffordTNTUpgrade = false, canAffordFrostUpgrade = false, canAffordBarbwireUpgrade = false, canAffordTurretUpgrade = false;
     private bool notifyBaseUpgrades { get => canAffordBaseDefenseUpgrade || canAffordSoldierMergeUpgrade || canAffordThrowableGuyUpgrade || canAffordAirstrikeUpgrade; }
     private bool notifyTrapUpgrades { get => canAffordTNTUpgrade || canAffordFrostUpgrade || canAffordBarbwireUpgrade || canAffordTurretUpgrade; }
+    public bool NotifyPlacement { get => canAffordTNT || canAffordFrost || canAffordBarbwire || canAffordTurret; }
 
     private void Awake()
     {
@@ -462,8 +464,19 @@ public class UIButtonManager : MonoBehaviour
             frostButton.SetText("No Capacity");
         else
             frostButton.SetText(UIMoney.FormatMoney(CostManager.GetFrostPrice()));
-        if (!PlayerProgression.CanAfford(CostManager.GetFrostPrice()) || noCapacity || locked) frostButton.Deactivate();
-        else frostButton.Activate();
+        if (!PlayerProgression.CanAfford(CostManager.GetFrostPrice()) || noCapacity || locked)
+        {
+            canAffordFrost = false;
+            if (!NotifyPlacement)
+                PlacementModeController.Instance.HideNotification();
+            frostButton.Deactivate();
+        }
+        else
+        {
+            canAffordFrost = true;
+            PlacementModeController.Instance.ShowNotification();
+            frostButton.Activate();
+        }
     }
 
     public void UpdateTurretButton()
@@ -488,8 +501,19 @@ public class UIButtonManager : MonoBehaviour
             turretButton.SetText("No Capacity");
         else
             turretButton.SetText(UIMoney.FormatMoney(CostManager.GetTurretPrice()));
-        if (!PlayerProgression.CanAfford(CostManager.GetTurretPrice()) || noCapacity || locked) turretButton.Deactivate();
-        else turretButton.Activate();
+        if (!PlayerProgression.CanAfford(CostManager.GetTurretPrice()) || noCapacity || locked)
+        {
+            canAffordTurret = false;
+            if (!NotifyPlacement)
+                PlacementModeController.Instance.HideNotification();
+            turretButton.Deactivate();
+        }
+        else
+        {
+            canAffordTurret = true;
+            PlacementModeController.Instance.ShowNotification();
+            turretButton.Activate();
+        }
     }
 
     public void UpdateTNTButton()
@@ -514,8 +538,20 @@ public class UIButtonManager : MonoBehaviour
             tntButton.SetText("No Capacity");
         else
             tntButton.SetText(UIMoney.FormatMoney(CostManager.GetTNTPrice()));
-        if (!PlayerProgression.CanAfford(CostManager.GetTNTPrice()) || noCapacity || locked) tntButton.Deactivate();
-        else tntButton.Activate();
+        if (!PlayerProgression.CanAfford(CostManager.GetTNTPrice()) || noCapacity || locked)
+        {
+            canAffordTNT = false;
+            if (!NotifyPlacement)
+                PlacementModeController.Instance.HideNotification();
+            tntButton.Deactivate();
+        }
+        else
+        {
+            canAffordTNT = true;
+            print(PlacementModeController.Instance);
+            PlacementModeController.Instance.ShowNotification();
+            tntButton.Activate();
+        }
     }
 
     public void UpdateBarbwireButton()
@@ -539,9 +575,20 @@ public class UIButtonManager : MonoBehaviour
         else if (noCapacity)
             barbwireButton.SetText("No Capacity");
         else
-            barbwireButton.SetText(UIMoney.FormatMoney(CostManager.GetTNTPrice()));
-        if (!PlayerProgression.CanAfford(CostManager.GetBarbwirePrice()) || noCapacity || noCapacity || locked) barbwireButton.Deactivate();
-        else barbwireButton.Activate();
+            barbwireButton.SetText(UIMoney.FormatMoney(CostManager.GetBarbwirePrice()));
+        if (!PlayerProgression.CanAfford(CostManager.GetBarbwirePrice()) || noCapacity || locked)
+        {
+            canAffordBarbwire = false;
+            if (!NotifyPlacement)
+                PlacementModeController.Instance.HideNotification();
+            barbwireButton.Deactivate();
+        }
+        else
+        {
+            canAffordBarbwire = true;
+            PlacementModeController.Instance.ShowNotification();
+            barbwireButton.Activate();
+        }
     }
 
     public void SelectFrostBomb()
