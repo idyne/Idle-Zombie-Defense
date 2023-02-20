@@ -65,32 +65,32 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Zombie 1
     prefab: {fileID: 6756975525295821979, guid: fa4e2c46e7bec8949af3c2ed7ebfc7c5, type: 3}
-    size: 100
+    size: 64
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Zombie 2
     prefab: {fileID: 6756975525295821979, guid: e17d3f7698b4a684da23958f336f149d, type: 3}
-    size: 40
+    size: 16
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Zombie 3
     prefab: {fileID: 6756975525295821979, guid: 3e02c0c95022f2e48a535317d13c6b36, type: 3}
-    size: 20
+    size: 4
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Zombie 4
     prefab: {fileID: 6756975525295821979, guid: 2f1f17a3fe76f464f9947d829844f8f0, type: 3}
-    size: 20
+    size: 1
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Zombie 5
     prefab: {fileID: 6756975525295821979, guid: dad0a4732238afa4b9a977cdf64fddd6, type: 3}
-    size: 10
+    size: 1
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Zombie 6
     prefab: {fileID: 6756975525295821979, guid: a09d6a982af50274e9cd1d84ffdb9acd, type: 3}
-    size: 10
+    size: 1
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Explosion Effect
@@ -200,7 +200,7 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Smoke Effect
     prefab: {fileID: 8971224939505514978, guid: 9da7726ce0b72e4469daf478b358be44, type: 3}
-    size: 6
+    size: 12
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: UI Money Image

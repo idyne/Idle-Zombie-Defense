@@ -21,7 +21,16 @@ public class Tower : MonoBehaviour
     [SerializeField] private CameraController cameraController;
     private List<Transform> bombPoints = new();
     private List<Transform> zombieSpawnPoints = new();
-    private List<Transform> points = new();
+    private List<Transform> _points = new();
+    private bool pointsInitialized = false;
+    private List<Transform> points
+    {
+        get
+        {
+            if (!pointsInitialized) InitializePoints();
+            return _points;
+        }
+    }
     private UIHealthBar healthBar;
     public Transform Transform { get; private set; }
     private int MaxHealth { get => GetMaxHealth(); }
@@ -49,7 +58,6 @@ public class Tower : MonoBehaviour
         healthBar = GetComponentInChildren<UIHealthBar>();
         SetHealth(MaxHealth);
         healthBar.Hide();
-        InitializePoints();
     }
 
     private void Start()
@@ -90,7 +98,6 @@ public class Tower : MonoBehaviour
 
     public void TurnOnLights()
     {
-        print("turnon");
         for (int i = 0; i < spotlights.Length; i++)
         {
             spotlights[i].TurnOn();
@@ -132,7 +139,8 @@ public class Tower : MonoBehaviour
     private void InitializePoints()
     {
         for (int i = 0; i < pointContainer.childCount; i++)
-            points.Add(pointContainer.GetChild(i));
+            _points.Add(pointContainer.GetChild(i));
+        pointsInitialized = true;
     }
 
 

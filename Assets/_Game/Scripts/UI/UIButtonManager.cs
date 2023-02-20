@@ -233,6 +233,8 @@ public class UIButtonManager : MonoBehaviour
             throwableWeaponsGuyButton.Lock(Settings.ThrowableWeaponsUnlockDay);
             return;
         }
+        else
+            throwableWeaponsGuyButton.Unlock();
         if (!maxedOut)
             throwableWeaponsGuyButton.SetText(UIMoney.FormatMoney(cost));
         else throwableWeaponsGuyButton.SetText("Max");
@@ -261,6 +263,8 @@ public class UIButtonManager : MonoBehaviour
             airstrikeLevelButton.Lock(Settings.AirstrikeUnlockDay);
             return;
         }
+        else
+            airstrikeLevelButton.Unlock();
         if (!maxedOut)
             airstrikeLevelButton.SetText(UIMoney.FormatMoney(cost));
         else airstrikeLevelButton.SetText("Max");
@@ -290,6 +294,8 @@ public class UIButtonManager : MonoBehaviour
             tntUpgradeButton.Lock(Settings.TNTUnlockDay);
             return;
         }
+        else
+            tntUpgradeButton.Unlock();
         if (!maxedOut)
             tntUpgradeButton.SetText(UIMoney.FormatMoney(cost));
         else tntUpgradeButton.SetText("Max");
@@ -318,6 +324,8 @@ public class UIButtonManager : MonoBehaviour
             frostUpgradeButton.Lock(Settings.FrostUnlockDay);
             return;
         }
+        else
+            frostUpgradeButton.Unlock();
         if (!maxedOut)
             frostUpgradeButton.SetText(UIMoney.FormatMoney(cost));
         else frostUpgradeButton.SetText("Max");
@@ -346,6 +354,8 @@ public class UIButtonManager : MonoBehaviour
             barbwireUpgradeButton.Lock(Settings.BarbwireUnlockDay);
             return;
         }
+        else
+            barbwireUpgradeButton.Unlock();
         if (!maxedOut)
             barbwireUpgradeButton.SetText(UIMoney.FormatMoney(cost));
         else barbwireUpgradeButton.SetText("Max");
@@ -374,6 +384,8 @@ public class UIButtonManager : MonoBehaviour
             turretUpgradeButton.Lock(Settings.TurretUnlockDay);
             return;
         }
+        else
+            turretUpgradeButton.Unlock();
         if (!maxedOut)
             turretUpgradeButton.SetText(UIMoney.FormatMoney(cost));
         else turretUpgradeButton.SetText("Max");

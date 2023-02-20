@@ -54,6 +54,7 @@ public static class ProgressInitializer
 
     private static void InitializeSoldiers()
     {
+        Debug.Log("initializesoldiers");
         for (int i = 1; i < PlayerProgression.PlayerData.Soldiers.Count; i++)
         {
             int number = PlayerProgression.PlayerData.Soldiers[i];

@@ -168,11 +168,11 @@ MonoBehaviour:
     pitchRangeMax: 1
     volume: 0.5
   - tag: Tic Tac Sound
-    clip: {fileID: 8300000, guid: c5e2a73ad4706440f93bf05df0b465fe, type: 3}
+    clip: {fileID: 8300000, guid: 0f0c5b0ea1327e94ebec897cb1ac9db9, type: 3}
     loop: 0
     spatialBlend: 0
-    pitchRangeMin: 0.7
-    pitchRangeMax: 0.7
+    pitchRangeMin: 1
+    pitchRangeMax: 1
     volume: 0.5
   - tag: Sound Button Sound
     clip: {fileID: 8300000, guid: 53876af583398ce4db99173d06b17c3a, type: 3}
@@ -231,7 +231,7 @@ MonoBehaviour:
     pitchRangeMax: 1
     volume: 1
   - tag: Area Cleared Sound
-    clip: {fileID: 8300000, guid: d50112dff621547448ea782c779da414, type: 3}
+    clip: {fileID: 8300000, guid: 6af80f54ffe7a414ca3029a28f13288c, type: 3}
     loop: 0
     spatialBlend: 0
     pitchRangeMin: 1
@@ -300,3 +300,17 @@ MonoBehaviour:
     pitchRangeMin: 1
     pitchRangeMax: 1
     volume: 0.5
+  - tag: TNT Explosion Sound
+    clip: {fileID: 8300000, guid: 92d3259b6a9732e4ba3fb95331b2c95d, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.9
+    pitchRangeMax: 1
+    volume: 1
+  - tag: Frost Explosion Sound
+    clip: {fileID: 8300000, guid: df0ec39bb7429284fb2f1c3413e68098, type: 3}
+    loop: 0
+    spatialBlend: 0.9
+    pitchRangeMin: 0.9
+    pitchRangeMax: 1
+    volume: 1

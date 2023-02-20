@@ -46,9 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f1204d85eb1e8d4d95e476b3881b7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 35
-  ease: 16
-  audioSource: {fileID: 0}
+  velocity: 60
+  ease: 1
   Damage: 10
 --- !u!1 &6363203790952865318
 GameObject:

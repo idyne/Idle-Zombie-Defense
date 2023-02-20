@@ -38,6 +38,7 @@ public class ExplosiveBomb : Bomb
             zombie.GetHit(damage);
         }
         ObjectPooler.SpawnFromPool("Explosive Bomb Effect", transform.position, Quaternion.identity);
+        SoundFX.PlaySound("TNT Explosion Sound", transform.position);
         mesh.SetActive(false);
         explodedMesh.SetActive(true);
         Exploded = true;

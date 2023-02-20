@@ -24,6 +24,7 @@ public class SoundFXWorker : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
+        audioSource.mute = !Settings.SoundOn;
         Settings.OnSoundChange.AddListener((soundOn) => audioSource.mute = !soundOn);
         PauseButton.OnPause.AddListener(() => { if (Working) Pause(); });
         PauseButton.OnResume.AddListener(() => { if (Working) Unpause(); });

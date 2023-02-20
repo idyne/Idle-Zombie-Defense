@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using static LevelManager;
+using UnityEngine.Events;
 
 public class TowerController : MonoBehaviour
 {
     private static TowerController instance = null;
+    private Tower currentTower = null;
+    public UnityEvent<Tower> OnTowerChange { get; private set; } = new();
     public static TowerController Instance
     {
         get
@@ -29,7 +32,10 @@ public class TowerController : MonoBehaviour
 
     public Tower GetCurrentTower()
     {
-        Tower currentTower = towers.Find((tower) => tower.TowerWorldLevel == WorldLevel && tower.TowerZoneLevel == ZoneLevel);
+        if (currentTower && currentTower.TowerWorldLevel == WorldLevel && currentTower.TowerZoneLevel == ZoneLevel)
+            return currentTower;
+        currentTower = towers.Find((tower) => tower.TowerWorldLevel == WorldLevel && tower.TowerZoneLevel == ZoneLevel);
+        OnTowerChange.Invoke(currentTower);
         return currentTower;
     }
 }

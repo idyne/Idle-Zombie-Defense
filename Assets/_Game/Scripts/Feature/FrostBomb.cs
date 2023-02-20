@@ -31,6 +31,7 @@ public class FrostBomb : Bomb
             zombie.SlowDown();
         }
         ObjectPooler.SpawnFromPool("Frost Bomb Effect", transform.position, Quaternion.identity);
+        SoundFX.PlaySound("Frost Explosion Sound", transform.position);
         mesh.SetActive(false);
         explodedMesh.SetActive(true);
         Exploded = true;

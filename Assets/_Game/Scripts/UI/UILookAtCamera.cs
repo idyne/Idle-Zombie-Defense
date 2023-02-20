@@ -5,11 +5,12 @@ using UnityEngine;
 public class UILookAtCamera : MonoBehaviour
 {
     public Transform Transform { get; private set; }
-    private static Transform cameraTransform = null;
+    private Transform cameraTransform = null;
     private void Awake()
     {
         Transform = transform;
-        if (cameraTransform == null) cameraTransform = Camera.main.transform;
+        cameraTransform = TowerController.Instance.GetCurrentTower().CameraController.CamTransform;
+        TowerController.Instance.OnTowerChange.AddListener((tower) => cameraTransform = tower.CameraController.CamTransform);
     }
 
     private void Update()

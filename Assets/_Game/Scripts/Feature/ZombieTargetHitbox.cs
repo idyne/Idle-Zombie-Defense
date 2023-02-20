@@ -27,8 +27,12 @@ public class ZombieTargetHitbox : MonoBehaviour
     public void SetZombie(Zombie zombie)
     {
         Zombie = zombie;
-        zombie.OnSpawn.AddListener(()=> { gameObject.SetActive(true); });
-        zombie.OnDeath.AddListener(()=> { gameObject.SetActive(false); });
+        zombie.OnSpawn.AddListener(() =>
+        {
+            gameObject.SetActive(true);
+            zombie.OnDeath.AddListener(() => { gameObject.SetActive(false); });
+        });
+
     }
 
     public void SetPosition()

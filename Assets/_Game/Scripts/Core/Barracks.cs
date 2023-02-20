@@ -153,6 +153,7 @@ public class Barracks : MonoBehaviour
 
     public void ClearSoldiers()
     {
+        print("clear soldiers");
         for (int i = 1; i < soldierTable.Count; i++)
         {
             List<Soldier> soldiers = soldierTable[i];

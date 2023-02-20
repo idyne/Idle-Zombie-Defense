@@ -21,6 +21,8 @@ public abstract class CameraController : MonoBehaviour
         }
     }
 
+    public Transform CamTransform { get => camTransform; }
+
     public abstract void ZoomOut();
 
 

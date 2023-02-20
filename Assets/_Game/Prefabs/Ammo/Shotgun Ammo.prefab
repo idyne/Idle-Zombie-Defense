@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 35
-  ease: 10
+  ease: 1
   Damage: 120
 --- !u!54 &8563263841179507675
 Rigidbody:
