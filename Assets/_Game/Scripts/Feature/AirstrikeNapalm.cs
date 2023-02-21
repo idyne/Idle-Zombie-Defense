@@ -21,7 +21,14 @@ public class AirstrikeNapalm : MonoBehaviour, IPooledObject
     }
     private int GetDamage()
     {
-        return WorldDay * 25;
+        switch (WorldLevel)
+        {
+            case 1:
+                return Settings.World1.AirstrikeDamage;
+            case 2:
+                return Settings.World2.AirstrikeDamage;
+        }
+        return 75;
     }
     private void Fall()
     {

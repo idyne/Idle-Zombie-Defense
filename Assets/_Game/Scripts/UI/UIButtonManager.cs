@@ -119,9 +119,9 @@ public class UIButtonManager : MonoBehaviour
     public void ShowStartAndUpgradeButtons()
     {
         startButton.Show();
+        baseUpgradesButton.Show();
         if (Day > 1)
         {
-            baseUpgradesButton.Show();
             trapUpgradesButton.Show();
         }
     }

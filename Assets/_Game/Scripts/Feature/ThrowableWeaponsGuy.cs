@@ -23,7 +23,7 @@ public class ThrowableWeaponsGuy : MonoBehaviour
     private ThrowableWeapon throwableWeapon = null;
     [SerializeField] private Button button;
     [SerializeField] private Image buttonImage;
-    private float cooldown = 30;
+    private float cooldown { get => Settings.ThrowableWeaponCooldown; }
     private float remainingCooldown = 0;
     [SerializeField] private Image cooldownLayerImage;
     [SerializeField] private GameObject ragdoll;

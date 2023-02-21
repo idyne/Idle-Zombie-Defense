@@ -8,6 +8,24 @@ using static LevelManager;
 
 public static class Settings
 {
+    public static int BaseDefenseLevelCost { get => Mathf.CeilToInt(PlayerData.BaseDefenseLevel * 5); }
+    public static int SoldierMergeLevelCost { get => Mathf.CeilToInt(PlayerData.SoldierMergeLevel * 50); }
+    public static int CommanderLevelPrice { get => Mathf.CeilToInt((PlayerData.ThrowableWeaponsGuyLevel + 1) * 50); }
+    public static int AirstrikeLevelPrice { get => Mathf.CeilToInt((PlayerData.AirstrikeLevel + 1) * 50); }
+    public static int TNTLevelCost { get => Mathf.CeilToInt(PlayerData.TNTLevel * 50); }
+    public static int FrostLevelCost { get => Mathf.CeilToInt(PlayerData.FrostLevel * 50); }
+    public static int BarbwireLevelCost { get => Mathf.CeilToInt(PlayerData.BarbwireLevel * 50); }
+    public static int TurretLevelCost { get => Mathf.CeilToInt(PlayerData.TurretLevel * 50); }
+    public static int ExplosiveBombCost { get => Mathf.CeilToInt(NumberOfExplosiveBombs * 100 + 5); }
+    public static int FrostBombCost { get => Mathf.CeilToInt(NumberOfFrostBombs * 100 + 5); }
+    public static int BarbwireCost { get => Mathf.CeilToInt(NumberOfBarbwires * 100 + 5); }
+    public static int TurretCost { get => Mathf.CeilToInt(NumberOfTurrets * 800 + 200); }
+    public static int BarbwireDPS { get => Mathf.CeilToInt(PlayerData.BarbwireLevel * 50 * (WorldDay / 3 + 1)); }
+    public static int TNTDamage { get => Mathf.CeilToInt(PlayerData.TNTLevel * 50 * (WorldDay / 3 + 1)); }
+    public static int FrostDuration { get => Mathf.CeilToInt(PlayerData.FrostLevel * 10); }
+    public static int BarbwireMaxDamage { get => BarbwireDPS * 6; }
+    public static float ThrowableWeaponCooldown { get => 20f / (PlayerData.ThrowableWeaponsGuyLevel / 2f); }
+    public static float AirstrikeCooldown { get => 30f / (PlayerData.AirstrikeLevel / 2f); }
     public static readonly int FrostUnlockDay = 9;
     public static readonly int TurretUnlockDay = 14;
     public static readonly int TNTUnlockDay = 2;
@@ -19,6 +37,7 @@ public static class Settings
     public static UnityEvent<bool> OnSoundChange { get; private set; } = new();
 
     private static int NumberOfFrostBombs { get => PlayerData.Traps.Where(trapData => trapData.Item1 == 1).Count(); }
+    private static int NumberOfBarbwires { get => PlayerData.Traps.Where(trapData => trapData.Item1 == 2).Count(); }
     private static int NumberOfTurrets { get => PlayerData.Turrets.Count; }
     private static int NumberOfExplosiveBombs { get => PlayerData.Traps.Where(trapData => trapData.Item1 == 0).Count(); }
 
@@ -66,12 +85,6 @@ public static class Settings
         public static int IncomeCost { get => Mathf.CeilToInt(BaseIncomeCost * PlayerData.IncomeLevel); }
 
         #endregion
-        #region Preparation
-        public static int FrostBombCost { get => Mathf.CeilToInt(NumberOfFrostBombs * 100 + 5); }
-        public static int BarbwireCost { get => Mathf.CeilToInt(NumberOfFrostBombs * 100 + 5); }
-        public static int TurretCost { get => Mathf.CeilToInt(NumberOfTurrets * 800 + 200); }
-        public static int ExplosiveBombCost { get => Mathf.CeilToInt(NumberOfExplosiveBombs * 100 + 5); }
-        #endregion
         #region Prize
         public static int FinishDayPrize
         {
@@ -93,15 +106,6 @@ public static class Settings
                 return Mathf.CeilToInt(money);
             }
         }
-        #endregion
-        #region Upgrades
-        public static readonly int TrapCapacityLimit = 2;
-        public static readonly int TurretCapacityLimit = 0;
-        public static readonly int BaseDefenseLimit = 7;
-        public static readonly int SoldierMergeLevelLimit = 2;
-        public static int BaseDefenseLevelCost { get => Mathf.CeilToInt(PlayerData.BaseDefenseLevel * 1); }
-        public static int SoldierMergeLevelCost { get => Mathf.CeilToInt(PlayerData.SoldierMergeLevel * 2); }
-
         #endregion
         #region Wave
         private static readonly int BaseWavePower = 5;
@@ -190,6 +194,17 @@ public static class Settings
 
 
         #endregion
+        #region Turret
+        public static int TurretDamage { get => Mathf.CeilToInt(PlayerData.TurretLevel * 50 * (WorldDay / 3f + 1)); }
+        #endregion
+        #region Commander
+        public static int CommanderWeaponDamage { get => Mathf.CeilToInt(50 * (WorldDay / 3f + 1)); }
+        public static int GrenadeDamage { get => Mathf.CeilToInt(50 * (WorldDay / 3f + 1)); }
+        public static int MolotovDPS { get => Mathf.CeilToInt(50 * (WorldDay / 3f + 1)); }
+        #endregion
+        #region Airstrike
+        public static int AirstrikeDamage { get => Mathf.CeilToInt(PlayerData.AirstrikeLevel * 50 * (WorldDay / 3f + 1)); }
+        #endregion
     }
     public static class World2
     {
@@ -231,12 +246,6 @@ public static class Settings
         public static int IncomeCost { get => Mathf.CeilToInt(BaseIncomeCost * PlayerData.IncomeLevel); }
 
         #endregion
-        #region Preparation
-        public static int FrostBombCost { get => Mathf.CeilToInt(NumberOfFrostBombs * 100 + 5); }
-        public static int BarbwireCost { get => Mathf.CeilToInt(NumberOfFrostBombs * 100 + 5); }
-        public static int TurretCost { get => Mathf.CeilToInt(NumberOfTurrets * 800 + 200); }
-        public static int ExplosiveBombCost { get => Mathf.CeilToInt(NumberOfExplosiveBombs * 100 + 5); }
-        #endregion
         #region Prize
         public static int FinishDayPrize
         {
@@ -269,15 +278,6 @@ public static class Settings
                 return Mathf.CeilToInt(money);
             }
         }
-        #endregion
-        #region Upgrades
-        public static readonly int TrapCapacityLimit = 4;
-        public static readonly int TurretCapacityLimit = 2;
-        public static readonly int BaseDefenseLimit = 14;
-        public static readonly int SoldierMergeLevelLimit = 3;
-        public static int BaseDefenseLevelCost { get => Mathf.CeilToInt(Mathf.Pow(PlayerData.BaseDefenseLevel, 1.5f) * 100); }
-        public static int SoldierMergeLevelCost { get => Mathf.CeilToInt(Mathf.Pow(PlayerData.SoldierMergeLevel, 2.1f) * 1500); }
-
         #endregion
         #region Wave
         private static readonly int BaseWavePower = 5;
@@ -375,6 +375,17 @@ public static class Settings
         }
 
 
+        #endregion
+        #region Turret
+        public static int TurretDamage { get => Mathf.CeilToInt(PlayerData.TurretLevel * 50 * (WorldDay / 3f + 1)); }
+        #endregion
+        #region Commander
+        public static int CommanderWeaponDamage { get => Mathf.CeilToInt(50 * (WorldDay / 3f + 1)); }
+        public static int GrenadeDamage { get => Mathf.CeilToInt(50 * (WorldDay / 3f + 1)); }
+        public static int MolotovDPS { get => Mathf.CeilToInt(50 * (WorldDay / 3f + 1)); }
+        #endregion
+        #region Airstrike
+        public static int AirstrikeDamage { get => Mathf.CeilToInt(PlayerData.AirstrikeLevel * 50 * (WorldDay / 3f + 1)); }
         #endregion
     }
 

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7643400566074286078}
-  - component: {fileID: 7194345477673716817}
+  - component: {fileID: 7801405595222960522}
   m_Layer: 0
-  m_Name: Turret Ammo
+  m_Name: Commander Ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7194345477673716817
+--- !u!114 &7801405595222960522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5388626812233157393}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d620ceb2c4a8eb64bad26439877e6ba3, type: 3}
+  m_Script: {fileID: 11500000, guid: 506b2ccf72c11144c9ca178db5e10abe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 60
@@ -126,7 +126,7 @@ TrailRenderer:
   m_Time: 0.025
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.25
+    widthMultiplier: 0.1
     widthCurve:
       serializedVersion: 2
       m_Curve:

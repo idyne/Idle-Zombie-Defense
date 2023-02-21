@@ -5,6 +5,11 @@ using UnityEngine;
 using static LevelManager;
 public class FrostBomb : Bomb
 {
+    private int frostDuration { get => GetFrostDuration(); }
+    private int GetFrostDuration()
+    {
+        return Settings.FrostDuration;
+    }
     protected override int price
     {
         get
@@ -28,7 +33,7 @@ public class FrostBomb : Bomb
         for (int i = 0; i < colliders.Length; i++)
         {
             Zombie zombie = colliders[i].GetComponent<Zombie>();
-            zombie.SlowDown();
+            zombie.SlowDown(frostDuration);
         }
         ObjectPooler.SpawnFromPool("Frost Bomb Effect", transform.position, Quaternion.identity);
         SoundFX.PlaySound("Frost Explosion Sound", transform.position);

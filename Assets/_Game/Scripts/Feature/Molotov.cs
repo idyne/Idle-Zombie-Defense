@@ -3,14 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FateGames;
+using static LevelManager;
 
 public class Molotov : ThrowableWeapon, IPooledObject
 {
-    protected int damagePerSecond = 50;
+    protected int damagePerSecond { get => GetDPS(); }
     protected List<Zombie> cooldownList = new();
     [SerializeField] private Collider damageCollider;
     [SerializeField] private GameObject mesh;
     private float duration = 6;
+
+    private int GetDPS()
+    {
+        switch (WorldLevel)
+        {
+            case 1:
+                return Settings.World1.MolotovDPS;
+            case 2:
+                return Settings.World2.MolotovDPS;
+        }
+        return 75;
+    }
 
     public void OnObjectSpawn()
     {

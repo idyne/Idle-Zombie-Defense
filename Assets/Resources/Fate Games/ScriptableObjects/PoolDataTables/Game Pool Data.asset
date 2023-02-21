@@ -283,3 +283,8 @@ MonoBehaviour:
     size: 8
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
+  - tag: Commander Ammo
+    prefab: {fileID: 5388626812233157393, guid: 3d69b07bdd17609419958262017d974c, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}

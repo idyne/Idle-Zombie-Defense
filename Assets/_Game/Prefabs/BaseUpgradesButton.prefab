@@ -4905,7 +4905,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 83, y: 0}
-  m_SizeDelta: {x: 303.4432, y: 235.8798}
+  m_SizeDelta: {x: 326.5715, y: 326.5715}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1386564433837195279
 CanvasRenderer:
@@ -4935,7 +4935,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ec3112970cf59c844960b9220f3a284b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 82b683481a352f244aeca11c593bb062, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -25,7 +25,7 @@ public class ExplosiveBomb : Bomb
     }
     private int GetDamage()
     {
-        return NormalizedDay * 75;
+        return Settings.TNTDamage;
     }
 
     protected override bool Explode()

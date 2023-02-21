@@ -8,7 +8,8 @@ public abstract class Projectile : MonoBehaviour, IPooledObject
 {
     [SerializeField] protected float velocity = 5;
     [SerializeField] protected Ease ease;
-    public int Damage = 1;
+    [SerializeField] private int damage = 50;
+    public virtual int Damage { get => damage; set => damage = value; }
     public Transform Transform { get; private set; }
 
     private void Awake()

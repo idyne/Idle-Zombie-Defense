@@ -7,118 +7,56 @@ public static class CostManager
 
     public static int GetFrostPrice()
     {
-        switch (WorldLevel)
-        {
-            case 1:
-                return Settings.World1.FrostBombCost;
-            case 2:
-                return Settings.World2.FrostBombCost;
-        }
-        return 1;
+        return Settings.FrostBombCost;
     }
 
     public static int GetBarbwirePrice()
     {
-        switch (WorldLevel)
-        {
-            case 1:
-                return Settings.World1.BarbwireCost;
-            case 2:
-                return Settings.World2.BarbwireCost;
-        }
-        return 1;
+        return Settings.BarbwireCost;
     }
 
     public static int GetTurretPrice()
     {
-        switch (WorldLevel)
-        {
-            case 1:
-                return Settings.World1.TurretCost;
-            case 2:
-                return Settings.World2.TurretCost;
-        }
-        return 1;
+        return Settings.TurretCost;
     }
 
     public static int GetTNTPrice()
     {
-        switch (WorldLevel)
-        {
-            case 1:
-                return Settings.World1.ExplosiveBombCost;
-            case 2:
-                return Settings.World2.ExplosiveBombCost;
-        }
-        return 1;
+        return Settings.ExplosiveBombCost;
     }
 
     public static int GetBaseDefenseLevelPrice()
     {
-        switch (WorldLevel)
-        {
-            case 1:
-                return Settings.World1.BaseDefenseLevelCost;
-            case 2:
-                return Settings.World2.BaseDefenseLevelCost;
-        }
-        return 1;
+        return Settings.BaseDefenseLevelCost;
     }
     public static int GetThrowableWeaponsGuyLevelPrice()
     {
-        //TODO
-        switch (WorldLevel)
-        {
-            case 1:
-                return Settings.World1.BaseDefenseLevelCost;
-            case 2:
-                return Settings.World2.BaseDefenseLevelCost;
-        }
-        return 1;
+        return Settings.CommanderLevelPrice;
     }
     public static int GetAirstrikePrice()
     {
-        //TODO
-        switch (WorldLevel)
-        {
-            case 1:
-                return Settings.World1.BaseDefenseLevelCost;
-            case 2:
-                return Settings.World2.BaseDefenseLevelCost;
-        }
-        return 1;
+        return Settings.AirstrikeLevelPrice;
     }
     public static int GetTNTUpgradePrice()
     {
-        //TODO
-        return 1;
+        return Settings.TNTLevelCost;
     }
     public static int GetFrostUpgradePrice()
     {
-        //TODO
-        return 1;
+        return Settings.FrostLevelCost;
     }
     public static int GetBarbwireUpgradePrice()
     {
-        //TODO
-        return 1;
+        return Settings.BarbwireLevelCost;
     }
     public static int GetTurretUpgradePrice()
     {
-        //TODO
-        return 1;
+        return Settings.TurretLevelCost;
     }
 
     public static int GetSoldierMergeLevelPrice()
     {
-        switch (WorldLevel)
-        {
-            case 1:
-                return Settings.World1.SoldierMergeLevelCost;
-            case 2:
-                return Settings.World2.SoldierMergeLevelCost;
-        }
-        return 1;
+        return Settings.SoldierMergeLevelCost;
     }
 
     public static int GetIncomeCost()

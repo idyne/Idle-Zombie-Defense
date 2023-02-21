@@ -12,7 +12,7 @@ public class Airstrike : MonoBehaviour
     [SerializeField] private Button button;
     [SerializeField] private Image buttonImage;
     [SerializeField] private Sprite bombSprite, napalmSprite;
-    private float cooldown = 30;
+    private float cooldown { get => Settings.AirstrikeCooldown; }
     private float remainingCooldown = 0;
 
     private void Awake()

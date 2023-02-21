@@ -5244,6 +5244,7 @@ Transform:
   - {fileID: 5698448137271014933}
   - {fileID: 3010212063684842174}
   - {fileID: 1162437767385389382}
+  - {fileID: 6489107593239498989}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5365,7 +5366,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.083333336
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: e3369406bca05a9499d1e307ab8c6bcc, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: c820e917619084d459a13b1f669dba77, type: 2}
 --- !u!1 &2702587032991620849
 GameObject:
   m_ObjectHideFlags: 0
@@ -11499,6 +11500,54 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -1332402368948801129, guid: 837f6680fd3dff0489d1eddc6079442a, type: 3}
+--- !u!1 &6744624986213081982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6489107593239498989}
+  - component: {fileID: 4366488255918119569}
+  m_Layer: 0
+  m_Name: NavMeshVolume (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6489107593239498989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6744624986213081982}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8357635517279074028}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4366488255918119569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6744624986213081982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 36.902786, y: 19.277916, z: 5.0297813}
+  m_Center: {x: 0.26878166, y: 8.0061, z: 31.895472}
+  m_Area: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &6744891514030890591
 GameObject:
   m_ObjectHideFlags: 0
