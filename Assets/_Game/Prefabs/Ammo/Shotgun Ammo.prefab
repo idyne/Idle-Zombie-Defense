@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: 35
   ease: 1
-  Damage: 120
+  damage: 170
 --- !u!54 &8563263841179507675
 Rigidbody:
   m_ObjectHideFlags: 0

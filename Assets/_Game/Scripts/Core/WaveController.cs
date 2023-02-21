@@ -33,7 +33,7 @@ public class WaveController : MonoBehaviour
     public UnityEvent<Wave> OnNewWave { get; private set; } = new();
     public UnityEvent OnWaveStart { get; private set; } = new();
     public UnityEvent OnWaveEnd { get; private set; } = new();
-    private int CurrentBossLevel { get => CurrentTimePeriod == TimePeriod.Night ? NormalizedDay : -1; }
+    private int CurrentBossLevel { get => CurrentTimePeriod == TimePeriod.Night ? WorldDay : -1; }
 
 
     private int GetCurrentLevelPower()

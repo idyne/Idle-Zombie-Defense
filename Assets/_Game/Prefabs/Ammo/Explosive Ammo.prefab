@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: 20
   ease: 5
-  Damage: 250
+  damage: 200
   range: 2.2
   affectedLayers:
     serializedVersion: 2
