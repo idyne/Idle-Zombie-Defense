@@ -98,7 +98,27 @@ public static class Settings
                 return Mathf.CeilToInt(money);
             }
         }
+        public static int FinishDayUpgradePrize
+        {
+            get
+            {
+                // (NormalizedDay - 2) bitirdiðimiz günü temsil eder
+                float money = (NormalizedDay - 2) * 101 + 51;
+                // Zonelarýn son günlerindeki para önemsiz olduðu için sabit bir para veriyoruz
+                if (Day == 8 || Day == 22 || Day == 42)
+                    money = 1500;
+                return Mathf.CeilToInt(money);
+            }
+        }
         public static int FinishPhasePrize
+        {
+            get
+            {
+                float money = NormalizedDay * 20;
+                return Mathf.CeilToInt(money);
+            }
+        }
+        public static int FinishPhaseUpgradePrize
         {
             get
             {
@@ -269,12 +289,32 @@ public static class Settings
                 return Mathf.CeilToInt(money);
             }
         }
+        public static int FinishDayUpgradePrize
+        {
+            get
+            {
+                // (NormalizedDay - 2) bitirdiðimiz günü temsil eder
+                float money = (NormalizedDay - 2) * 101 + 51;
+                // Zonelarýn son günlerindeki para önemsiz olduðu için sabit bir para veriyoruz
+                if (Day == 8 || Day == 22 || Day == 42)
+                    money = 1500;
+                return Mathf.CeilToInt(money);
+            }
+        }
         public static int FinishPhasePrize
         {
             get
             {
                 float money = NormalizedDay * 20;
                 money *= 1.5f;
+                return Mathf.CeilToInt(money);
+            }
+        }
+        public static int FinishPhaseUpgradePrize
+        {
+            get
+            {
+                float money = NormalizedDay * 20;
                 return Mathf.CeilToInt(money);
             }
         }

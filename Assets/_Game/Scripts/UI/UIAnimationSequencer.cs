@@ -48,8 +48,9 @@ public class UIAnimationSequencer : MonoBehaviour
         UIContainer.SetActive(false);
         uiDayBar.Hide();
         UILevelBar.Instance.Hide();
-        float money = 1;
-        switch (ZoneLevel)
+        int money = 1;
+        int upgradePoints = 1;
+        switch (WorldLevel)
         {
             case 1:
                 money = Settings.World1.FinishDayPrize;
@@ -58,29 +59,43 @@ public class UIAnimationSequencer : MonoBehaviour
                 money = Settings.World2.FinishDayPrize;
                 break;
         }
-        areaCleared.Show(Mathf.CeilToInt(money), 5);
+        switch (WorldLevel)
+        {
+            case 1:
+                upgradePoints = Settings.World1.FinishDayUpgradePrize;
+                break;
+            case 2:
+                upgradePoints = Settings.World2.FinishDayUpgradePrize;
+                break;
+        }
+        areaCleared.Show(money, upgradePoints);
         yield return new WaitUntil(() => areaClearedNext);
         areaClearedNext = false;
         yield return new WaitForSeconds(3.2f);
     }
     private IEnumerator FinishPhase()
     {
-        float money = NormalizedDay * 20;
-        switch (ZoneLevel)
+        int money = 1;
+        int upgradePoints = 1;
+        switch (WorldLevel)
         {
+            case 1:
+                money = Settings.World1.FinishPhasePrize;
+                break;
             case 2:
-                money *= 1.5f;
-                break;
-            case 3:
-                money *= 2f;
-                break;
-            case 4:
-                money *= 2f;
-                break;
-            default:
+                money = Settings.World2.FinishPhasePrize;
                 break;
         }
-        yield return phaseCleared.Show(Mathf.CeilToInt(money), 1);
+        switch (WorldLevel)
+        {
+            case 1:
+                upgradePoints = Settings.World1.FinishPhaseUpgradePrize;
+                break;
+            case 2:
+                upgradePoints = Settings.World2.FinishPhaseUpgradePrize;
+                break;
+        }
+        yield return phaseCleared.Show(money, upgradePoints);
         uiDayBar.Hide();
         UILevelBar.Instance.Hide();
         yield return new WaitForSeconds(0.7f);

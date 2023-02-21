@@ -94,7 +94,7 @@ public class UIButtonManager : MonoBehaviour
 
     public void ShowInWaveButtons() => inWaveButtons.SetActive(true);
     public void HideInWaveButtons() => inWaveButtons.SetActive(false);
-    public void ShowOutWaveButtons() => outWaveButtons.SetActive(true);
+    public void ShowOutWaveButtons() { if (Day > 1) outWaveButtons.SetActive(true); }
     public void HideOutWaveButtons() => outWaveButtons.SetActive(false);
 
     public void UpdateSoldierButton()
