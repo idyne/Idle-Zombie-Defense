@@ -58,10 +58,6 @@ public class Tower : MonoBehaviour
         healthBar = GetComponentInChildren<UIHealthBar>();
         SetHealth(MaxHealth);
         healthBar.Hide();
-    }
-
-    private void Start()
-    {
         WaveController.Instance.OnNewWave.AddListener((wave) =>
         {
             wave.OnWaveClear.AddListener(Repair);
@@ -72,6 +68,20 @@ public class Tower : MonoBehaviour
         });
     }
 
+    private void Start()
+    {
+        /*Debug.Log("b " + gameObject.name, this);
+        WaveController.Instance.OnNewWave.AddListener((wave) =>
+        {
+            Debug.Log("a " + gameObject.name, this);
+            wave.OnWaveClear.AddListener(Repair);
+        });
+        UpgradeController.OnBaseDefenseUpgrade.AddListener(() =>
+        {
+            SetHealth(MaxHealth);
+        });*/
+    }
+
     public Transform GetRandomZombieSpawnPoint()
     {
         return zombieSpawnPoints[Random.Range(0, zombieSpawnPoints.Count)];
@@ -79,6 +89,7 @@ public class Tower : MonoBehaviour
 
     public void Repair()
     {
+        Debug.Log(gameObject.name, this);
         foreach (Barrier barrier in barriers)
             barrier.Repair();
         SetHealth(MaxHealth, damageTaken > 0);
@@ -98,6 +109,7 @@ public class Tower : MonoBehaviour
 
     public void TurnOnLights()
     {
+        return;
         for (int i = 0; i < spotlights.Length; i++)
         {
             spotlights[i].TurnOn();
@@ -168,6 +180,7 @@ public class Tower : MonoBehaviour
 
     private void Die()
     {
+        WaveController.State = WaveController.WaveState.LOSE;
         FateGames.LevelManager.Instance.FinishLevel(false);
     }
 

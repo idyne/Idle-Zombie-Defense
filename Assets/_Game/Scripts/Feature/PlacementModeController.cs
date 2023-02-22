@@ -11,7 +11,6 @@ public class PlacementModeController : MonoBehaviour
         get
         {
             if (instance == null) instance = FindObjectOfType<PlacementModeController>(true);
-            print(instance);
             return instance;
         }
     }

@@ -11,6 +11,7 @@ public abstract class CameraController : MonoBehaviour
     [SerializeField] protected Transform camTransform;
     [SerializeField] protected Camera camera;
     private Transform _transform = null;
+    public static bool InPlacementMode = false;
     public Transform transform
     {
         get

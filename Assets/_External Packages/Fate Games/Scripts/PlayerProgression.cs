@@ -8,6 +8,9 @@ namespace FateGames
         public static PlayerData PlayerData { get; private set; }
         public static readonly UnityEvent<int, int> OnMoneyChanged = new();
         public static readonly UnityEvent<int, int> OnUpgradePointChanged = new();
+        public static readonly UnityEvent<bool> OnHasEverDetonatedChanged = new();
+        public static readonly UnityEvent<bool> OnHasEverPlacedChanged = new();
+        public static readonly UnityEvent<bool> OnHasEverAimedChanged = new();
         public static bool CanAfford(int cost) => MONEY >= cost;
         public static bool CanAffordUpgrade(int cost) => UPGRADE_POINT >= cost;
 
@@ -36,6 +39,33 @@ namespace FateGames
                 int previous = PlayerData.UpgradePoint;
                 PlayerData.UpgradePoint = value;
                 OnUpgradePointChanged.Invoke(value, value - previous);
+            }
+        }
+
+        public static bool HasEverDetonated
+        {
+            get => PlayerData.HasEverDetonated; set
+            {
+                PlayerData.HasEverDetonated = value;
+                OnHasEverDetonatedChanged.Invoke(value);
+            }
+        }
+
+        public static bool HasEverPlaced
+        {
+            get => PlayerData.HasEverPlaced; set
+            {
+                PlayerData.HasEverPlaced = value;
+                OnHasEverPlacedChanged.Invoke(value);
+            }
+        }
+
+        public static bool HasEverAimed
+        {
+            get => PlayerData.HasEverAimed; set
+            {
+                PlayerData.HasEverAimed = value;
+                OnHasEverAimedChanged.Invoke(value);
             }
         }
 

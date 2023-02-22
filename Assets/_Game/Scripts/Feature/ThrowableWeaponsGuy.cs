@@ -13,7 +13,8 @@ public class ThrowableWeaponsGuy : MonoBehaviour
     private bool usingSkill = false;
     private bool throwing = false;
     private Camera mainCamera { get => TowerController.Instance.GetCurrentTower().CameraController.Camera; }
-    private float shootingPeriod = 0.5f;
+    private float baseShootingPeriod = 0.5f;
+    private float shootingPeriod { get => baseShootingPeriod - (Barracks.FireRateLevel - 1) * baseShootingPeriod / (float)LimitManager.GetMaxFireRateLevel() * 0.5f; }
     private float lastShootTime = -50;
     private Zombie target = null;
     private Weapon weapon;
@@ -114,6 +115,8 @@ public class ThrowableWeaponsGuy : MonoBehaviour
         if (WaveController.Instance.CurrentWave == null || WaveController.State != WaveController.WaveState.RUNNING) return;
         if (zombie == null || Vector3.Distance(zombie.Transform.position, transform.position) > range) return;
         if (zombie == target) return;
+        if (!PlayerProgression.HasEverAimed)
+            PlayerProgression.HasEverAimed = true;
         if (target)
             RemoveTarget();
         target = zombie;

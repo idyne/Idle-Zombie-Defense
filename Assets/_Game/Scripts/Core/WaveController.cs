@@ -27,7 +27,7 @@ public class WaveController : MonoBehaviour
     public static int WaveLevel { get => PlayerProgression.PlayerData.WaveLevel; set => PlayerProgression.PlayerData.WaveLevel = value; }
 
     public Wave CurrentWave { get; private set; } = null;
-    public static WaveState State { get; private set; }
+    public static WaveState State { get; set; }
 
     private int CurrentMaxZombieLevel { get => GetCurrentMaxZombieLevel(); }
     public UnityEvent<Wave> OnNewWave { get; private set; } = new();
@@ -308,5 +308,5 @@ public class WaveController : MonoBehaviour
         }
     }
 
-    public enum WaveState { WAITING, RUNNING };
+    public enum WaveState { WAITING, RUNNING, LOSE };
 }

@@ -48,6 +48,8 @@ public abstract class Trap : Placeable
     public void Detonate()
     {
         if (PauseButton.Paused || !Explode()) return;
+        if (!PlayerProgression.HasEverDetonated)
+            PlayerProgression.HasEverDetonated = true;
         (int, int, bool) saveData = PlayerProgression.PlayerData.Traps[saveDataIndex];
         saveData.Item3 = true;
         PlayerProgression.PlayerData.Traps[saveDataIndex] = saveData;

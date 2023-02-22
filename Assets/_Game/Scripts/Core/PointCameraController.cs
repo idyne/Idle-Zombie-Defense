@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(Swerve))]
 public class PointCameraController : CameraController
 {
-    
+
     private bool zoomingOut = false;
 
     [SerializeField] private float cameraForwardRange = 10;
@@ -37,7 +37,7 @@ public class PointCameraController : CameraController
         swerve.OnStart.AddListener(() => { onUI = EventSystem.current.IsPointerOverGameObject() && EventSystem.current.currentSelectedGameObject != null; });
         swerve.OnSwerve.AddListener(() =>
         {
-            if (zoomingOut || PlacementModeController.InPlacementMode || onUI) return;
+            if (zoomingOut || InPlacementMode || onUI) return;
             angle = anchorAngle + swerve.XRate * 180;
             zoomDistance = Mathf.Clamp(anchorDistance - swerve.YRate * cameraZoomSpeed, cameraBackwardRange, cameraForwardRange);
             DayCycler.Instance.ChangeFogOffset(-zoomDistance);
@@ -56,13 +56,13 @@ public class PointCameraController : CameraController
 
     private void SetAnchorAngle()
     {
-        if (PlacementModeController.InPlacementMode) return;
+        if (InPlacementMode) return;
         anchorAngle = angle;
     }
 
     private void SetAnchorDistance()
     {
-        if (PlacementModeController.InPlacementMode) return;
+        if (InPlacementMode) return;
         anchorDistance = zoomDistance;
     }
 
