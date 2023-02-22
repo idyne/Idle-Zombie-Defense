@@ -8,7 +8,7 @@ namespace FateGames
     public class PlayerData : Data
     {
         public int CurrentLevel = 1;
-        public int Money = 50000;
+        public int Money = 0;
         public int UpgradePoint = 0;
         public List<int> Soldiers = new() { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public int WaveLevel = 49;

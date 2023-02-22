@@ -1688,7 +1688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aab9539070a4a949b4769a8f5209ca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseShootingPeriod: 2
+  baseShootingPeriod: 1.6
   range: 20
   ragdoll: {fileID: 4652869632857123284}
 --- !u!1 &7114066279467730523
