@@ -170,7 +170,6 @@ public class UIButtonManager : MonoBehaviour
 
     public void UpdateMergeButton()
     {
-        print("UpdateMergeButton");
         int cost = CostManager.GetMergeCost();
         bool canMerge = Barracks.Instance.CanMerge(out _);
         mergeButton.SetText(UIMoney.FormatMoney(cost));
@@ -548,7 +547,6 @@ public class UIButtonManager : MonoBehaviour
         else
         {
             canAffordTNT = true;
-            print(PlacementModeController.Instance);
             PlacementModeController.Instance.ShowNotification();
             tntButton.Activate();
         }

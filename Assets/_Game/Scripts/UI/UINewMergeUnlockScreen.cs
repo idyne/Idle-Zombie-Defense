@@ -27,6 +27,7 @@ public class UINewMergeUnlockScreen : MonoBehaviour
         SoundFX.PlaySound("New Merge Unlocked Sound");
         container.SetActive(true);
         bannerText.text = soldierNames[level];
+        SoldierRenderController.Instance.gameObject.SetActive(true);
         SoldierRenderController.Instance.Render(level);
     }
 
@@ -36,6 +37,7 @@ public class UINewMergeUnlockScreen : MonoBehaviour
         SoundFX.PlaySound("UI Button Sound");
         container.SetActive(false);
         pauseButton.Press();
+        SoldierRenderController.Instance.gameObject.SetActive(false);
     }
 
 }

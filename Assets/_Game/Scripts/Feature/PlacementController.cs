@@ -1,3 +1,4 @@
+using FateGames;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -70,7 +71,7 @@ public class PlacementController : MonoBehaviour
             // Show grids for placement
             ShowGrids();
             // Set main camera to placement mode
-            //CameraController.InPlacementMode = true;
+            CameraController.InPlacementMode = true;
             //UIButtonManager.Instance.HidePlacementButtons();
             //UIButtonManager.Instance.HideStartAndUpgradeButtons();
             PlacementModeController.Instance.HidePlacementButtons();
@@ -127,14 +128,18 @@ public class PlacementController : MonoBehaviour
     private void Place()
     {
         if (hoveredGrid && hoveredGrid.IsAvaliable)
+        {
             selectedPlaceable.Attach(hoveredGrid);
+            if (!PlayerProgression.HasEverPlaced)
+                PlayerProgression.HasEverPlaced = true;
+        }
         else selectedPlaceable.PlaceOnGrid();
         selectedPlaceable.OnDrop.Invoke();
         selectedPlaceable = null;
         hoveredGrid = null;
         HideGrids();
         // Set main camera to not placement mode
-        //CameraController.InPlacementMode = false;
+        CameraController.InPlacementMode = false;
         //UIButtonManager.Instance.ShowPlacementButtons();
         //UIButtonManager.Instance.ShowStartAndUpgradeButtons();
         PlacementModeController.Instance.ShowPlacementButtons();

@@ -44,7 +44,7 @@ public class Airstrike : MonoBehaviour
     private void HideButton() => button.gameObject.SetActive(false);
     private void ShowButton()
     {
-        switch (PlayerProgression.PlayerData.ThrowableWeaponsGuyLevel)
+        switch (PlayerProgression.PlayerData.AirstrikeLevel)
         {
             case 1:
                 buttonImage.sprite = bombSprite;

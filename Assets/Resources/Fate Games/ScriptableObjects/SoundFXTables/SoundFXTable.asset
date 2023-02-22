@@ -54,7 +54,7 @@ MonoBehaviour:
     spatialBlend: 0.9
     pitchRangeMin: 0.8
     pitchRangeMax: 1
-    volume: 1
+    volume: 0.8
   - tag: Rocket Sound
     clip: {fileID: 8300000, guid: 865e88b4b32e7c44298c5cffdb7a80af, type: 3}
     loop: 0

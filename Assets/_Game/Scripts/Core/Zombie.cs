@@ -202,7 +202,7 @@ public class Zombie : MonoBehaviour, IPooledObject
     }
     private void SetHealth(int health, bool showBar = true)
     {
-
+        if (WaveController.State == WaveController.WaveState.LOSE) return;
         currentHealth = Mathf.Clamp(health, 0, maxHealth);
         bool first = healthBar.Percent <= currentHealth / (float)maxHealth;
         healthBar.SetPercent(currentHealth / (float)maxHealth);

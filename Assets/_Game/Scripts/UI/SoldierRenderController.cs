@@ -24,6 +24,11 @@ public class SoldierRenderController : MonoBehaviour
         image.texture = camera.targetTexture;
     }
 
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
+
 
     public void Render(int soldierIndex)
     {
