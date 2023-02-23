@@ -5095,6 +5095,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Exploded TNT
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8180e41218a856b49b001db23ec1b422, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8180e41218a856b49b001db23ec1b422, type: 3}
 --- !u!4 &7047308556493952476 stripped
