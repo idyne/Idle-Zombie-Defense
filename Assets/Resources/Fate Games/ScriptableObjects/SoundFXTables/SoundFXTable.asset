@@ -35,21 +35,21 @@ MonoBehaviour:
     pitchRangeMax: 1
     volume: 0.874
   - tag: M16 Sound
-    clip: {fileID: 8300000, guid: eea904033193c0c41a784dc49aad9611, type: 3}
+    clip: {fileID: 8300000, guid: a671a8173534a694baae6113eef43145, type: 3}
     loop: 0
     spatialBlend: 0.9
     pitchRangeMin: 0.75
     pitchRangeMax: 1
     volume: 0.6
   - tag: M249 Sound
-    clip: {fileID: 8300000, guid: 177848aa4c0287f48a637ff84751bc6d, type: 3}
+    clip: {fileID: 8300000, guid: be800fb2a668d97429749af2adff98c8, type: 3}
     loop: 0
     spatialBlend: 0.8
     pitchRangeMin: 0.8
     pitchRangeMax: 1
     volume: 1
   - tag: Pistol Sound
-    clip: {fileID: 8300000, guid: e1694f66760ca85418567e2dcbd66a0a, type: 3}
+    clip: {fileID: 8300000, guid: 8e24aad832aae0f4e943ccb7c737a097, type: 3}
     loop: 0
     spatialBlend: 0.9
     pitchRangeMin: 0.8
@@ -63,14 +63,14 @@ MonoBehaviour:
     pitchRangeMax: 1
     volume: 1
   - tag: Shotgun Sound
-    clip: {fileID: 8300000, guid: a2ce75c4daaa82b4c8fe57a740efdca8, type: 3}
+    clip: {fileID: 8300000, guid: 384570a3a80bc1647a870a316e59c83f, type: 3}
     loop: 0
     spatialBlend: 0.9
     pitchRangeMin: 0.75
     pitchRangeMax: 1
     volume: 0.6
   - tag: Sniper Sound
-    clip: {fileID: 8300000, guid: f7368ff6b9b7b6545ad0fd23d120bfe8, type: 3}
+    clip: {fileID: 8300000, guid: c90b4fa1bc5c02b48a52121b60389d8c, type: 3}
     loop: 0
     spatialBlend: 0.9
     pitchRangeMin: 0.75
@@ -119,7 +119,7 @@ MonoBehaviour:
     pitchRangeMax: 1
     volume: 0.5
   - tag: Uzi Sound
-    clip: {fileID: 8300000, guid: 31ea6c5495890634f8f47bfb95e7a8f7, type: 3}
+    clip: {fileID: 8300000, guid: 22d0a7efb4f59bb46905a19262baa971, type: 3}
     loop: 0
     spatialBlend: 0.9
     pitchRangeMin: 0.75
@@ -189,7 +189,7 @@ MonoBehaviour:
     pitchRangeMax: 1
     volume: 0.5
   - tag: Fail Sound
-    clip: {fileID: 8300000, guid: aa32dee47a661f74e930502073769a3c, type: 3}
+    clip: {fileID: 8300000, guid: 9a2b928a0aace364fa319d75a4e2b4ce, type: 3}
     loop: 0
     spatialBlend: 0
     pitchRangeMin: 1
@@ -210,21 +210,21 @@ MonoBehaviour:
     pitchRangeMax: 1
     volume: 0.5
   - tag: Upgrade Button Sound
-    clip: {fileID: 8300000, guid: f2593a54280f8b74a98bbc446c26db31, type: 3}
+    clip: {fileID: 8300000, guid: c258978075281c24eaeb0da5c906293a, type: 3}
     loop: 0
     spatialBlend: 0
     pitchRangeMin: 1
     pitchRangeMax: 1
     volume: 0.5
   - tag: Bazooka Explosion Sound
-    clip: {fileID: 8300000, guid: a970649270f85524781aecaae72c17d4, type: 3}
+    clip: {fileID: 8300000, guid: 413ee75485bcb654796ed988a6bb03cd, type: 3}
     loop: 0
     spatialBlend: 0.9
     pitchRangeMin: 0.9
     pitchRangeMax: 1
     volume: 1
   - tag: Rocket Explosion Sound
-    clip: {fileID: 8300000, guid: 3900e0114d300ec44983585f377b93e7, type: 3}
+    clip: {fileID: 8300000, guid: 6c6b4254cefd2624cafbd0ddae3109ef, type: 3}
     loop: 0
     spatialBlend: 0.9
     pitchRangeMin: 0.9
@@ -288,7 +288,7 @@ MonoBehaviour:
     volume: 1
   - tag: Background Music Sound
     clip: {fileID: 8300000, guid: 92c97c42cb3ca624f89eb2b2214a5862, type: 3}
-    loop: 1
+    loop: 0
     spatialBlend: 0
     pitchRangeMin: 1
     pitchRangeMax: 1
