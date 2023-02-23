@@ -173,10 +173,17 @@ public class UIButtonManager : MonoBehaviour
         int cost = CostManager.GetMergeCost();
         bool canMerge = Barracks.Instance.CanMerge(out _);
         mergeButton.SetText(UIMoney.FormatMoney(cost));
-        if (!canMerge) mergeButton.Hide();
-        else mergeButton.Show();
-        if (!PlayerProgression.CanAfford(cost)) mergeButton.Deactivate();
-        else mergeButton.Activate();
+        if (!canMerge)
+        {
+            mergeButton.Hide();
+            mergeButton.Deactivate();
+        }
+        else
+        {
+            mergeButton.Show();
+            if (!PlayerProgression.CanAfford(cost)) mergeButton.Deactivate();
+            else mergeButton.Activate();
+        }
     }
 
     public void UpdateBaseDefenseButton()
