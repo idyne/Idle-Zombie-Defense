@@ -1043,6 +1043,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Exploded Frostbomb
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 899265c46633e174fad702e09699befa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 899265c46633e174fad702e09699befa, type: 3}
 --- !u!4 &33457253826548749 stripped

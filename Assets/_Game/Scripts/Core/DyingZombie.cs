@@ -23,20 +23,21 @@ public class DyingZombie : MonoBehaviour, IPooledObject
     public void OnObjectSpawn()
     {
         anim.Play("Pose");
-        rend.material.SetFloat("_DissolveValue", 0);
+        //rend.material.SetFloat("_DissolveValue", 0);
         foreach (Rigidbody rigidbody in rigidbodies)
         {
             rigidbody.AddExplosionForce(10, Transform.position - (Transform.position).normalized - new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f)), 5, 0.05f, ForceMode.Impulse);
         }
         StartCoroutine(DelayedCall(1 + Random.Range(-0.5f, 0.5f), () =>
        {
-           DOTween.To((val) =>
+           /*DOTween.To((val) =>
            {
                rend.material.SetFloat("_DissolveValue", val);
            }, 0, 1, 1).OnComplete(() =>
            {
                gameObject.SetActive(false);
-           });
+           });*/
+           gameObject.SetActive(false);
        }));
     }
 

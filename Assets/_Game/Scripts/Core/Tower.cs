@@ -89,7 +89,6 @@ public class Tower : MonoBehaviour
 
     public void Repair()
     {
-        Debug.Log(gameObject.name, this);
         foreach (Barrier barrier in barriers)
             barrier.Repair();
         SetHealth(MaxHealth, damageTaken > 0);

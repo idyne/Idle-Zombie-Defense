@@ -169,6 +169,7 @@ public class UIAnimationSequencer : MonoBehaviour
             UILevelBar.Instance.Show();
             UILevelBar.Instance.SetDay();
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
+            yield return AdManager.ShowInterstitial();
             UIButtonManager.Instance.UpdateStartButton();
             UIButtonManager.Instance.UpdateTrapUpgradesButton();
             UIButtonManager.Instance.UpdateBaseUpgradesButton();
@@ -188,6 +189,7 @@ public class UIAnimationSequencer : MonoBehaviour
             UILevelBar.Instance.Show();
             UILevelBar.Instance.SetDay();
             yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
+            yield return AdManager.ShowInterstitial();
             if (Day == 4)
                 MoonSDK.OpenRateUsScreen();
             UIButtonManager.Instance.UpdateStartButton();
@@ -336,9 +338,20 @@ public class UIAnimationSequencer : MonoBehaviour
         //mapController.FillPath(ZoneLevel - 2);
         //yield return new WaitForSeconds(2);
         //mapController.Hide();
-        soldierUnlocked.Show(ZoneLevel + 3);
-        yield return new WaitUntil(() => soldierUnlockedHide);
-        soldierUnlockedHide = false;
+        if (CycleNumber == 1)
+        {
+            int soldierLevel = 3;
+            if (WorldLevel == 1)
+            {
+                soldierLevel = ZoneLevel + 2;
+            }
+            else if (WorldLevel == 2 && ZoneLevel == 2)
+                soldierLevel = ZoneLevel + 5;
+            soldierUnlocked.Show(soldierLevel);
+            yield return new WaitUntil(() => soldierUnlockedHide);
+            soldierUnlockedHide = false;
+        }
+
     }
     private IEnumerator GoCurrentWorld()
     {
@@ -374,6 +387,14 @@ public class UIAnimationSequencer : MonoBehaviour
         /*soldierUnlocked.Show(ZoneLevel + 3);
         yield return new WaitUntil(() => soldierUnlockedHide);
         soldierUnlockedHide = false;*/
+        if (CycleNumber == 1)
+        {
+            int soldierLevel = ZoneLevel + 5;
+            soldierUnlocked.Show(soldierLevel);
+            yield return new WaitUntil(() => soldierUnlockedHide);
+            soldierUnlockedHide = false;
+        }
+
     }
     private IEnumerator PlayDayAnimation()
     {

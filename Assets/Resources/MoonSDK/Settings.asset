@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Settings
   m_EditorClassIdentifier: 
   Firebase: 1
-  int_grace_time: 0
-  int_grace_level: 12
+  int_grace_time: 180
+  int_grace_level: 0
   cooldown_between_INTs: 180
   cooldown_after_RVs: 180
   show_int_if_fail: 1
