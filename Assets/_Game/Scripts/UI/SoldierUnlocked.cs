@@ -22,7 +22,7 @@ public class SoldierUnlocked : MonoBehaviour
         {
             UIToHide[i].SetActive(false);
         }
-        for (int i = 5; i < soldiers.Count; i++)
+        for (int i = 4; i < soldiers.Count; i++)
         {
             soldiers[i]?.SetActive(false);
         }

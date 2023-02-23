@@ -16,7 +16,7 @@ namespace Moonee.MoonSDK.Internal.Analytics
 
             if (settings.Firebase)
             {
-                Initialize();
+                Initialize(settings);
             }
             else Destroy(this);
 
@@ -45,7 +45,7 @@ namespace Moonee.MoonSDK.Internal.Analytics
                 };
             };
         }
-        void Initialize()
+        void Initialize(MoonSDKSettings settings = null)
         {
             Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
             {
@@ -57,7 +57,7 @@ namespace Moonee.MoonSDK.Internal.Analytics
                     var app = Firebase.FirebaseApp.DefaultInstance;
                     var remoteConfig = FirebaseRemoteConfig.DefaultInstance;
                     // Set a flag here to indicate whether Firebase is ready to use by your app.
-                    SetDefaultRemoteConfigValues();
+                    SetDefaultRemoteConfigValues(settings);
                 }
                 else
                 {
@@ -67,10 +67,11 @@ namespace Moonee.MoonSDK.Internal.Analytics
                 }
             });
         }
-        private void SetDefaultRemoteConfigValues()
+        private void SetDefaultRemoteConfigValues(MoonSDKSettings settings = null)
         {
             var remoteConfig = FirebaseRemoteConfig.DefaultInstance;
-            var settings = MoonSDKSettings.Load();
+            if (settings == null)
+                settings = MoonSDKSettings.Load();
 
             remoteConfig.SetDefaultsAsync(new Dictionary<string, object>
             {

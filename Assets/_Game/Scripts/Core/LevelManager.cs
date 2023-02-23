@@ -15,6 +15,9 @@ public static class LevelManager
     public static bool NewZone { get => NewDay && NormalizedDay == 1; }
     public static bool NewDay { get => CurrentTimePeriod == TimePeriod.Morning; }
     public static bool NewWorld { get => NewDay && WorldDay == 1; }
+
+    public static int GetCycleNumber(int day) => day - 1 / 25 + 1;
+    public static int CycleNumber { get => GetCycleNumber(Day); }
     public static int GetDay(int waveLevel) => (waveLevel - 1) / 4 + 1;
 
     public static int Day { get => GetDay(WaveLevel); }

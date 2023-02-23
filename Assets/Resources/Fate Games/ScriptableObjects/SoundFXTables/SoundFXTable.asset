@@ -268,7 +268,7 @@ MonoBehaviour:
   - tag: Grenade Explosion Sound
     clip: {fileID: 8300000, guid: 79c3cb7a26813d146b07c293b0324039, type: 3}
     loop: 0
-    spatialBlend: 0.9
+    spatialBlend: 0.6
     pitchRangeMin: 0.9
     pitchRangeMax: 1
     volume: 1

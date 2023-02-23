@@ -170,9 +170,13 @@ public class Barracks : MonoBehaviour
         if (Merging) return false;
         int i = 1;
         bool canMerge = false;
-        int limitLevel = ZoneLevel + 3;
-        if (ZoneLevel == 4)
-            limitLevel = 8;
+        int limitLevel;
+        if (CycleNumber == 1)
+        {
+            limitLevel = ((WorldLevel - 1) * 3) + ZoneLevel + 2;
+            limitLevel = Mathf.Clamp(limitLevel, 1, 7);
+        }
+        else limitLevel = 7;
         while (i < limitLevel)
         {
             if (soldierTable[i].Count >= 3)
