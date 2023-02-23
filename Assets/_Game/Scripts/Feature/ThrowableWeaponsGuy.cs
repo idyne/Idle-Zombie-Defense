@@ -14,7 +14,7 @@ public class ThrowableWeaponsGuy : MonoBehaviour
     private bool throwing = false;
     private Camera mainCamera { get => TowerController.Instance.GetCurrentTower().CameraController.Camera; }
     private float baseShootingPeriod = 0.5f;
-    private float shootingPeriod { get => baseShootingPeriod - (Barracks.FireRateLevel - 1) * baseShootingPeriod / (float)LimitManager.GetMaxFireRateLevel() * 0.5f; }
+    private float shootingPeriod { get => baseShootingPeriod - (Barracks.FireRateLevel - 1) * baseShootingPeriod / (float)LimitManager.GetMaxFireRateLevel() * 0.6f; }
     private float lastShootTime = -50;
     private Zombie target = null;
     private Weapon weapon;
