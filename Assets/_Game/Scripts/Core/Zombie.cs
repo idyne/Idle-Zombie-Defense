@@ -37,6 +37,8 @@ public class Zombie : MonoBehaviour, IPooledObject
     private bool slowedDown = false;
     private Tween slowDownTween = null;
     private bool died = false;
+    public List<string> logs = new();
+    private float slowDownMultiplier = 1;
 
     private void Awake()
     {
@@ -73,7 +75,7 @@ public class Zombie : MonoBehaviour, IPooledObject
         barriers.Clear();
     }
 
-    public void SlowDown(float t = 15)
+    public void SlowDown(float t = 15, float multiplier = 0.4f)
     {
         if (slowedDown) return;
         if (slowDownTween != null)
@@ -82,9 +84,10 @@ public class Zombie : MonoBehaviour, IPooledObject
             slowDownTween = null;
         }
         slowedDown = true;
-        agent.speed *= 0.4f;
-        meshAnimator.speed *= 0.4f;
-        hitCooldownDuration *= 2.5f;
+        slowDownMultiplier = multiplier;
+        agent.speed *= slowDownMultiplier;
+        meshAnimator.speed *= slowDownMultiplier;
+        hitCooldownDuration *= 1f / slowDownMultiplier;
         SetColor(slowedDownColor);
         slowDownTween = DOVirtual.DelayedCall(t, CancelSlowDown, false);
     }
@@ -98,9 +101,9 @@ public class Zombie : MonoBehaviour, IPooledObject
             slowDownTween = null;
         }
         slowedDown = false;
-        agent.speed *= 2.5f;
-        meshAnimator.speed *= 2.5f;
-        hitCooldownDuration *= 0.4f;
+        agent.speed *= 1f / slowDownMultiplier;
+        meshAnimator.speed *= 1f / slowDownMultiplier;
+        hitCooldownDuration *= slowDownMultiplier;
         SetColor(originalColor);
     }
 
@@ -184,6 +187,7 @@ public class Zombie : MonoBehaviour, IPooledObject
         ObjectPooler.SpawnFromPool(isBoss ? "Dying Zombie Boss" : ("Dying Zombie " + level), Transform.position, Transform.rotation);
         SoundFX.PlaySound("Zombie Dying Sound " + (Random.value > 0.5f ? "1" : "2"), ShotPoint.position);
         died = true;
+        logs.Add("Die");
     }
 
     private void Deactivate()
@@ -199,6 +203,7 @@ public class Zombie : MonoBehaviour, IPooledObject
         SetColor(originalColor);
         OnSpawn.Invoke();
         died = false;
+        logs.Add("Spawn");
     }
     private void SetHealth(int health, bool showBar = true)
     {

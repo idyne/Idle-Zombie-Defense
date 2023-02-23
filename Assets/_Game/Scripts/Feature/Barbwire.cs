@@ -42,7 +42,7 @@ public class Barbwire : Trap
             if (!cooldownList.Contains(zombie))
             {
                 float t = 0.5f;
-                zombie.SlowDown(t);
+                zombie.SlowDown(t, 0.7f);
                 int damage = Mathf.CeilToInt(damagePerSecond * t);
                 if (damageTable.ContainsKey(zombie))
                 {

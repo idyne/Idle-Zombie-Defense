@@ -14,9 +14,9 @@ public static class Settings
     public static int AirstrikeLevelPrice { get => Mathf.CeilToInt((PlayerData.AirstrikeLevel - 1) * 10 + 20); }
 
     public static int TNTLevelCost { get => Mathf.CeilToInt((PlayerData.TNTLevel - 1) * 2 + 3); }
-    public static int BarbwireLevelCost { get => Mathf.CeilToInt((PlayerData.BarbwireLevel - 1) * 2 + 4); }
-    public static int FrostLevelCost { get => Mathf.CeilToInt((PlayerData.FrostLevel -1) * 2 + 5); }
-    public static int TurretLevelCost { get => Mathf.CeilToInt((PlayerData.TurretLevel - 1) * 2 + 6); }
+    public static int BarbwireLevelCost { get => Mathf.CeilToInt((PlayerData.BarbwireLevel - 1) * 2 + 6); }
+    public static int FrostLevelCost { get => Mathf.CeilToInt((PlayerData.FrostLevel -1) * 2 + 8); }
+    public static int TurretLevelCost { get => Mathf.CeilToInt((PlayerData.TurretLevel - 1) * 2 + 10); }
 
     public static int ExplosiveBombCost { get => Mathf.CeilToInt(NumberOfExplosiveBombs * 100 + 50); }
     public static int BarbwireCost { get => Mathf.CeilToInt(NumberOfBarbwires * 120 + 80); }
@@ -24,10 +24,10 @@ public static class Settings
     public static int TurretCost { get => Mathf.CeilToInt(NumberOfTurrets * 1000 + 500); }
 
     public static int BarbwireDPS { get => Mathf.CeilToInt(PlayerData.BarbwireLevel * 10 * (WorldDay / 3 + 1)); }
-    public static int TNTDamage { get => Mathf.CeilToInt(PlayerData.TNTLevel * 10 * (WorldDay / 3 + 1)); }
+    public static int TNTDamage { get => Mathf.CeilToInt(PlayerData.TNTLevel * 15 * (WorldDay / 3 + 1)); }
     public static int FrostDuration { get => Mathf.CeilToInt(PlayerData.FrostLevel * 10); }
-    public static int BarbwireMaxDamage { get => BarbwireDPS * 6; }
-    public static float ThrowableWeaponCooldown { get => 12f / (PlayerData.ThrowableWeaponsGuyLevel / 2f); }
+    public static int BarbwireMaxDamage { get => BarbwireDPS * 3; }
+    public static float ThrowableWeaponCooldown { get => 8f / (PlayerData.ThrowableWeaponsGuyLevel / 1.3f); }
     public static float AirstrikeCooldown { get => 30f / (PlayerData.AirstrikeLevel / 2f); }
     public static readonly int FrostUnlockDay = 9;
     public static readonly int TurretUnlockDay = 14;
@@ -55,7 +55,7 @@ public static class Settings
         private static readonly float SoldierCostExponentialIncreaseRatio = 0.05f;
         private static readonly float SoldierCostLinearIncreaseRatio = 16f;
 
-        private static readonly float BaseMergeRateCost = 30;
+        private static readonly float BaseMergeCost = 30;
         private static readonly float MergeCostExponentialIncreaseRatio = 0.1f;
         private static readonly float MergeCostLinearIncreaseRatio = 31f;
 
@@ -65,7 +65,7 @@ public static class Settings
 
         public static int MaxFireRateLevel = 20;
         public static int SoldierCost { get => Mathf.CeilToInt(BaseSoldierCost * Mathf.Pow(1 + SoldierCostExponentialIncreaseRatio, Barracks.Instance.Power) + Barracks.Instance.Power * SoldierCostLinearIncreaseRatio); }
-        public static int MergeCost { get => Mathf.CeilToInt(BaseMergeRateCost * Mathf.Pow(1 + MergeCostExponentialIncreaseRatio, Barracks.Instance.TotalMerge) + Barracks.Instance.TotalMerge * MergeCostLinearIncreaseRatio); }
+        public static int MergeCost { get => Mathf.CeilToInt(BaseMergeCost * Mathf.Pow(1 + MergeCostExponentialIncreaseRatio, PlayerData.MergeCount ) + PlayerData.MergeCount * MergeCostLinearIncreaseRatio); }
         public static int FireRateCost { get => Mathf.CeilToInt(BaseFireRateCost * Mathf.Pow(1 + FireRateCostExponentialIncreaseRatio, PlayerData.FireRateLevel - 1) + (PlayerData.FireRateLevel - 1) * FireRateCostLinearIncreaseRatio); }
         
         #endregion
@@ -95,7 +95,7 @@ public static class Settings
         #endregion
         #region Financier
         public static readonly float BaseIncomeCost = 50;
-        private static float IncomeCostExponentialIncreaseRatio = 0.05f;
+        private static float IncomeCostExponentialIncreaseRatio = 0.2f;
         private static float IncomeCostLinearIncreaseRatio = 51f;
         public static int IncomeCost { get => Mathf.CeilToInt(BaseIncomeCost * Mathf.Pow(1 + IncomeCostExponentialIncreaseRatio, PlayerData.IncomeLevel-1) + (PlayerData.IncomeLevel - 1) * IncomeCostLinearIncreaseRatio); }
 
@@ -193,16 +193,17 @@ public static class Settings
             /*if (WorldDay >= 3)
                 WorldDayMultiplier *= 0.5f;*/
             float result = level * (BaseZombieHealth * Mathf.Pow(1 + ZombieHealthExponentialIncreaseRatio, WorldDay - 1) + (WorldDay - 1) * ZombieHealthLinearIncreaseRatio);
+
+            if (WorldDay >= 10)
+                result *= 1.2f;
+
             if (boss && (WorldDay == CumulativeZoneLengths[0][0] || WorldDay == CumulativeZoneLengths[0][1] || WorldDay == CumulativeZoneLengths[0][2]))
                 result *= bossMultiplier * 1.3f;
             else if (boss)
                 result *= bossMultiplier;
-            else if (WorldDay == CumulativeZoneLengths[0][1])
-                result *= 2.3f;
             
-            /*if (WorldDay >= 6)
-                result *= 1.2f;
-            if (WorldDay >= 5)
+
+            /*if (WorldDay >= 5)
                 result *= 1.4f;
             if (WorldDay > 2)
                 result *= 1.2f;
@@ -233,7 +234,7 @@ public static class Settings
         {
             float baseZombieIncome = 8f;
             /*float gain = (((PlayerData.IncomeLevel - 1) / 3f) + (WorldDay) * 2) * level;*/
-            float gain = (baseZombieIncome * (Mathf.Pow(1.1f, PlayerData.IncomeLevel - 1) + WorldDay * 0.1f)) * level;
+            float gain = (baseZombieIncome * (Mathf.Pow(1.05f, PlayerData.IncomeLevel - 1) + WorldDay * 0.1f)) * level;
             if (boss)
             {
                 Debug.Log(level);
@@ -254,7 +255,7 @@ public static class Settings
         private static readonly float CommanderWeaponDamageExponentialIncreaseRatio = 0.05f;
         private static readonly float CommanderWeaponDamageLinearIncreaseRatio = 15f;
         public static int CommanderWeaponDamage { get => Mathf.CeilToInt(BaseCommanderWeaponDamage * Mathf.Pow(1 + CommanderWeaponDamageExponentialIncreaseRatio, WorldDay - 1) + (WorldDay - 1) * CommanderWeaponDamageLinearIncreaseRatio); }
-        public static int GrenadeDamage { get => Mathf.CeilToInt(25 * (WorldDay / 3f + 1)); }
+        public static int GrenadeDamage { get => Mathf.CeilToInt(35 * (WorldDay / 3f + 1)); }
         public static int MolotovDPS { get => Mathf.CeilToInt(50 * (WorldDay / 3f + 1)); }
         #endregion
         #region Airstrike

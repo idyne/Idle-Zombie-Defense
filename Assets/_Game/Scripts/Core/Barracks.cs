@@ -234,7 +234,7 @@ public class Barracks : MonoBehaviour
         }
 
 
-
+        PlayerProgression.PlayerData.MergeCount++;
         PlayerProgression.MONEY -= cost;
         HapticManager.DoHaptic();
     }

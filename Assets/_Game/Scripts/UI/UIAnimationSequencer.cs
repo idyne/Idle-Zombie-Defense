@@ -290,6 +290,7 @@ public class UIAnimationSequencer : MonoBehaviour
     private void ResetProgress()
     {
         Barracks.Instance.ClearSoldiers();
+        PlayerProgression.PlayerData.MergeCount = 0;
         PlayerProgression.PlayerData.IncomeLevel = 1;
         PlayerProgression.PlayerData.FireRateLevel = 1;
         //PlayerProgression.PlayerData.BaseDefenseLevel = 1;
