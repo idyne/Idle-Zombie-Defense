@@ -9,7 +9,7 @@ public class Soldier : MonoBehaviour, IPooledObject
 {
     public Transform Transform { get; private set; }
     [SerializeField] private float baseShootingPeriod = 1;
-    private float shootingPeriod { get => baseShootingPeriod - (Barracks.FireRateLevel - 1) * baseShootingPeriod / (float)LimitManager.GetMaxFireRateLevel() * 0.5f; }
+    private float shootingPeriod { get => baseShootingPeriod - (Barracks.FireRateLevel - 1) * baseShootingPeriod / (float)LimitManager.GetMaxFireRateLevel() * 0.6f; }
     [SerializeField] private float range = 20;
     private Weapon weapon;
     private Zombie target = null;

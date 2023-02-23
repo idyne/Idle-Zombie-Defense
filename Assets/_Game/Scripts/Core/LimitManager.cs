@@ -53,37 +53,33 @@ public static class LimitManager
 
     public static int GetBaseDefenseLimit()
     {
-        if (Day < 4) return 2;
-        if (Day < 8) return 3;
-        if (Day < 13) return 4;
-        if (Day < 17) return 5;
-        return 6;
+        if (Day < 4) return 3;
+        if (Day < 8) return 5;
+        if (Day < 13) return 8;
+        if (Day < 17) return 11;
+        return 15;
     }
 
     public static int GetSoldierMergeLimit()
     {
-        if (Day < 4) return 2;
-        if (Day < 8) return 3;
-        if (Day < 13) return 4;
-        if (Day < 17) return 5;
-        return 6;
+        if (Day < 4) return 0;
+        if (Day < 8) return 1;
+        if (Day < 13) return 2;
+        if (Day < 17) return 3;
+        return 4;
     }
 
     public static int GetThrowableWeaponsGuyLevelLimit()
     {
-        if (Day < 4) return 2;
-        if (Day < 8) return 3;
-        if (Day < 13) return 4;
-        if (Day < 17) return 5;
-        return 6;
+        if (Day < 4) return 0;
+        if (Day < 8) return 1;
+        return 2;
     }
     public static int GetAirstrikeLevelLimit()
     {
-        if (Day < 4) return 2;
-        if (Day < 8) return 3;
-        if (Day < 13) return 4;
-        if (Day < 17) return 5;
-        return 6;
+        if (Day < 13) return 0;
+        if (Day < 17) return 1;
+        return 2;
     }
 
     public static int GetMaxFireRateLevel()

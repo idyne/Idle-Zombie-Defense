@@ -11,8 +11,8 @@ public class ExplosiveBomb : Bomb
     {
         get
         {
-            float result = CostManager.GetTNTPrice() / 4;
-            switch (ZoneLevel)
+            float result = CostManager.GetTNTPrice() / 2;
+            switch (WorldLevel)
             {
                 case 2:
                     result = CostManager.GetTNTPrice() / 4 + Mathf.Pow(NormalizedDay, 1.2f) * 11;
