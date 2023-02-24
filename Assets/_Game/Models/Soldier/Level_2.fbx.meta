@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: f1f0a2c4ca3cb0c4c9fb27247c65a1ef
 ModelImporter:
-  serializedVersion: 21202
+  serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
@@ -99,6 +99,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips:
+  - 312c3ec0775dc0a44bc251c87e8264e1
   - e9db06c23d3c0fd439988cb1916bccf2
   importAnimation: 1
   humanDescription:
@@ -123,6 +124,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

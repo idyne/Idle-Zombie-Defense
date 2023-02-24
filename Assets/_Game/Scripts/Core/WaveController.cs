@@ -146,12 +146,15 @@ public class WaveController : MonoBehaviour
         private int maxZombieLevel;
         private int totalNumberOfZombies = 0;
         private int numberOfDeadZombies = 0;
+        private bool spawning = false;
+        public bool Clear { get; private set; } = false;
 
         public Wave(int power, int maxZombieLevel, int bossLevel = -1)
         {
             this.power = power;
             this.maxZombieLevel = maxZombieLevel;
             this.bossLevel = bossLevel;
+            OnWaveClear.AddListener(() => { Clear = true; });
         }
 
         public void Start()
@@ -170,6 +173,7 @@ public class WaveController : MonoBehaviour
 
         private void SpawnZombies()
         {
+            spawning = true;
             int totalNumberOfZombies = 0;
             List<int> numbersOfZombies = GenerateNumbersOfZombies(power, maxZombieLevel);
             for (int i = 1; i <= maxZombieLevel; i++)
@@ -183,11 +187,14 @@ public class WaveController : MonoBehaviour
                 if (numbersOfZombies[level] > 0)
                 {
                     numbersOfZombies[level]--;
-                    DOVirtual.DelayedCall(++count * period, () => { SpawnZombie(level); }, false);
+                    if (bossLevel <= 0 && count + 1 == totalNumberOfZombies)
+                        DOVirtual.DelayedCall(++count * period, () => { SpawnZombie(level); }, false).OnComplete(() => { spawning = false; });
+                    else
+                        DOVirtual.DelayedCall(++count * period, () => { SpawnZombie(level); }, false);
                 }
             }
             if (bossLevel > 0)
-                DOVirtual.DelayedCall(++count * period, () => { SpawnBoss(bossLevel); }, false);
+                DOVirtual.DelayedCall(++count * period, () => { SpawnBoss(bossLevel); }, false).OnComplete(() => { spawning = false; });
             this.totalNumberOfZombies = totalNumberOfZombies;
         }
 
@@ -218,7 +225,7 @@ public class WaveController : MonoBehaviour
                 zombies.Remove(zombie);
                 numberOfDeadZombies++;
                 OnPercentChange.Invoke(numberOfDeadZombies / (float)totalNumberOfZombies);
-                if (zombies.Count == 0) OnWaveClear.Invoke();
+                if (!spawning && zombies.Count == 0) OnWaveClear.Invoke();
             });
         }
         private void SpawnBoss(int level)
@@ -255,7 +262,7 @@ public class WaveController : MonoBehaviour
                 zombies.Remove(zombie);
                 numberOfDeadZombies++;
                 OnPercentChange.Invoke(numberOfDeadZombies / (float)totalNumberOfZombies);
-                if (zombies.Count == 0) OnWaveClear.Invoke();
+                if (!spawning && zombies.Count == 0) OnWaveClear.Invoke();
             });
         }
 

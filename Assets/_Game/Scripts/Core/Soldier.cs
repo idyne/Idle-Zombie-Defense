@@ -16,6 +16,7 @@ public class Soldier : MonoBehaviour, IPooledObject
     private MeshAnimatorBase meshAnimator;
     private float lastShootTime = -50;
     [SerializeField] private GameObject ragdoll;
+    [SerializeField] private Animator ragdollAnimator;
     private void Awake()
     {
         Transform = transform;
@@ -56,12 +57,33 @@ public class Soldier : MonoBehaviour, IPooledObject
     {
         if (ragdoll)
         {
+            ragdollAnimator.enabled = false;
             ragdoll.transform.SetParent(null);
             ragdoll.SetActive(true);
             Rigidbody[] rigidbodies = ragdoll.GetComponentsInChildren<Rigidbody>();
             foreach (Rigidbody rb in rigidbodies)
+            {
+                rb.isKinematic = false;
                 rb.AddExplosionForce(5, Vector3.zero, 10, 1, ForceMode.Impulse);
+            }
         }
+    }
+
+    public void Rewind()
+    {
+        Rigidbody[] rigidbodies = ragdoll.GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rigidbodies)
+            rb.isKinematic = true;
+        ragdollAnimator.enabled = true;
+        ragdollAnimator.SetTrigger("Rewind");
+        ragdoll.transform.SimulateProjectileMotion(transform.position, 2);
+        ragdoll.transform.DORotateQuaternion(transform.rotation, 2);
+        DOVirtual.DelayedCall(2, () =>
+        {
+            Activate();
+            ragdoll.transform.SetParent(transform);
+            ragdoll.SetActive(false);
+        });
     }
 
     private void LookAtTarget(TweenCallback onComplete)
@@ -102,6 +124,12 @@ public class Soldier : MonoBehaviour, IPooledObject
         target?.OnDeath.RemoveListener(OnTargetDeath);
         target = null;
         StopShooting();
+    }
+
+    public void Activate()
+    {
+        gameObject.SetActive(true);
+        InvokeRepeating(nameof(FindTarget), 0, 2 + Random.Range(-0.2f, 0.2f));
     }
 
     public void Deactivate()

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,8 +53,20 @@ namespace FateGames
         {
             void Success()
             {
+                gameObject.SetActive(false);
                 WaveLevel = PlayerPrefs.GetInt("AnchorWaveLevel");
-                SceneManager.LoadCurrentLevel();
+                Tower tower = TowerController.Instance.GetCurrentTower();
+                ObjectPooler.SpawnFromPool("Revive Effect", tower.Transform.position, Quaternion.identity);
+                tower.Rewind();
+                Barracks.Instance.RewindSoldiers();
+                tower.CameraController.ZoomIn();
+                DOVirtual.DelayedCall(2, () =>
+                {
+                    WaveBomb.Instance.Explode();
+                    Turret.Stopped = false;
+                    GameManager.Instance.UpdateGameState(GameState.IN_GAME);
+                });
+                //SceneManager.LoadCurrentLevel();
             }
             void Fail()
             {

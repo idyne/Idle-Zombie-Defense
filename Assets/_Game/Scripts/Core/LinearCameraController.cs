@@ -6,6 +6,12 @@ using DG.Tweening;
 public class LinearCameraController : CameraController
 {
     [SerializeField] private Transform outWavePoint, inWavePoint;
+
+    public override void ZoomIn()
+    {
+        //throw new System.NotImplementedException();
+    }
+
     public override void ZoomOut()
     {
         //TODO
