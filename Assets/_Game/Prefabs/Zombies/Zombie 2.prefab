@@ -61,6 +61,7 @@ MonoBehaviour:
   shotPoint: {fileID: 9180398247816205757}
   levitatingTextPoint: {fileID: 8338549506988085423}
   slowedDownColor: {r: 0.41960785, g: 0.6627451, b: 1, a: 1}
+  rend: {fileID: 5737832292306680560}
 --- !u!195 &4221529958158323268
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -463,5 +464,10 @@ PrefabInstance:
 --- !u!4 &4384333158133879616 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4842454888355637079, guid: d1efa73556f08124cad012f55014bb7a, type: 3}
+  m_PrefabInstance: {fileID: 9217633512642049047}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5737832292306680560 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3480012329024196327, guid: d1efa73556f08124cad012f55014bb7a, type: 3}
   m_PrefabInstance: {fileID: 9217633512642049047}
   m_PrefabAsset: {fileID: 0}

@@ -8,20 +8,20 @@ using static LevelManager;
 
 public static class Settings
 {
-    public static int BaseDefenseLevelCost { get => Mathf.CeilToInt((PlayerData.BaseDefenseLevel -1) * 1 + 5); }
-    public static int SoldierMergeLevelCost { get => Mathf.CeilToInt((PlayerData.SoldierMergeLevel -1) * 5 + 15); }
+    public static int BaseDefenseLevelCost { get => Mathf.CeilToInt((PlayerData.BaseDefenseLevel - 1) * 1 + 5); }
+    public static int SoldierMergeLevelCost { get => Mathf.CeilToInt((PlayerData.SoldierMergeLevel - 1) * 5 + 15); }
     public static int CommanderLevelPrice { get => Mathf.CeilToInt((PlayerData.ThrowableWeaponsGuyLevel) * 10 + 10); }
     public static int AirstrikeLevelPrice { get => Mathf.CeilToInt((PlayerData.AirstrikeLevel - 1) * 10 + 20); }
 
     public static int TNTLevelCost { get => Mathf.CeilToInt((PlayerData.TNTLevel - 1) * 2 + 3); }
     public static int BarbwireLevelCost { get => Mathf.CeilToInt((PlayerData.BarbwireLevel - 1) * 2 + 6); }
-    public static int FrostLevelCost { get => Mathf.CeilToInt((PlayerData.FrostLevel -1) * 2 + 8); }
+    public static int FrostLevelCost { get => Mathf.CeilToInt((PlayerData.FrostLevel - 1) * 2 + 8); }
     public static int TurretLevelCost { get => Mathf.CeilToInt((PlayerData.TurretLevel - 1) * 2 + 10); }
 
-    public static int ExplosiveBombCost { get => Mathf.CeilToInt(NumberOfExplosiveBombs * 100 + 50); }
-    public static int BarbwireCost { get => Mathf.CeilToInt(NumberOfBarbwires * 120 + 80); }
-    public static int FrostBombCost { get => Mathf.CeilToInt(NumberOfFrostBombs * 150 + 100); }
-    public static int TurretCost { get => Mathf.CeilToInt(NumberOfTurrets * 1000 + 500); }
+    public static int ExplosiveBombCost { get => Mathf.CeilToInt(CycleNumber > 1 ? (NumberOfExplosiveBombs * 1000 + 500) : (NumberOfExplosiveBombs * 100 + 50)); }
+    public static int BarbwireCost { get => Mathf.CeilToInt(CycleNumber > 1 ? (NumberOfBarbwires * 1200 + 800) : (NumberOfBarbwires * 120 + 80)); }
+    public static int FrostBombCost { get => Mathf.CeilToInt(CycleNumber > 1 ? (NumberOfFrostBombs * 1500 + 1000) : (NumberOfFrostBombs * 150 + 100)); }
+    public static int TurretCost { get => Mathf.CeilToInt(CycleNumber > 1 ? (NumberOfTurrets * 10000 + 5000) : (NumberOfTurrets * 1000 + 500)); }
 
     public static int BarbwireDPS { get => Mathf.CeilToInt(PlayerData.BarbwireLevel * 10 * (WorldDay / 3 + 1)); }
     public static int TNTDamage { get => Mathf.CeilToInt(PlayerData.TNTLevel * 15 * (WorldDay / 3 + 1)); }
@@ -59,19 +59,19 @@ public static class Settings
         private static readonly float MergeCostExponentialIncreaseRatio = 0.1f;
         private static readonly float MergeCostLinearIncreaseRatio = 31f;
 
-        private static readonly float BaseFireRateCost = 40f;
+        private static readonly float BaseFireRateCost = CycleNumber > 1 ? 400 : 40f;
         private static readonly float FireRateCostExponentialIncreaseRatio = 0.3f;
         private static readonly float FireRateCostLinearIncreaseRatio = 30f;
 
         public static int MaxFireRateLevel = 20;
         public static int SoldierCost { get => Mathf.CeilToInt(BaseSoldierCost * Mathf.Pow(1 + SoldierCostExponentialIncreaseRatio, Barracks.Instance.Power) + Barracks.Instance.Power * SoldierCostLinearIncreaseRatio); }
-        public static int MergeCost { get => Mathf.CeilToInt(BaseMergeCost * Mathf.Pow(1 + MergeCostExponentialIncreaseRatio, PlayerData.MergeCount ) + PlayerData.MergeCount * MergeCostLinearIncreaseRatio); }
+        public static int MergeCost { get => Mathf.CeilToInt(BaseMergeCost * Mathf.Pow(1 + MergeCostExponentialIncreaseRatio, PlayerData.MergeCount) + PlayerData.MergeCount * MergeCostLinearIncreaseRatio); }
         public static int FireRateCost { get => Mathf.CeilToInt(BaseFireRateCost * Mathf.Pow(1 + FireRateCostExponentialIncreaseRatio, PlayerData.FireRateLevel - 1) + (PlayerData.FireRateLevel - 1) * FireRateCostLinearIncreaseRatio); }
-        
+
         #endregion
         #region Base
-        public static readonly float BaseBarrierHealth = 300;
-        public static readonly float BaseTowerHealth = 1000;
+        public static readonly float BaseBarrierHealth = CycleNumber > 1 ? 2500 : 300;
+        public static readonly float BaseTowerHealth = CycleNumber > 1 ? 7500 : 1000;
         public static int BarrierMaxHealth
         {
             get
@@ -94,10 +94,10 @@ public static class Settings
         }
         #endregion
         #region Financier
-        public static readonly float BaseIncomeCost = 50;
+        public static readonly float BaseIncomeCost = CycleNumber > 1 ? 500 : 50;
         private static float IncomeCostExponentialIncreaseRatio = 0.2f;
         private static float IncomeCostLinearIncreaseRatio = 51f;
-        public static int IncomeCost { get => Mathf.CeilToInt(BaseIncomeCost * Mathf.Pow(1 + IncomeCostExponentialIncreaseRatio, PlayerData.IncomeLevel-1) + (PlayerData.IncomeLevel - 1) * IncomeCostLinearIncreaseRatio); }
+        public static int IncomeCost { get => Mathf.CeilToInt(BaseIncomeCost * Mathf.Pow(1 + IncomeCostExponentialIncreaseRatio, PlayerData.IncomeLevel - 1) + (PlayerData.IncomeLevel - 1) * IncomeCostLinearIncreaseRatio); }
 
         #endregion
         #region Prize
@@ -110,7 +110,7 @@ public static class Settings
                 // Zonelarýn son günlerindeki para önemsiz olduðu için sabit bir para veriyoruz
                 if (Day == 4 || Day == 8)
                     money *= 2;
-                return Mathf.CeilToInt(money);
+                return Mathf.CeilToInt(money * (CycleNumber > 1 ? 10 : 1));
             }
         }
         public static int FinishDayUpgradePrize
@@ -122,7 +122,7 @@ public static class Settings
                 // Zonelarýn son günlerindeki para önemsiz olduðu için sabit bir para veriyoruz
                 if (Day == 4 || Day == 8)
                     money = 10;
-                return Mathf.CeilToInt(money);
+                return Mathf.CeilToInt(money * (CycleNumber > 1 ? 10 : 1));
             }
         }
         public static int FinishPhasePrize
@@ -130,7 +130,7 @@ public static class Settings
             get
             {
                 float money = WorldDay * 10;
-                return Mathf.CeilToInt(money);
+                return Mathf.CeilToInt(money * (CycleNumber > 1 ? 10 : 1));
             }
         }
         public static int FinishPhaseUpgradePrize
@@ -138,12 +138,12 @@ public static class Settings
             get
             {
                 float money = 3;
-                return Mathf.CeilToInt(money);
+                return Mathf.CeilToInt(money * (CycleNumber > 1 ? 10 : 1));
             }
         }
         #endregion
         #region Wave
-        private static readonly int BaseWavePower = 10;
+        private static readonly int BaseWavePower = CycleNumber > 1 ? 15 : 10;
         public static int WavePower
         {
             get
@@ -184,7 +184,18 @@ public static class Settings
         #endregion
         #region Zombie
 
-        private static readonly float BaseZombieHealth = 30f;
+        private static float BaseZombieHealth
+        {
+            get
+            {
+                float result = CycleNumber > 1 ? 1000 : 30f;
+                if (CycleNumber > 1 && ZoneLevel == 2)
+                {
+                    result *= 2;
+                }
+                return result;
+            }
+        }
         private static readonly float ZombieHealthExponentialIncreaseRatio = 0.05f;
         private static readonly float ZombieHealthLinearIncreaseRatio = 20f;
         public static int ZombieHealth(int level, bool boss)
@@ -201,7 +212,7 @@ public static class Settings
                 result *= bossMultiplier * 1.3f;
             else if (boss)
                 result *= bossMultiplier;
-            
+
 
             /*if (WorldDay >= 5)
                 result *= 1.4f;
@@ -215,7 +226,7 @@ public static class Settings
         }
 
 
-        private static readonly int BaseZombieDamage = 30;
+        private static readonly int BaseZombieDamage = CycleNumber > 1 ? 300 : 30;
         private static readonly float ZombieDamagaLinearIncreaseRatio = 0.5f;
         public static int ZombieDamage(int level, bool boss)
         {
@@ -232,7 +243,7 @@ public static class Settings
 
         public static int ZombieGain(int level, bool boss)
         {
-            float baseZombieIncome = 8f;
+            float baseZombieIncome = CycleNumber > 1 ? 80 : 8f;
             /*float gain = (((PlayerData.IncomeLevel - 1) / 3f) + (WorldDay) * 2) * level;*/
             float gain = (baseZombieIncome * (Mathf.Pow(1.05f, PlayerData.IncomeLevel - 1) + WorldDay * 0.1f)) * level;
             if (boss)
@@ -240,7 +251,7 @@ public static class Settings
                 Debug.Log(level);
                 gain *= 2f;
             }
-                
+
             return Mathf.CeilToInt(gain);
         }
 
@@ -251,7 +262,7 @@ public static class Settings
         #endregion
         #region Commander
 
-        public static readonly float BaseCommanderWeaponDamage = 15;
+        public static float BaseCommanderWeaponDamage { get { return CycleNumber > 1 ? 200 : 15; } }
         private static readonly float CommanderWeaponDamageExponentialIncreaseRatio = 0.05f;
         private static readonly float CommanderWeaponDamageLinearIncreaseRatio = 15f;
         public static int CommanderWeaponDamage { get => Mathf.CeilToInt(BaseCommanderWeaponDamage * Mathf.Pow(1 + CommanderWeaponDamageExponentialIncreaseRatio, WorldDay - 1) + (WorldDay - 1) * CommanderWeaponDamageLinearIncreaseRatio); }
@@ -259,7 +270,7 @@ public static class Settings
         public static int MolotovDPS { get => Mathf.CeilToInt(50 * (WorldDay / 3f + 1)); }
         #endregion
         #region Airstrike
-        public static int AirstrikeDamage { get => Mathf.CeilToInt(PlayerData.AirstrikeLevel * 50 * (WorldDay / 3f + 1)); }
+        public static int AirstrikeDamage { get => Mathf.CeilToInt(PlayerData.AirstrikeLevel * 20 * (WorldDay / 3f + 1)); }
         #endregion
     }
 
@@ -322,7 +333,7 @@ public static class Settings
             get
             {
                 // (WorldDay - 2) bitirdiðimiz günü temsil eder
-                float money = (WorldDay==1)? 0: (WorldDay - 2) * 101 + 51;
+                float money = (WorldDay == 1) ? 0 : (WorldDay - 2) * 101 + 51;
                 // Zonelarýn son günlerindeki para önemsiz olduðu için sabit bir para veriyoruz
                 if (WorldDay == 5 || WorldDay == 9)
                     money *= 2;
