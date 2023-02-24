@@ -22,7 +22,7 @@ public class ZombieTargetHitboxUpdater : MonoBehaviour
         for (int i = 0; i < hitboxes.Count; i++)
         {
             ZombieTargetHitbox hitbox = hitboxes[i];
-            if (hitbox.gameObject.activeSelf)
+            if (hitbox.Active)
                 hitbox.SetPosition();
         }
     }

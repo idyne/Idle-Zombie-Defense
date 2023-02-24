@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ZombieTargetHitbox : MonoBehaviour
 {
+    public bool Active { get; private set; }
     private SphereCollider sphereCollider;
     private Transform _transform = null;
     public Transform transform
@@ -13,6 +14,16 @@ public class ZombieTargetHitbox : MonoBehaviour
             if (_transform == null)
                 _transform = base.transform;
             return _transform;
+        }
+    }
+    private GameObject _gameObject = null;
+    public GameObject gameObject
+    {
+        get
+        {
+            if (_gameObject == null)
+                _gameObject = base.gameObject;
+            return _gameObject;
         }
     }
     private void Awake()
@@ -30,7 +41,8 @@ public class ZombieTargetHitbox : MonoBehaviour
         zombie.OnSpawn.AddListener(() =>
         {
             gameObject.SetActive(true);
-            zombie.OnDeath.AddListener(() => { gameObject.SetActive(false); });
+            Active = true;
+            zombie.OnDeath.AddListener(() => { gameObject.SetActive(false); Active = false; });
         });
 
     }
