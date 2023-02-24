@@ -38,6 +38,7 @@ public class Zombie : MonoBehaviour, IPooledObject
     private bool slowedDown = false;
     private Tween slowDownTween = null;
     private bool died = false;
+    public List<string> logs = new();
     private float slowDownMultiplier = 1;
 
     private void Awake()
