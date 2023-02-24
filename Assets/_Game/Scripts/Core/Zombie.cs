@@ -195,6 +195,7 @@ public class Zombie : MonoBehaviour, IPooledObject
         ObjectPooler.SpawnFromPool(isBoss ? "Dying Zombie Boss" : ("Dying Zombie " + level), Transform.position, Transform.rotation);
         SoundFX.PlaySound("Zombie Dying Sound " + (Random.value > 0.5f ? "1" : "2"), ShotPoint.position);
         died = true;
+        logs.Add("Die");
     }
 
     private void Deactivate()
@@ -212,6 +213,7 @@ public class Zombie : MonoBehaviour, IPooledObject
         SetColor(originalColor);
         OnSpawn.Invoke();
         died = false;
+        logs.Add("Spawn");
     }
     private void SetHealth(int health, bool showBar = true)
     {

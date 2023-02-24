@@ -62,11 +62,11 @@ public static class LimitManager
 
     public static int GetSoldierMergeLimit()
     {
-        if (Day < 4) return 0;
-        if (Day < 8) return 1;
-        if (Day < 13) return 2;
-        if (Day < 17) return 3;
-        return 4;
+        if (Day < 4) return 1;
+        if (Day < 8) return 2;
+        if (Day < 13) return 3;
+        if (Day < 17) return 4;
+        return 5;
     }
 
     public static int GetThrowableWeaponsGuyLevelLimit()
