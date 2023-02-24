@@ -173,10 +173,17 @@ public class UIButtonManager : MonoBehaviour
         int cost = CostManager.GetMergeCost();
         bool canMerge = Barracks.Instance.CanMerge(out _);
         mergeButton.SetText(UIMoney.FormatMoney(cost));
-        if (!canMerge) mergeButton.Hide();
-        else mergeButton.Show();
-        if (!PlayerProgression.CanAfford(cost)) mergeButton.Deactivate();
-        else mergeButton.Activate();
+        if (!canMerge)
+        {
+            mergeButton.Hide();
+            mergeButton.Deactivate();
+        }
+        else
+        {
+            mergeButton.Show();
+            if (!PlayerProgression.CanAfford(cost)) mergeButton.Deactivate();
+            else mergeButton.Activate();
+        }
     }
 
     public void UpdateBaseDefenseButton()
@@ -596,7 +603,7 @@ public class UIButtonManager : MonoBehaviour
         int limit = LimitManager.GetFrostLimit();
         bool noCapacity = limit <= PlayerProgression.PlayerData.Traps.Where(trap => trap.Item1 == 1).Count();
         if (noCapacity) return;
-        FrostBomb bomb = ObjectPooler.SpawnFromPool("Frost Bomb", Vector3.up * 100, Quaternion.identity).GetComponent<FrostBomb>();
+        FrostBomb bomb = Object.Instantiate(PrefabManager.Prefabs["Frost Bomb"], Vector3.up * 100, Quaternion.identity).GetComponent<FrostBomb>();
         trapPlacementController.Select(bomb);
         SoundFX.PlaySound("Out Wave Button Sound");
     }
@@ -606,7 +613,7 @@ public class UIButtonManager : MonoBehaviour
         int limit = LimitManager.GetBarbwireLimit();
         bool noCapacity = limit <= PlayerProgression.PlayerData.Traps.Where(trap => trap.Item1 == 2).Count();
         if (noCapacity) return;
-        Barbwire barbwire = ObjectPooler.SpawnFromPool("Barbwire", Vector3.up * 100, Quaternion.identity).GetComponent<Barbwire>();
+        Barbwire barbwire = Object.Instantiate(PrefabManager.Prefabs["Barbwire"], Vector3.up * 100, Quaternion.identity).GetComponent<Barbwire>();
         trapPlacementController.Select(barbwire);
         SoundFX.PlaySound("Out Wave Button Sound");
     }
@@ -616,7 +623,7 @@ public class UIButtonManager : MonoBehaviour
         int limit = LimitManager.GetTNTLimit();
         bool noCapacity = limit <= PlayerProgression.PlayerData.Traps.Where(trap => trap.Item1 == 0).Count();
         if (noCapacity) return;
-        ExplosiveBomb bomb = ObjectPooler.SpawnFromPool("Explosive Bomb", Vector3.up * 100, Quaternion.identity).GetComponent<ExplosiveBomb>();
+        ExplosiveBomb bomb = Object.Instantiate(PrefabManager.Prefabs["Explosive Bomb"], Vector3.up * 100, Quaternion.identity).GetComponent<ExplosiveBomb>();
         trapPlacementController.Select(bomb);
         SoundFX.PlaySound("Out Wave Button Sound");
     }
@@ -626,7 +633,7 @@ public class UIButtonManager : MonoBehaviour
         int limit = LimitManager.GetTurretLimit();
         bool noCapacity = limit <= PlayerProgression.PlayerData.Turrets.Count;
         if (noCapacity) return;
-        Turret turret = ObjectPooler.SpawnFromPool("Turret", Vector3.up * 100, Quaternion.identity).GetComponent<Turret>();
+        Turret turret = Object.Instantiate(PrefabManager.Prefabs["Turret"], Vector3.up * 100, Quaternion.identity).GetComponent<Turret>();
         turretPlacementController.Select(turret);
         SoundFX.PlaySound("Out Wave Button Sound");
     }

@@ -32,6 +32,7 @@ public class ThrowableWeaponsGuy : MonoBehaviour
     [SerializeField] private Sprite grenadeSprite, molotovSprite;
     private Vector3 grenadePoint;
     [SerializeField] private TargetIndicator targetIndicator;
+    [SerializeField] private Animator ragdollAnimator;
 
     private void ResetCooldown() => remainingCooldown = 0;
 
@@ -132,12 +133,38 @@ public class ThrowableWeaponsGuy : MonoBehaviour
     {
         if (ragdoll)
         {
+            ragdollAnimator.enabled = false;
             ragdoll.transform.SetParent(null);
             ragdoll.SetActive(true);
             Rigidbody[] rigidbodies = ragdoll.GetComponentsInChildren<Rigidbody>();
             foreach (Rigidbody rb in rigidbodies)
+            {
+                rb.isKinematic = false;
                 rb.AddExplosionForce(5, Vector3.zero, 10, 1, ForceMode.Impulse);
+            }
         }
+    }
+
+    public void Rewind()
+    {
+        Rigidbody[] rigidbodies = ragdoll.GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rigidbodies)
+            rb.isKinematic = true;
+        ragdollAnimator.enabled = true;
+        ragdollAnimator.SetTrigger("Rewind");
+        ragdoll.transform.SimulateProjectileMotion(transform.position, 2);
+        ragdoll.transform.DORotateQuaternion(transform.rotation, 2);
+        DOVirtual.DelayedCall(2, () =>
+        {
+            Activate();
+            ragdoll.transform.SetParent(transform);
+            ragdoll.SetActive(false);
+        });
+    }
+
+    public void Activate()
+    {
+        gameObject.SetActive(true);
     }
 
     public void Deactivate()

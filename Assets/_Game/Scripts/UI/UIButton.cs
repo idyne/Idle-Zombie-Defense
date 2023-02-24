@@ -9,6 +9,7 @@ public class UIButton : MonoBehaviour
     [SerializeField] private Button button;
     [SerializeField] private TMPro.TextMeshProUGUI text;
     [SerializeField] private Image disabledImage;
+    public bool Hidden { get => root.activeSelf; }
 
     public bool Active { get => button.interactable; }
 

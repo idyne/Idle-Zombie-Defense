@@ -22,6 +22,12 @@ public static class SoundFX
         }
     }
 
+    public static void StopWorkers()
+    {
+        foreach (SoundFXWorker worker in workers)
+            worker.Stop();
+    }
+
     private static SoundFXWorker GetAvailableWorker()
     {
         SoundFXWorker worker;

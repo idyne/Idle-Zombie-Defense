@@ -13,6 +13,7 @@ public class Zombie : MonoBehaviour, IPooledObject
 {
     public Transform Transform { get; private set; }
     private NavMeshAgent agent;
+    [SerializeField] private float speed = 1;
     [SerializeField] private bool isBoss = false;
     [SerializeField] private int level = 1;
     private int maxHealth { get => GetMaxHealth(); }
@@ -37,11 +38,13 @@ public class Zombie : MonoBehaviour, IPooledObject
     private bool slowedDown = false;
     private Tween slowDownTween = null;
     private bool died = false;
+    private float slowDownMultiplier = 1;
 
     private void Awake()
     {
         Transform = transform;
         agent = GetComponent<NavMeshAgent>();
+        speed = agent.speed;
         healthBar = GetComponentInChildren<UIHealthBar>();
         meshAnimator = GetComponentInChildren<MeshAnimatorBase>();
         rend = GetComponentInChildren<MeshRenderer>();
@@ -61,19 +64,23 @@ public class Zombie : MonoBehaviour, IPooledObject
         SetHealth(maxHealth, false);
     }
 
-    public void Stop()
+    public void Stop(float duration = 4)
     {
         //agent.enabled = false;
         agent.isStopped = false;
-        agent.SetDestination(Vector3.zero);
+        agent.SetDestination(TowerController.Instance.GetCurrentTower().Transform.position);
+        agent.speed = 1;
         meshAnimator.Play(0);
-        agent.speed = 1f;
         isStopped = true;
         tower = null;
         barriers.Clear();
+        DOTween.To(() => agent.speed, x => agent.speed = x, 0, duration).OnComplete(() =>
+        {
+            agent.isStopped = true;
+        });
     }
 
-    public void SlowDown(float t = 15)
+    public void SlowDown(float t = 15, float multiplier = 0.4f)
     {
         if (slowedDown) return;
         if (slowDownTween != null)
@@ -82,9 +89,10 @@ public class Zombie : MonoBehaviour, IPooledObject
             slowDownTween = null;
         }
         slowedDown = true;
-        agent.speed *= 0.4f;
-        meshAnimator.speed *= 0.4f;
-        hitCooldownDuration *= 2.5f;
+        slowDownMultiplier = multiplier;
+        agent.speed *= slowDownMultiplier;
+        meshAnimator.speed *= slowDownMultiplier;
+        hitCooldownDuration *= 1f / slowDownMultiplier;
         SetColor(slowedDownColor);
         slowDownTween = DOVirtual.DelayedCall(t, CancelSlowDown, false);
     }
@@ -98,9 +106,9 @@ public class Zombie : MonoBehaviour, IPooledObject
             slowDownTween = null;
         }
         slowedDown = false;
-        agent.speed *= 2.5f;
-        meshAnimator.speed *= 2.5f;
-        hitCooldownDuration *= 0.4f;
+        agent.speed *= 1f / slowDownMultiplier;
+        meshAnimator.speed *= 1f / slowDownMultiplier;
+        hitCooldownDuration *= slowDownMultiplier;
         SetColor(originalColor);
     }
 
@@ -152,16 +160,18 @@ public class Zombie : MonoBehaviour, IPooledObject
         levitatingText.SetText("$" + gain);
     }
 
-    public void GetHit(Projectile projectile)
+    public void GetHit(Projectile projectile, bool ignoreLose = false)
     {
+        if (!ignoreLose && WaveController.State == WaveController.WaveState.LOSE) return;
         if (currentHealth <= 0 || !gameObject.activeSelf) return;
         Flash(0.05f);
         if (!isBoss)
             GetPushed(projectile.Damage / (float)maxHealth);
         SetHealth(currentHealth - projectile.Damage);
     }
-    public void GetHit(int damage)
+    public void GetHit(int damage, bool ignoreLose = false)
     {
+        if (!ignoreLose && WaveController.State == WaveController.WaveState.LOSE) return;
         if (currentHealth <= 0 || !gameObject.activeSelf) return;
         Flash(0.05f);
         if (!isBoss)
@@ -193,7 +203,9 @@ public class Zombie : MonoBehaviour, IPooledObject
 
     public void OnObjectSpawn()
     {
+        isStopped = false;
         SetHealth(maxHealth, false);
+        agent.speed = speed;
         agent.SetDestination(TowerController.Instance.GetCurrentTower().Transform.position);
         CancelSlowDown();
         SetColor(originalColor);
@@ -202,7 +214,6 @@ public class Zombie : MonoBehaviour, IPooledObject
     }
     private void SetHealth(int health, bool showBar = true)
     {
-        if (WaveController.State == WaveController.WaveState.LOSE) return;
         currentHealth = Mathf.Clamp(health, 0, maxHealth);
         bool first = healthBar.Percent <= currentHealth / (float)maxHealth;
         healthBar.SetPercent(currentHealth / (float)maxHealth);

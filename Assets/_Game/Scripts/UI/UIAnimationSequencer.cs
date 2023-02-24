@@ -302,6 +302,8 @@ public class UIAnimationSequencer : MonoBehaviour
         //PlayerProgression.PlayerData.AirstrikeLevel = 0;
         PlayerProgression.PlayerData.Traps.Clear();
         PlayerProgression.PlayerData.Turrets.Clear();
+        foreach (Placeable placeable in FindObjectsOfType<Placeable>())
+            placeable.Deactivate();
         //PlayerProgression.UPGRADE_POINT = 0;
         PlayerProgression.MONEY = 0;
     }

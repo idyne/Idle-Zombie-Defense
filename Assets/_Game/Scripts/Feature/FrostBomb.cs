@@ -43,4 +43,5 @@ public class FrostBomb : Bomb
         HideRangeIndicator();
         return true;
     }
+
 }

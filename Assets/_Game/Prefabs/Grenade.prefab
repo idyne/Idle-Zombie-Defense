@@ -213,7 +213,7 @@ MonoBehaviour:
   zombieLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  range: 2
+  range: 4
 --- !u!1001 &2787560060700151487
 PrefabInstance:
   m_ObjectHideFlags: 0

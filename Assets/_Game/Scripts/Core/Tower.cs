@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using FateGames;
+using DG.Tweening;
 using static LevelManager;
 public class Tower : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class Tower : MonoBehaviour
     private List<Transform> zombieSpawnPoints = new();
     private List<Transform> _points = new();
     private bool pointsInitialized = false;
+    private Dictionary<Rigidbody, (Vector3, Quaternion)> initialSeperatePartPoints = new();
     private List<Transform> points
     {
         get
@@ -58,6 +60,9 @@ public class Tower : MonoBehaviour
         healthBar = GetComponentInChildren<UIHealthBar>();
         SetHealth(MaxHealth);
         healthBar.Hide();
+        Debug.Log("za " + gameObject.name, this);
+        if (WaveController.Instance.CurrentWave != null && !WaveController.Instance.CurrentWave.Clear)
+            WaveController.Instance.CurrentWave.OnWaveClear.AddListener(Repair);
         WaveController.Instance.OnNewWave.AddListener((wave) =>
         {
             wave.OnWaveClear.AddListener(Repair);
@@ -82,13 +87,25 @@ public class Tower : MonoBehaviour
         });*/
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            Rewind();
+            Barracks.Instance.RewindSoldiers();
+        }
+    }
+
     public Transform GetRandomZombieSpawnPoint()
     {
         return zombieSpawnPoints[Random.Range(0, zombieSpawnPoints.Count)];
     }
 
+
+
     public void Repair()
     {
+        Debug.Log(gameObject.name, this);
         foreach (Barrier barrier in barriers)
             barrier.Repair();
         SetHealth(MaxHealth, damageTaken > 0);
@@ -123,6 +140,25 @@ public class Tower : MonoBehaviour
         }
     }
 
+    public void Rewind()
+    {
+        Rigidbody[] rbs = seperateTower.GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rbs)
+        {
+            rb.isKinematic = true;
+            Transform partTransform = rb.transform;
+            (Vector3, Quaternion) positionAndRotation = initialSeperatePartPoints[rb];
+            partTransform.SimulateProjectileMotion(positionAndRotation.Item1, 2);
+            //partTransform.DOMove(positionAndRotation.Item1, 2);
+            partTransform.DORotateQuaternion(positionAndRotation.Item2, 2);
+        }
+        DOVirtual.DelayedCall(2, () =>
+        {
+            tower.SetActive(true);
+            seperateTower.SetActive(false);
+        });
+    }
+
     public void Explode()
     {
         tower.SetActive(false);
@@ -130,6 +166,9 @@ public class Tower : MonoBehaviour
         Rigidbody[] rbs = seperateTower.GetComponentsInChildren<Rigidbody>();
         foreach (Rigidbody rb in rbs)
         {
+            Transform partTransform = rb.transform;
+            if (!initialSeperatePartPoints.ContainsKey(rb))
+                initialSeperatePartPoints.Add(rb, (partTransform.position, partTransform.rotation));
             rb.isKinematic = false;
             rb.AddExplosionForce(5, transform.position, 5, 1, ForceMode.Impulse);
         }

@@ -24,6 +24,7 @@ public class UIUpgradeButton : UIButton
     }
     public void Lock(int unlockDay)
     {
+        Deactivate();
         unlockedContainer.SetActive(false);
         lockedContainer.SetActive(true);
         int cycleDay = GetCycleDay(unlockDay);

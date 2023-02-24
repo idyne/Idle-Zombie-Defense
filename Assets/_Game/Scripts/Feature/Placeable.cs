@@ -58,4 +58,10 @@ public class Placeable : MonoBehaviour
         grid.SetPlaceable(null);
         grid = null;
     }
+
+    public void Deactivate()
+    {
+        Detach();
+        PlaceOnGrid();
+    }
 }

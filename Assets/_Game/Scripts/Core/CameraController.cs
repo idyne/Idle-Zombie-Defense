@@ -26,6 +26,7 @@ public abstract class CameraController : MonoBehaviour
     public Camera Camera { get => camera;  }
 
     public abstract void ZoomOut();
+    public abstract void ZoomIn();
 
 
 }

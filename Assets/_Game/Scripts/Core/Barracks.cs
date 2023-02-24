@@ -123,6 +123,18 @@ public class Barracks : MonoBehaviour
         throwableWeaponsGuy.Deactivate();
     }
 
+    public void RewindSoldiers()
+    {
+        for (int i = 1; i < soldierTable.Count; i++)
+        {
+            for (int j = 0; j < soldierTable[i].Count; j++)
+            {
+                soldierTable[i][j].Rewind();
+            }
+        }
+        throwableWeaponsGuy.Rewind();
+    }
+
     public void BuySoldier()
     {
         int cost = CostManager.GetSoldierCost();

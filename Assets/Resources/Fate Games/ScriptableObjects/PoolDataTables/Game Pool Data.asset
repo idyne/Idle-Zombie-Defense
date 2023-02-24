@@ -65,22 +65,22 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Zombie 1
     prefab: {fileID: 6756975525295821979, guid: fa4e2c46e7bec8949af3c2ed7ebfc7c5, type: 3}
-    size: 64
+    size: 128
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Zombie 2
     prefab: {fileID: 6756975525295821979, guid: e17d3f7698b4a684da23958f336f149d, type: 3}
-    size: 16
+    size: 32
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Zombie 3
     prefab: {fileID: 6756975525295821979, guid: 3e02c0c95022f2e48a535317d13c6b36, type: 3}
-    size: 4
+    size: 32
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Zombie 4
     prefab: {fileID: 6756975525295821979, guid: 2f1f17a3fe76f464f9947d829844f8f0, type: 3}
-    size: 1
+    size: 32
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Zombie 5
@@ -120,22 +120,22 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Dying Zombie 1
     prefab: {fileID: 7505477399732115323, guid: 6ff1cb301dfd4d04f950e7a04d30da79, type: 3}
-    size: 50
+    size: 200
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Dying Zombie 2
     prefab: {fileID: 7505477399732115323, guid: 1b0822987dd1ccf4fa8412a97a8716f6, type: 3}
-    size: 20
+    size: 40
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Dying Zombie 3
     prefab: {fileID: 7505477399732115323, guid: 2047ed72655e155468b4679a2316763a, type: 3}
-    size: 20
+    size: 40
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Dying Zombie 4
     prefab: {fileID: 7505477399732115323, guid: 9176a2c3fad3a5140ab97012dded859e, type: 3}
-    size: 20
+    size: 40
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Dying Zombie 5
@@ -185,7 +185,7 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Coin
     prefab: {fileID: 61506213663790832, guid: 564ca2f28647a4b4ab9e69124bb9e965, type: 3}
-    size: 160
+    size: 640
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Shotgun Ammo
@@ -205,7 +205,7 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: UI Money Image
     prefab: {fileID: 590420669460658490, guid: 6b0be8a901f7ccc4694c69da8a7c3af7, type: 3}
-    size: 160
+    size: 320
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: UI Upgrade Point Image
@@ -235,7 +235,7 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Frost Bomb
     prefab: {fileID: 2567905047410825368, guid: 12d475007820d47458a7cd674442541b, type: 3}
-    size: 8
+    size: 1
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Explosive Bomb
@@ -245,7 +245,7 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Barbwire
     prefab: {fileID: 5355505176278194101, guid: 75d4c14dc055b3649b4e4e652fcab4f1, type: 3}
-    size: 8
+    size: 2
     canActiveObjectsBeDequeued: 0
     container: {fileID: 0}
   - tag: Airstrike Bomb
@@ -285,6 +285,11 @@ MonoBehaviour:
     container: {fileID: 0}
   - tag: Commander Ammo
     prefab: {fileID: 5388626812233157393, guid: 3d69b07bdd17609419958262017d974c, type: 3}
-    size: 1
+    size: 2
     canActiveObjectsBeDequeued: 0
+    container: {fileID: 0}
+  - tag: Revive Effect
+    prefab: {fileID: 7723261687464412058, guid: 09d3d17e669f79745a59f5be0308e812, type: 3}
+    size: 1
+    canActiveObjectsBeDequeued: 1
     container: {fileID: 0}

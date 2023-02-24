@@ -70,7 +70,13 @@ public class PointCameraController : CameraController
     public override void ZoomOut()
     {
         zoomingOut = true;
-        DOTween.To(() => camTransform.position, x => camTransform.position = x, camTransform.position - camTransform.forward * 5, 3);
+        DOTween.To(() => camTransform.position, x => camTransform.position = x, camTransform.position - camTransform.forward * 5, 3).OnComplete(() => zoomingOut = false); ;
+    }
+
+    public override void ZoomIn()
+    {
+        zoomingOut = true;
+        DOTween.To(() => camTransform.position, x => camTransform.position = x, camTransform.position + camTransform.forward * 5, 3).OnComplete(() => zoomingOut = false);
     }
 
     private void Init()

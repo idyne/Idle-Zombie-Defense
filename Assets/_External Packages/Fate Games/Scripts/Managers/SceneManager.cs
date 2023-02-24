@@ -27,6 +27,7 @@ namespace FateGames
             if (sceneIndex < 0 && sceneIndex >= UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings)
                 throw new System.ArgumentOutOfRangeException();
             Debug.Log(DOTween.KillAll() + " tweens have killed.");
+            SoundFX.StopWorkers();
             GameManager.Instance.StartCoroutine(LoadSceneAsynchronously(sceneIndex));
         }
 
