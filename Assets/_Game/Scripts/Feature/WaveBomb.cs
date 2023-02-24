@@ -47,7 +47,7 @@ public class WaveBomb : MonoBehaviour
         for (int i = 0; i < colliders.Length; i++)
         {
             Zombie zombie = colliders[i].GetComponent<Zombie>();
-            zombie.GetHit(99999, true);
+            zombie.GetHit(999999, true);
         }
         if (currentRange >= range)
         {

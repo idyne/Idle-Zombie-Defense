@@ -135,7 +135,9 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 0.4
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 11400000, guid: 7b95ae790a860814ebe61ac156ba830a, type: 2}
+  - {fileID: 6202231905747873188, guid: ec719246d9ffe2642b4308fe611fbee7, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -480,7 +482,7 @@ PlayerSettings:
     m_DynamicBatching: 0
   - m_BuildTarget: Android
     m_StaticBatching: 1
-    m_DynamicBatching: 0
+    m_DynamicBatching: 1
   - m_BuildTarget: iPhone
     m_StaticBatching: 1
     m_DynamicBatching: 0

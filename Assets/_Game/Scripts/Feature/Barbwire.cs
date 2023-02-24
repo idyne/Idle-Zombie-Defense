@@ -43,6 +43,8 @@ public class Barbwire : Trap
             {
                 float t = 0.5f;
                 zombie.SlowDown(t, 0.7f);
+                cooldownList.Add(zombie);
+                DOVirtual.DelayedCall(t, () => { cooldownList.Remove(zombie); }, false);
                 int damage = Mathf.CeilToInt(damagePerSecond * t);
                 if (damageTable.ContainsKey(zombie))
                 {
@@ -50,18 +52,13 @@ public class Barbwire : Trap
                     {
                         damage = Mathf.Clamp(damage, 0, Settings.BarbwireMaxDamage - damageTable[zombie]);
                         zombie.GetHit(damage);
-                        
-                        cooldownList.Add(zombie);
                         damageTable[zombie] += damage;
-                        DOVirtual.DelayedCall(t, () => { cooldownList.Remove(zombie); }, false);
                     }
                 }
                 else
                 {
                     zombie.GetHit(damage);
-                    cooldownList.Add(zombie);
                     damageTable.Add(zombie, damage);
-                    DOVirtual.DelayedCall(t, () => { cooldownList.Remove(zombie); }, false);
                 }
             }
         }
