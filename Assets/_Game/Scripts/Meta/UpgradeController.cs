@@ -69,7 +69,7 @@ public static class UpgradeController
     }
     public static void UpgradeTurret()
     {
-        int price = CostManager.GetTNTUpgradePrice();
+        int price = CostManager.GetTurretUpgradePrice();
         if (CanAfford(price))
         {
             PlayerProgression.PlayerData.TurretLevel++;
