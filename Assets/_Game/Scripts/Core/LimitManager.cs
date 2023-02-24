@@ -6,19 +6,23 @@ public static class LimitManager
 {
     public static int GetTNTUpgradeLimit()
     {
-        return 10;
+        if (Day < 26) return 10;
+        return 999;
     }
     public static int GetBarbwireUpgradeLimit()
     {
-        return 8;
+        if (Day < 26) return 8;
+        return 999;
     }
     public static int GetFrostUpgradeLimit()
     {
-        return 6;
+        if (Day < 26) return 6;
+        return 999;
     }
     public static int GetTurretUpgradeLimit()
     {
-        return 5;
+        if (Day < 26) return 5;
+        return 999;
     }
 
     
@@ -57,7 +61,8 @@ public static class LimitManager
         if (Day < 8) return 5;
         if (Day < 13) return 8;
         if (Day < 17) return 11;
-        return 15;
+        if (Day < 26) return 15;
+        return 999;
     }
 
     public static int GetSoldierMergeLimit()

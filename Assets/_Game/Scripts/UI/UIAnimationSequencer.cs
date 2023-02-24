@@ -156,6 +156,26 @@ public class UIAnimationSequencer : MonoBehaviour
             UIButtonManager.Instance.ShowOutWaveButtons();
             OnOutWaveUIActivated.Invoke();
         }
+        //Sonraki cyclea geçme
+        else if (!isNewSession && NewWorld && CycleDay == 1)
+        {
+            print("newcycle");
+            yield return FinishDay();
+            yield return GoCurrentWorld(false);
+            yield return GoCurrentDay();
+            UIContainer.SetActive(true);
+            uiDayBar.Show();
+            uiDayBar.GoDown(false);
+            UILevelBar.Instance.Show();
+            UILevelBar.Instance.SetDay();
+            yield return timePeriodAnimation.SetTimePeriod(CurrentTimePeriod);
+            yield return AdManager.ShowInterstitial();
+            UIButtonManager.Instance.UpdateStartButton();
+            UIButtonManager.Instance.UpdateTrapUpgradesButton();
+            UIButtonManager.Instance.UpdateBaseUpgradesButton();
+            UIButtonManager.Instance.ShowOutWaveButtons();
+            OnOutWaveUIActivated.Invoke();
+        }
         //Sonraki worlde geçme
         else if (!isNewSession && NewWorld)
         {
@@ -356,26 +376,30 @@ public class UIAnimationSequencer : MonoBehaviour
         }
 
     }
-    private IEnumerator GoCurrentWorld()
+    private IEnumerator GoCurrentWorld(bool showMap = true)
     {
         //mapController.Show();
         ResetProgress();
         environmentChanger.SetEnvironment();
         SetTower();
-        surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
-        zoneMapController.Open();
-        if (!zoneMapSetup)
+        surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1 && CycleNumber == 1);
+        if (showMap)
         {
-            int lastAchievedZoneIndex = (WorldLevel - 1) * 3 + ZoneLevel - 2;
-            zoneMapController.SetupZonesAndPaths(lastAchievedZoneIndex);
-            zoneMapSetup = true;
+            zoneMapController.Open();
+            if (!zoneMapSetup)
+            {
+                int lastAchievedZoneIndex = (WorldLevel - 1) * 3 + ZoneLevel - 2;
+                zoneMapController.SetupZonesAndPaths(lastAchievedZoneIndex);
+                zoneMapSetup = true;
+            }
+            yield return new WaitForSeconds(0.5f);
+            int previousZoneIndex = (WorldLevel - 1) * 3 + ZoneLevel - 2;
+            zoneMapController.FindNextPathOnWorld(previousZoneIndex);
+            yield return new WaitForSeconds(1.5f);
+            zoneMapController.PlayPath(previousZoneIndex);
+            yield return new WaitUntil(() => zoneMapController.Closed);
         }
-        yield return new WaitForSeconds(0.5f);
-        int previousZoneIndex = (WorldLevel - 1) * 3 + ZoneLevel - 2;
-        zoneMapController.FindNextPathOnWorld(previousZoneIndex);
-        yield return new WaitForSeconds(1.5f);
-        zoneMapController.PlayPath(previousZoneIndex);
-        yield return new WaitUntil(() => zoneMapController.Closed);
+        
         //mapController.GoPosition(1);
         //mapAnimator.SetTrigger("Fade");
         //yield return new WaitForSeconds(1);

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class PlacementController : MonoBehaviour
 {
+    private static bool placing = false;
     [SerializeField] private LayerMask gridLayerMask, placeableLayerMask, groundLayerMask;
     [SerializeField] private Transform gridContainer;
     private List<Grid> grids = null;
@@ -33,7 +34,7 @@ public class PlacementController : MonoBehaviour
         if (!PlacementModeController.InPlacementMode) return;
         if (PauseButton.Paused) return;
         if (WaveController.State == WaveController.WaveState.RUNNING) return;
-        if (Input.GetMouseButtonDown(0)) Select();
+        if (!placing && Input.GetMouseButtonDown(0)) Select();
         if (selectedPlaceable && Input.GetMouseButton(0)) Hover();
         if (selectedPlaceable && Input.GetMouseButtonUp(0)) Place();
     }
@@ -76,6 +77,7 @@ public class PlacementController : MonoBehaviour
             //UIButtonManager.Instance.HideStartAndUpgradeButtons();
             PlacementModeController.Instance.HidePlacementButtons();
             PlacementModeController.Instance.HideExitPlacementModeButton();
+            placing = true;
         }
     }
 
@@ -144,6 +146,7 @@ public class PlacementController : MonoBehaviour
         //UIButtonManager.Instance.ShowStartAndUpgradeButtons();
         PlacementModeController.Instance.ShowPlacementButtons();
         PlacementModeController.Instance.ShowExitPlacementModeButton();
+        placing = false;
     }
 
     private void ShowGrids()

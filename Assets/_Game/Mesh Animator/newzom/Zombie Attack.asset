@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationName: Zombie Attack
   playbackSpeed: 1
-  wrapMode: 2
+  wrapMode: 0
   events: []
   length: 2.6333334
   frameSkip: 1
   rootMotionMode: 0
   exposedTransforms: []
-  vertexCount: 364
-  preGenerateFrames: 1
+  vertexCount: 0
+  preGenerateFrames: 0
   meshNormalMode: 0
   recalculateNormalsOnRotation: 0
   compressedFrameData:

@@ -118,6 +118,7 @@ public class ThrowableWeaponsGuy : MonoBehaviour
         if (zombie == target) return;
         if (!PlayerProgression.HasEverAimed)
             PlayerProgression.HasEverAimed = true;
+        HapticManager.DoHaptic();
         if (target)
             RemoveTarget();
         target = zombie;

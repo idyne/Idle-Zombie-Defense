@@ -17,6 +17,7 @@ public class Zombie : MonoBehaviour, IPooledObject
     [SerializeField] private bool isBoss = false;
     [SerializeField] private int level = 1;
     private int maxHealth { get => GetMaxHealth(); }
+    [SerializeField] private Material originalMaterial, whiteMaterial, slowedMaterial;
     [SerializeField] private int matIndex = 0;
     [SerializeField] private float hitCooldownDuration = 1f;
     private int damage { get => GetDamage(); }
@@ -31,14 +32,12 @@ public class Zombie : MonoBehaviour, IPooledObject
     public Transform ShotPoint { get => shotPoint; }
 
     private bool canHit = true;
-    private MeshRenderer rend;
-    private Color originalColor;
+    [SerializeField] private MeshRenderer rend;
     private Tower tower;
     private bool isStopped = false;
     private bool slowedDown = false;
     private Tween slowDownTween = null;
     private bool died = false;
-    public List<string> logs = new();
     private float slowDownMultiplier = 1;
 
     private void Awake()
@@ -48,11 +47,7 @@ public class Zombie : MonoBehaviour, IPooledObject
         speed = agent.speed;
         healthBar = GetComponentInChildren<UIHealthBar>();
         meshAnimator = GetComponentInChildren<MeshAnimatorBase>();
-        rend = GetComponentInChildren<MeshRenderer>();
-        if (!isBoss)
-            originalColor = rend.material.color;
-        else
-            originalColor = rend.materials[1].color;
+        //rend = GetComponentInChildren<MeshRenderer>();
         healthBar.Hide();
         ZombieTargetHitbox zombieTargetHitbox = Instantiate(PrefabManager.Prefabs["Zombie Target Hitbox"]).GetComponent<ZombieTargetHitbox>();
         zombieTargetHitbox.SetZombie(this);
@@ -83,18 +78,13 @@ public class Zombie : MonoBehaviour, IPooledObject
 
     public void SlowDown(float t = 15, float multiplier = 0.4f)
     {
-        if (slowedDown) return;
-        if (slowDownTween != null)
-        {
-            slowDownTween.Kill();
-            slowDownTween = null;
-        }
+        if (slowedDown) CancelSlowDown();
         slowedDown = true;
         slowDownMultiplier = multiplier;
-        agent.speed *= slowDownMultiplier;
-        meshAnimator.speed *= slowDownMultiplier;
-        hitCooldownDuration *= 1f / slowDownMultiplier;
-        SetColor(slowedDownColor);
+        agent.speed *= multiplier;
+        meshAnimator.speed *= multiplier;
+        hitCooldownDuration *= 1f / multiplier;
+        SetColor(slowedMaterial);
         slowDownTween = DOVirtual.DelayedCall(t, CancelSlowDown, false);
     }
 
@@ -110,7 +100,7 @@ public class Zombie : MonoBehaviour, IPooledObject
         agent.speed *= 1f / slowDownMultiplier;
         meshAnimator.speed *= 1f / slowDownMultiplier;
         hitCooldownDuration *= slowDownMultiplier;
-        SetColor(originalColor);
+        SetColor(originalMaterial);
     }
 
 
@@ -195,7 +185,6 @@ public class Zombie : MonoBehaviour, IPooledObject
         ObjectPooler.SpawnFromPool(isBoss ? "Dying Zombie Boss" : ("Dying Zombie " + level), Transform.position, Transform.rotation);
         SoundFX.PlaySound("Zombie Dying Sound " + (Random.value > 0.5f ? "1" : "2"), ShotPoint.position);
         died = true;
-        logs.Add("Die");
     }
 
     private void Deactivate()
@@ -210,10 +199,9 @@ public class Zombie : MonoBehaviour, IPooledObject
         agent.speed = speed;
         agent.SetDestination(TowerController.Instance.GetCurrentTower().Transform.position);
         CancelSlowDown();
-        SetColor(originalColor);
+        SetColor(originalMaterial);
         OnSpawn.Invoke();
         died = false;
-        logs.Add("Spawn");
     }
     private void SetHealth(int health, bool showBar = true)
     {
@@ -308,17 +296,15 @@ public class Zombie : MonoBehaviour, IPooledObject
     }
     private IEnumerator FlashCoroutine(float duration)
     {
-        SetColor(Color.white);
+        SetColor(whiteMaterial);
         yield return new WaitForSeconds(duration);
-        SetColor(slowedDown ? slowedDownColor : originalColor);
+        SetColor(slowedDown ? slowedMaterial : originalMaterial);
     }
 
-    private void SetColor(Color color)
+    private void SetColor(Material material)
     {
-        Material material;
-        material = rend.materials[matIndex];
-        material.color = color;
-        rend.materials[matIndex] = material;
+        rend.sharedMaterial = material;
+        //rend.materials[matIndex] = material;
 
     }
 
