@@ -343,16 +343,19 @@ public class UIAnimationSequencer : MonoBehaviour
         //mapController.Hide();
         if (CycleNumber == 1)
         {
-            int soldierLevel = 3;
-            if (WorldLevel == 1)
+            if (!(WorldLevel == 2 && ZoneLevel == 3))
             {
-                soldierLevel = ZoneLevel + 2;
+                int soldierLevel = 3;
+                if (WorldLevel == 1)
+                {
+                    soldierLevel = ZoneLevel + 2;
+                }
+                else if (WorldLevel == 2 && ZoneLevel == 2)
+                    soldierLevel = ZoneLevel + 5;
+                soldierUnlocked.Show(soldierLevel);
+                yield return new WaitUntil(() => soldierUnlockedHide);
+                soldierUnlockedHide = false;
             }
-            else if (WorldLevel == 2 && ZoneLevel == 2)
-                soldierLevel = ZoneLevel + 5;
-            soldierUnlocked.Show(soldierLevel);
-            yield return new WaitUntil(() => soldierUnlockedHide);
-            soldierUnlockedHide = false;
         }
 
     }
