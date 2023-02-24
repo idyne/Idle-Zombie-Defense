@@ -3831,8 +3831,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Size: {x: 12.469124, y: 18.702017, z: 72.25312}
-  m_Center: {x: -36.013706, y: 8.851008, z: 15.37878}
+  m_Size: {x: 17.391533, y: 18.702017, z: 77.19947}
+  m_Center: {x: -38.47491, y: 8.851008, z: 12.905606}
   m_Area: 1
   m_AffectedAgents: ffffffff
 --- !u!1 &2521975010030207618
@@ -4793,8 +4793,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Size: {x: 72.63183, y: 17.929787, z: 12.196613}
-  m_Center: {x: 7.111767, y: 8.464893, z: -29.290846}
+  m_Size: {x: 90.84338, y: 17.929787, z: 22.76381}
+  m_Center: {x: -1.994009, y: 8.464893, z: -34.57444}
   m_Area: 1
   m_AffectedAgents: ffffffff
 --- !u!1 &3116603627002640829
@@ -12665,7 +12665,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.083333336
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: dfc8c7340f62f0f4e965677892ef8000, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 641c3de55226f404c9aaef852cbc7b53, type: 2}
 --- !u!1 &8401885916972176326
 GameObject:
   m_ObjectHideFlags: 0
