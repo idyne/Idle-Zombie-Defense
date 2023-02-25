@@ -33,6 +33,7 @@ public class Zombie : MonoBehaviour, IPooledObject
 
     private bool canHit = true;
     [SerializeField] private MeshRenderer rend;
+    [SerializeField] private int rendIndex = 0;
     private Tower tower;
     private bool isStopped = false;
     private bool slowedDown = false;
@@ -303,7 +304,7 @@ public class Zombie : MonoBehaviour, IPooledObject
 
     private void SetColor(Material material)
     {
-        rend.sharedMaterial = material;
+        rend.sharedMaterials[rendIndex] = material;
         //rend.materials[matIndex] = material;
 
     }
