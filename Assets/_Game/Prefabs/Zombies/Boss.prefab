@@ -81,13 +81,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 728031c6ff90db9479284abcc059a335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 1
   isBoss: 1
   level: 1
+  originalMaterial: {fileID: 2100000, guid: e9d451bb95f954a4196943c70681538b, type: 2}
+  whiteMaterial: {fileID: 2100000, guid: 173db37bc46b7ef41b629e0a80aea15f, type: 2}
+  slowedMaterial: {fileID: 2100000, guid: ac4aa6485bf99e84cac009256f64e7e1, type: 2}
   matIndex: 1
   hitCooldownDuration: 1.5
   shotPoint: {fileID: 6391222573832946911}
   levitatingTextPoint: {fileID: 3957990890118431232}
   slowedDownColor: {r: 0.41960785, g: 0.6627451, b: 1, a: 1}
+  rend: {fileID: 6785353115227196211}
+  rendIndex: 1
 --- !u!195 &4221529958158323268
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -560,5 +566,10 @@ PrefabInstance:
 --- !u!4 &1383211279353657284 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7863975746578632572, guid: 771168609da97fd4ebf4703fd202b67d, type: 3}
+  m_PrefabInstance: {fileID: 9083851788304218296}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6785353115227196211 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2322231949543764875, guid: 771168609da97fd4ebf4703fd202b67d, type: 3}
   m_PrefabInstance: {fileID: 9083851788304218296}
   m_PrefabAsset: {fileID: 0}
