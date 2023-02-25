@@ -180,12 +180,12 @@ public class Zombie : MonoBehaviour, IPooledObject
     private void Die()
     {
         DropMoney();
-        OnDeath.Invoke();
-        OnDeath.RemoveAllListeners();
         Deactivate();
+        died = true;
         ObjectPooler.SpawnFromPool(isBoss ? "Dying Zombie Boss" : ("Dying Zombie " + level), Transform.position, Transform.rotation);
         SoundFX.PlaySound("Zombie Dying Sound " + (Random.value > 0.5f ? "1" : "2"), ShotPoint.position);
-        died = true;
+        OnDeath.Invoke();
+        OnDeath.RemoveAllListeners();
     }
 
     private void Deactivate()
@@ -304,7 +304,9 @@ public class Zombie : MonoBehaviour, IPooledObject
 
     private void SetColor(Material material)
     {
-        rend.sharedMaterials[rendIndex] = material;
+        Material[] sharedMaterials = rend.sharedMaterials;
+        sharedMaterials[rendIndex] = material;
+        rend.sharedMaterials = sharedMaterials;
         //rend.materials[matIndex] = material;
 
     }

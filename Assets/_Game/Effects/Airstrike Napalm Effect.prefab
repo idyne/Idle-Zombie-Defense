@@ -122,6 +122,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1116109469658245038, guid: 50e5bff118166d142ad518b4e0a1ee4d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1116109469658245038, guid: 50e5bff118166d142ad518b4e0a1ee4d, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1116109469658643128, guid: 50e5bff118166d142ad518b4e0a1ee4d, type: 3}
       propertyPath: InitialModule.startSizeY.minMaxState
       value: 1

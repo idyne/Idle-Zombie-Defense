@@ -49,6 +49,7 @@ public class Tower : MonoBehaviour
 
     private void Awake()
     {
+        Deactivate();
         for (int i = 0; i < bombPointContainer.childCount; i++)
             bombPoints.Add(bombPointContainer.GetChild(i));
         bombPoints.Sort((a, b) => Mathf.CeilToInt(a.position.z - b.position.z));
@@ -60,7 +61,6 @@ public class Tower : MonoBehaviour
         healthBar = GetComponentInChildren<UIHealthBar>();
         SetHealth(MaxHealth);
         healthBar.Hide();
-        Debug.Log("za " + gameObject.name, this);
         if (WaveController.Instance.CurrentWave != null && !WaveController.Instance.CurrentWave.Clear)
             WaveController.Instance.CurrentWave.OnWaveClear.AddListener(Repair);
         WaveController.Instance.OnNewWave.AddListener((wave) =>
@@ -71,6 +71,16 @@ public class Tower : MonoBehaviour
         {
             SetHealth(MaxHealth);
         });
+    }
+
+    public void EnableCamera()
+    {
+        cameraController.Enable();
+    }
+
+    public void DisableCamera()
+    {
+        cameraController.Disable();
     }
 
     private void Start()

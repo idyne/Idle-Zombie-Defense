@@ -107,7 +107,6 @@ public class Turret : Placeable
     }
     private void RemoveTarget()
     {
-        target?.OnDeath.RemoveListener(OnTargetDeath);
         target = null;
         StopShooting();
     }

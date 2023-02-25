@@ -13020,6 +13020,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camTransform: {fileID: 6534895252024783184}
   camera: {fileID: 6534895252024783185}
+  cullingMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
   outWavePoint: {fileID: 3918311335558026173}
   inWavePoint: {fileID: 2617548286546533440}
 --- !u!1 &7545649352876909742

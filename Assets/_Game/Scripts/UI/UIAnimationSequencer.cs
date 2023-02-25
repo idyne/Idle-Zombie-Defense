@@ -110,14 +110,17 @@ public class UIAnimationSequencer : MonoBehaviour
         //Oyuna yeni baþlama
         if (isNewSession && Day == 1 && NewDay)
         {
+            SetTower();
+            tower.DisableCamera();
             print("start new game");
             zoneMapController.Open();
             yield return new WaitForSeconds(0.5f);
             zoneMapController.BeginingShow();
-            SetTower();
             surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
             dayCycler.SetTimePeriodWithoutAnimation(CurrentTimePeriod);
             environmentChanger.SetEnvironment();
+            yield return new WaitUntil(() => zoneMapController.Closed);
+            tower.EnableCamera();
             uiDayBar.SetPercent(((int)CurrentTimePeriod) * 0.25f, false);
             uiDayBar.SetDay(WorldDay);
             UILevelBar.Instance.SetDay();
@@ -402,7 +405,7 @@ public class UIAnimationSequencer : MonoBehaviour
             zoneMapController.PlayPath(previousZoneIndex);
             yield return new WaitUntil(() => zoneMapController.Closed);
         }
-        
+
         //mapController.GoPosition(1);
         //mapAnimator.SetTrigger("Fade");
         //yield return new WaitForSeconds(1);

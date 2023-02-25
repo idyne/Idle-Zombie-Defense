@@ -2057,6 +2057,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camTransform: {fileID: 2165489061568873084}
   camera: {fileID: 2165489061568873085}
+  cullingMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
   cameraForwardRange: -4
   cameraBackwardRange: -10
   cameraZoomSpeed: 10

@@ -121,7 +121,7 @@ public class Soldier : MonoBehaviour, IPooledObject
 
     private void RemoveTarget()
     {
-        target?.OnDeath.RemoveListener(OnTargetDeath);
+        //target?.OnDeath.RemoveListener(OnTargetDeath);
         target = null;
         StopShooting();
     }
