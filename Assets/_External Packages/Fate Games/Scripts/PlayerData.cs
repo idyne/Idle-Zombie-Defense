@@ -11,7 +11,7 @@ namespace FateGames
         public int Money = 0;
         public int UpgradePoint = 0;
         public List<int> Soldiers = new() { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        public int WaveLevel = 1;
+        public int WaveLevel = 14;
         public int IncomeLevel = 1;
         public int FireRateLevel = 1;
         public int BaseDefenseLevel = 1;

@@ -324,7 +324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5995586
+      value: 0.8557762
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
       propertyPath: m_LocalScale.z
@@ -336,7 +336,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.189
+      value: -0.258
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
       propertyPath: m_LocalPosition.z
@@ -372,7 +372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7640558969779515294, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
       propertyPath: m_StaticEditorFlags
