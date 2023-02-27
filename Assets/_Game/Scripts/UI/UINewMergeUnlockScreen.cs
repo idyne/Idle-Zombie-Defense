@@ -37,6 +37,7 @@ public class UINewMergeUnlockScreen : MonoBehaviour
         SoundFX.PlaySound("UI Button Sound");
         container.SetActive(false);
         pauseButton.Press();
+        SoldierRenderController.Instance.DisableCamera();
         SoldierRenderController.Instance.gameObject.SetActive(false);
     }
 
