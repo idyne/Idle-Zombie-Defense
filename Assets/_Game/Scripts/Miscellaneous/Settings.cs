@@ -248,7 +248,6 @@ public static class Settings
             float gain = (baseZombieIncome * (Mathf.Pow(1.05f, PlayerData.IncomeLevel - 1) + WorldDay * 0.1f)) * level;
             if (boss)
             {
-                Debug.Log(level);
                 gain *= 2f;
             }
 
@@ -470,7 +469,6 @@ public static class Settings
             float gain = (baseZombieIncome * (Mathf.Pow(1.05f, PlayerData.IncomeLevel - 1) + WorldDay * 0.1f)) * level;
             if (boss)
             {
-                Debug.Log(level);
                 gain *= 2f;
             }
 

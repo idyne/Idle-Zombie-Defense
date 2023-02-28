@@ -42,7 +42,7 @@ public class Turret : Placeable
     }
     private void HideRangeIndicator(float duration = -1)
     {
-        if (DOTween.Kill(this) > 0) print("Turret hiderangeindicator tween killded");
+        if (DOTween.Kill(this) > 0) print("Turret hiderangeindicator tween killed");
         rangeIndicatorTransform.gameObject.SetActive(false);
         if (duration > 0)
             DOVirtual.DelayedCall(duration, () => { ShowRangeIndicator(); }, false);
