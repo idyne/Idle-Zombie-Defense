@@ -11,6 +11,7 @@ using FSG.MeshAnimator;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Zombie : MonoBehaviour, IPooledObject
 {
+    public List<Soldier> targetedSoldiers = new();
     public Transform Transform { get; private set; }
     private NavMeshAgent agent;
     [SerializeField] private float speed = 1;
@@ -38,7 +39,7 @@ public class Zombie : MonoBehaviour, IPooledObject
     private bool isStopped = false;
     private bool slowedDown = false;
     private Tween slowDownTween = null;
-    private bool died = false;
+    public bool died = false;
     private float slowDownMultiplier = 1;
 
     private void Awake()
@@ -154,8 +155,16 @@ public class Zombie : MonoBehaviour, IPooledObject
 
     public void GetHit(Projectile projectile, bool ignoreLose = false)
     {
-        if (!ignoreLose && WaveController.State == WaveController.WaveState.LOSE) return;
-        if (currentHealth <= 0 || !gameObject.activeSelf) return;
+        if (!ignoreLose && WaveController.State == WaveController.WaveState.LOSE)
+        {
+            //Debug.Log(ignoreLose + ", " + WaveController.State, this);
+            return;
+        }
+        if (currentHealth <= 0 || !gameObject.activeSelf)
+        {
+            //Debug.Log(currentHealth + ", " + gameObject.activeSelf, this);
+            return;
+        }
         Flash(0.05f);
         if (!isBoss)
             GetPushed(projectile.Damage / (float)maxHealth);
@@ -184,6 +193,11 @@ public class Zombie : MonoBehaviour, IPooledObject
         died = true;
         ObjectPooler.SpawnFromPool(isBoss ? "Dying Zombie Boss" : ("Dying Zombie " + level), Transform.position, Transform.rotation);
         SoundFX.PlaySound("Zombie Dying Sound " + (Random.value > 0.5f ? "1" : "2"), ShotPoint.position);
+        for (int i = 0; i < targetedSoldiers.Count; i++)
+        {
+            Soldier soldier = targetedSoldiers[i];
+            soldier.OnTargetDeath();
+        }
         OnDeath.Invoke();
         OnDeath.RemoveAllListeners();
     }
@@ -261,7 +275,7 @@ public class Zombie : MonoBehaviour, IPooledObject
                 });
             }
             agent.isStopped = true;
-            Transform.LookAt(barrier.Transform);
+            Transform.LookAt(barrier.transform);
             meshAnimator.Play(1);
             HitBarrier(barrier);
         }

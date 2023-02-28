@@ -223,7 +223,11 @@ public class ThrowableWeaponsGuy : MonoBehaviour
     }
     private void RemoveTarget()
     {
-        target = null;
+        if (target)
+        {
+            target.OnDeath.RemoveListener(OnTargetDeath);
+            target = null;
+        }
         targetIndicator.Hide();
         if (!throwing)
         {

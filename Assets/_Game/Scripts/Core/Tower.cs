@@ -49,7 +49,6 @@ public class Tower : MonoBehaviour
 
     private void Awake()
     {
-        Deactivate();
         for (int i = 0; i < bombPointContainer.childCount; i++)
             bombPoints.Add(bombPointContainer.GetChild(i));
         bombPoints.Sort((a, b) => Mathf.CeilToInt(a.position.z - b.position.z));
@@ -115,7 +114,6 @@ public class Tower : MonoBehaviour
 
     public void Repair()
     {
-        Debug.Log(gameObject.name, this);
         foreach (Barrier barrier in barriers)
             barrier.Repair();
         SetHealth(MaxHealth, damageTaken > 0);
@@ -125,11 +123,13 @@ public class Tower : MonoBehaviour
 
     public void Activate()
     {
+        Debug.Log("Activate", this);
         gameObject.SetActive(true);
     }
 
     public void Deactivate()
     {
+        Debug.Log("Deactivate", this);
         gameObject.SetActive(false);
     }
 

@@ -1625,6 +1625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appIcon: {fileID: 5343072982242321289}
+  icon: {fileID: 21300000, guid: 2a10bb68138d38049b481d2bb2747752, type: 3}
   rateUsScreen: {fileID: 5343072983817776879}
   enabledStars:
   - {fileID: 5343072983206919715}

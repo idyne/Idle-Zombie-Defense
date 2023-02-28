@@ -305,6 +305,7 @@ public class UIAnimationSequencer : MonoBehaviour
 
     private void SetTower()
     {
+        Debug.Log("SetTower");
         tower?.Deactivate();
         tower = TowerController.Instance.GetCurrentTower();
         tower.Activate();
