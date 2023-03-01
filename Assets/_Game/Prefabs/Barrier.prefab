@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 2361733653467629083}
   - component: {fileID: 388551002456339980}
   - component: {fileID: 329209658139985523}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Barrier
   m_TagString: Barrier
   m_Icon: {fileID: 0}
@@ -387,12 +387,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7640558969779515294, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -7640558969779515294, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7146521406498821007, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -7146521406498821007, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -516098083770646512, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -516098083770646512, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -403,8 +415,16 @@ PrefabInstance:
       value: Barrier
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416272007918961125, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8416272007918961125, guid: 9b3ef810a1e9a8145bc2eb298f348058, type: 3}
       propertyPath: m_StaticEditorFlags

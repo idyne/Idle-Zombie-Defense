@@ -81,18 +81,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 728031c6ff90db9479284abcc059a335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetedSoldiers: []
   speed: 1
   isBoss: 0
   level: 4
-  originalMaterial: {fileID: 2100000, guid: 9b29e126802e0184d8383b3860322f93, type: 2}
+  originalMaterial: {fileID: 2100000, guid: df28e9aedf92aa340ab19a233ee6948a, type: 2}
   whiteMaterial: {fileID: 2100000, guid: 173db37bc46b7ef41b629e0a80aea15f, type: 2}
-  slowedMaterial: {fileID: 2100000, guid: df28e9aedf92aa340ab19a233ee6948a, type: 2}
+  slowedMaterial: {fileID: 2100000, guid: ac4aa6485bf99e84cac009256f64e7e1, type: 2}
   matIndex: 0
   hitCooldownDuration: 1
   shotPoint: {fileID: 2118815613562837560}
   levitatingTextPoint: {fileID: 8295228961346662795}
   slowedDownColor: {r: 0.41960785, g: 0.6627451, b: 1, a: 1}
   rend: {fileID: 7106056635357257220}
+  rendIndex: 0
+  died: 0
 --- !u!195 &4221529958158323268
 NavMeshAgent:
   m_ObjectHideFlags: 0

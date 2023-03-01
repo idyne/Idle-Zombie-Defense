@@ -19,8 +19,9 @@ namespace FateGames
             StartCoroutine(ShowContinueButton());
         }
 
-        private IEnumerator ShowContinueButton(float delay = 2)
+        private IEnumerator ShowContinueButton(float delay = 3)
         {
+            continueButton.gameObject.SetActive(false);
             yield return new WaitForSeconds(delay);
             continueButton.gameObject.SetActive(true);
         }
