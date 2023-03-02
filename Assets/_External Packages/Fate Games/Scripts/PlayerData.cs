@@ -10,8 +10,8 @@ namespace FateGames
         public int CurrentLevel = 1;
         public int Money = 0;
         public int UpgradePoint = 0;
-        public List<int> Soldiers = new() { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        public int WaveLevel = 1;
+        public List<int> Soldiers = new() { 0, 0, 0, 0, 0, 4, 0, 0, 0 };
+        public int WaveLevel = 6;
         public int IncomeLevel = 1;
         public int FireRateLevel = 1;
         public int BaseDefenseLevel = 1;
@@ -24,9 +24,9 @@ namespace FateGames
         public int AirstrikeLevel = 0;
         public List<(int, int, bool)> Traps = new() { };
         public List<int> Turrets = new() { };
-        public bool HasEverDetonated = false;
-        public bool HasEverPlaced = false;
-        public bool HasEverAimed = false;
+        public bool HasEverDetonated = true;
+        public bool HasEverPlaced = true;
+        public bool HasEverAimed = true;
         public int MergeCount = 0;
     }
 }

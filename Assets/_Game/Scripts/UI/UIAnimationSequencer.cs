@@ -116,7 +116,7 @@ public class UIAnimationSequencer : MonoBehaviour
             zoneMapController.Open();
             yield return new WaitForSeconds(0.5f);
             zoneMapController.BeginingShow();
-            surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
+            surviveText.SetActive(true);
             dayCycler.SetTimePeriodWithoutAnimation(CurrentTimePeriod);
             environmentChanger.SetEnvironment();
             yield return new WaitUntil(() => zoneMapController.Closed);
@@ -142,8 +142,7 @@ public class UIAnimationSequencer : MonoBehaviour
             SetTower();
             if (CurrentTimePeriod == TimePeriod.Night)
                 tower.TurnOnLights();
-            surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
-            dayCycler.SetTimePeriodWithoutAnimation(CurrentTimePeriod);
+            surviveText.SetActive(true); dayCycler.SetTimePeriodWithoutAnimation(CurrentTimePeriod);
             environmentChanger.SetEnvironment();
             uiDayBar.SetPercent(((int)CurrentTimePeriod) * 0.25f, false);
             uiDayBar.SetDay(WorldDay);
@@ -344,7 +343,7 @@ public class UIAnimationSequencer : MonoBehaviour
         SetTower();
         OnNewZone.Invoke();
         Barracks.Instance.PlaceSoldiers(true);
-        surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1);
+        surviveText.SetActive(true);
         zoneMapController.Open();
         if (!zoneMapSetup)
         {
@@ -393,7 +392,7 @@ public class UIAnimationSequencer : MonoBehaviour
         ResetProgress();
         environmentChanger.SetEnvironment();
         SetTower();
-        surviveText.SetActive(ZoneLevel == 1 && WorldLevel == 1 && CycleNumber == 1);
+        surviveText.SetActive(true);
         if (showMap)
         {
             zoneMapController.Open();

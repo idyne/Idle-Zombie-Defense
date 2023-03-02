@@ -143,7 +143,7 @@ public static class Settings
         }
         #endregion
         #region Wave
-        private static readonly int BaseWavePower = 10;
+        private static readonly int BaseWavePower = 1000;
         public static int WavePower
         {
             get
@@ -188,7 +188,7 @@ public static class Settings
         {
             get
             {
-                float result = CycleNumber > 1 ? 240 : 30f;
+                float result = CycleNumber > 1 ? 240 : 300f;
                 return result;
             }
         }
@@ -261,7 +261,7 @@ public static class Settings
         #endregion
         #region Commander
 
-        public static float BaseCommanderWeaponDamage { get { return CycleNumber > 1 ? 61 : 15; } }
+        public static float BaseCommanderWeaponDamage { get { return CycleNumber > 1 ? 61 : 150; } }
         private static readonly float CommanderWeaponDamageExponentialIncreaseRatio = 0.05f;
         private static readonly float CommanderWeaponDamageLinearIncreaseRatio =/* CycleNumber > 1 ? 100 : */15f;
         public static int CommanderWeaponDamage { get => Mathf.CeilToInt(BaseCommanderWeaponDamage * Mathf.Pow(1 + CommanderWeaponDamageExponentialIncreaseRatio, WorldDay - 1) + (WorldDay - 1) * CommanderWeaponDamageLinearIncreaseRatio); }

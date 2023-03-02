@@ -178,7 +178,7 @@ public class WaveController : MonoBehaviour
             List<int> numbersOfZombies = GenerateNumbersOfZombies(power, maxZombieLevel);
             for (int i = 1; i <= maxZombieLevel; i++)
                 totalNumberOfZombies += numbersOfZombies[i];
-            float duration = 0.1f * power * (CurrentTimePeriod == TimePeriod.Night ? 0.6f : 1);
+            float duration = 0.05f * power * (CurrentTimePeriod == TimePeriod.Night ? 0.6f : 1);
             float period = duration / totalNumberOfZombies;
             int count = 0;
             while (count < totalNumberOfZombies)
