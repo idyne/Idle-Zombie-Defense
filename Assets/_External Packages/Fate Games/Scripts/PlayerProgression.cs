@@ -71,9 +71,13 @@ namespace FateGames
 
         public static void InitializePlayerData()
         {
-            PlayerData = SaveManager.Load<PlayerData>();
+            PlayerData = null;
+            if (PlayerPrefs.GetString("version") == Application.version)
+                PlayerData = SaveManager.Load<PlayerData>();
+            else Debug.LogWarning("Different version found. Creating new save file.");
             if (PlayerData == null)
             {
+                PlayerPrefs.SetString("version", Application.version);
                 PlayerData = new PlayerData();
                 SaveManager.Save(PlayerData);
             }

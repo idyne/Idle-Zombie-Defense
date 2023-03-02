@@ -23,7 +23,8 @@ namespace FateGames
         private void Initialize()
         {
             if (!AvoidDuplication()) return;
-            Application.targetFrameRate = targetFrameRate > 0 ? targetFrameRate : Screen.currentResolution.refreshRate;
+            Application.targetFrameRate = targetFrameRate > 0 ? targetFrameRate : (Screen.currentResolution.refreshRate);
+            //Application.targetFrameRate = targetFrameRate;
             PlayerProgression.InitializePlayerData();
             AnalyticsManager.Initialize();
             if (loadCurrentLevel)

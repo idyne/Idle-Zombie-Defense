@@ -75,7 +75,6 @@ public class Barracks : MonoBehaviour
                     {
                         maxMergeLevel = i + 1;
                         isNewMerge = true;
-                        print(maxMergeLevel);
                     }
                     AddSoldier(i + 1, out Soldier soldier, out Transform spawnPoint);
                 }
@@ -83,7 +82,6 @@ public class Barracks : MonoBehaviour
         }
         if (isNewMerge)
         {
-            print(maxMergeLevel);
 
             OnNewMergeUnlocked.Invoke(maxMergeLevel);
         }
@@ -165,7 +163,6 @@ public class Barracks : MonoBehaviour
 
     public void ClearSoldiers()
     {
-        print("clear soldiers");
         for (int i = 1; i < soldierTable.Count; i++)
         {
             List<Soldier> soldiers = soldierTable[i];

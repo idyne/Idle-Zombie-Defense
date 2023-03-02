@@ -33,6 +33,7 @@ public class ThrowableWeaponsGuy : MonoBehaviour
     private Vector3 grenadePoint;
     [SerializeField] private TargetIndicator targetIndicator;
     [SerializeField] private Animator ragdollAnimator;
+    //[SerializeField] private GameObject weaponObject;
 
     private void ResetCooldown() => remainingCooldown = 0;
 
@@ -205,6 +206,8 @@ public class ThrowableWeaponsGuy : MonoBehaviour
         }
         else
         {
+            /*if (!weaponObject.activeSelf)
+                weaponObject.SetActive(true);*/
             animator.SetTrigger("Shoot");
             weapon.Shoot(target);
         }
@@ -212,6 +215,7 @@ public class ThrowableWeaponsGuy : MonoBehaviour
 
     private void ThrowWeapon()
     {
+        //weaponObject.SetActive(false);
         DeactivateSkill();
         animator.SetTrigger("Throw");
         throwing = true;
@@ -219,8 +223,11 @@ public class ThrowableWeaponsGuy : MonoBehaviour
     }
     private void RemoveTarget()
     {
-        target?.OnDeath.RemoveListener(OnTargetDeath);
-        target = null;
+        if (target)
+        {
+            target.OnDeath.RemoveListener(OnTargetDeath);
+            target = null;
+        }
         targetIndicator.Hide();
         if (!throwing)
         {

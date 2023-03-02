@@ -60,7 +60,6 @@ public class Tower : MonoBehaviour
         healthBar = GetComponentInChildren<UIHealthBar>();
         SetHealth(MaxHealth);
         healthBar.Hide();
-        Debug.Log("za " + gameObject.name, this);
         if (WaveController.Instance.CurrentWave != null && !WaveController.Instance.CurrentWave.Clear)
             WaveController.Instance.CurrentWave.OnWaveClear.AddListener(Repair);
         WaveController.Instance.OnNewWave.AddListener((wave) =>
@@ -71,6 +70,16 @@ public class Tower : MonoBehaviour
         {
             SetHealth(MaxHealth);
         });
+    }
+
+    public void EnableCamera()
+    {
+        cameraController.Enable();
+    }
+
+    public void DisableCamera()
+    {
+        cameraController.Disable();
     }
 
     private void Start()
@@ -105,7 +114,6 @@ public class Tower : MonoBehaviour
 
     public void Repair()
     {
-        Debug.Log(gameObject.name, this);
         foreach (Barrier barrier in barriers)
             barrier.Repair();
         SetHealth(MaxHealth, damageTaken > 0);
@@ -115,11 +123,13 @@ public class Tower : MonoBehaviour
 
     public void Activate()
     {
+        Debug.Log("Activate", this);
         gameObject.SetActive(true);
     }
 
     public void Deactivate()
     {
+        Debug.Log("Deactivate", this);
         gameObject.SetActive(false);
     }
 

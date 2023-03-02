@@ -14,7 +14,6 @@ public class SoldierUnlocked : MonoBehaviour
 
     public void Show(int soldierLevel)
     {
-        print(soldierLevel);
         gameObject.SetActive(true);
         button.SetActive(false);
         soldierName.text = soldierNames[soldierLevel];

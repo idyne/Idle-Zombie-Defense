@@ -45,6 +45,7 @@ public class Soldier : MonoBehaviour, IPooledObject
         Zombie closestZombie = WaveController.Instance.CurrentWave.GetClosest(Transform.position);
         if (closestZombie == null || Vector3.Distance(closestZombie.Transform.position, Transform.position) > range) return;
         target = closestZombie;
+        target.targetedSoldiers.Add(this);
         closestZombie.OnDeath.AddListener(OnTargetDeath);
         //LookAtTarget(StartShooting);
         if (lastShootTime + shootingPeriod > Time.time)
@@ -93,7 +94,7 @@ public class Soldier : MonoBehaviour, IPooledObject
         Transform.DORotate(Quaternion.LookRotation(direction).eulerAngles, 0.4f).OnComplete(onComplete);
     }
 
-    private void OnTargetDeath()
+    public void OnTargetDeath()
     {
         RemoveTarget(); SetTarget();
     }
@@ -121,8 +122,12 @@ public class Soldier : MonoBehaviour, IPooledObject
 
     private void RemoveTarget()
     {
-        target?.OnDeath.RemoveListener(OnTargetDeath);
-        target = null;
+        if (target)
+        {
+            target.OnDeath.RemoveListener(OnTargetDeath);
+            target.targetedSoldiers.Remove(this);
+            target = null;
+        }
         StopShooting();
     }
 

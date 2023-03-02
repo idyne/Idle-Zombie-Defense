@@ -10,6 +10,7 @@ namespace Moonee.MoonSDK.Internal.RateUs
     public class RateUsView : MonoBehaviour
     {
         [SerializeField] private Image appIcon;
+        [SerializeField] private Sprite icon;
 
         [Header("GameObjects")]
 
@@ -32,7 +33,7 @@ namespace Moonee.MoonSDK.Internal.RateUs
         void Start()
         {
             settings = MoonSDKSettings.Load();
-            appIcon.sprite = settings.studioLogoSprite;
+            appIcon.sprite = icon != null ? icon : settings.studioLogoSprite;
 
             gameNameText.text = $"Enjoying {Application.productName}";
 
@@ -63,10 +64,10 @@ namespace Moonee.MoonSDK.Internal.RateUs
         {
             for (int i = 0; i < count; i++)
             {
-              enabledStars[i].SetActive(isToEnable);
+                enabledStars[i].SetActive(isToEnable);
             }
         }
-      
+
         private void CloseRateUsScreen()
         {
             Destroy(gameObject);

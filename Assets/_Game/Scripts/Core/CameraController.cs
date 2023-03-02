@@ -10,6 +10,7 @@ public abstract class CameraController : MonoBehaviour
 {
     [SerializeField] protected Transform camTransform;
     [SerializeField] protected Camera camera;
+    [SerializeField] protected LayerMask cullingMask;
     private Transform _transform = null;
     public static bool InPlacementMode = false;
     public Transform transform
@@ -23,10 +24,20 @@ public abstract class CameraController : MonoBehaviour
     }
 
     public Transform CamTransform { get => camTransform; }
-    public Camera Camera { get => camera;  }
+    public Camera Camera { get => camera; }
 
     public abstract void ZoomOut();
     public abstract void ZoomIn();
+
+    public void Disable()
+    {
+        camera.cullingMask = 0;
+    }
+
+    public void Enable()
+    {
+        camera.cullingMask = cullingMask;
+    }
 
 
 }

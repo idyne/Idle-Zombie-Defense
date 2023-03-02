@@ -32,8 +32,19 @@ public class SoldierRenderController : MonoBehaviour
 
     public void Render(int soldierIndex)
     {
+        EnableCamera();
         soldiers[lastRenderedSoldierIndex].SetActive(false);
         soldiers[soldierIndex].SetActive(true);
         lastRenderedSoldierIndex = soldierIndex;
+    }
+
+    public void EnableCamera()
+    {
+        camera.enabled = true;
+    }
+
+    public void DisableCamera()
+    {
+        camera.enabled = false;
     }
 }

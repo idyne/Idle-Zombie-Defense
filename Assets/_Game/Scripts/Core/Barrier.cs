@@ -9,8 +9,16 @@ public class Barrier : MonoBehaviour
 {
     [SerializeField] private List<Transform> parts;
     private int currentHealth = 100;
-    private UIHealthBar healthBar;
-    public Transform Transform { get; private set; }
+    [SerializeField] private UIHealthBar healthBar;
+    private Transform _transform = null;
+    public Transform transform
+    {
+        get
+        {
+            if (_transform == null) _transform = base.transform;
+            return _transform;
+        }
+    }
     public bool IsDead { get => currentHealth == 0; }
     public UnityEvent OnDeath { get; private set; } = new();
     public UnityEvent<int> OnHit { get; private set; } = new();
@@ -20,8 +28,7 @@ public class Barrier : MonoBehaviour
     private int damageTaken = 0;
     private void Awake()
     {
-        Transform = transform;
-        healthBar = GetComponentInChildren<UIHealthBar>();
+        //healthBar = GetComponentInChildren<UIHealthBar>();
         SetHealth(MaxHealth, false);
         healthBar.Hide();
         UpgradeController.OnBaseDefenseUpgrade.AddListener(() =>
@@ -44,11 +51,21 @@ public class Barrier : MonoBehaviour
 
     private void SetHealth(int health, bool showBar = true)
     {
-        int previousHealth = currentHealth;
-        currentHealth = Mathf.Clamp(health, 0, MaxHealth);
-        healthBar.SetPercent(currentHealth / (float)MaxHealth);
-        if (showBar)
-            healthBar.Show(2);
+        try
+        {
+            int previousHealth = currentHealth;
+            currentHealth = Mathf.Clamp(health, 0, MaxHealth);
+            healthBar.SetPercent(currentHealth / (float)MaxHealth);
+            if (showBar)
+                healthBar.Show(2);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e);
+            Debug.LogError("Error");
+            Debug.LogError(healthBar);
+        }
+
     }
 
     public void GetHit(int damage)
@@ -69,7 +86,7 @@ public class Barrier : MonoBehaviour
             breakLevel = 1;
             parts[0].DOKill();
             parts[0].DOScale(Vector3.zero, 0.2f);
-            ObjectPooler.SpawnFromPool("Wood Effect", Transform.position + Vector3.up, Transform.rotation);
+            ObjectPooler.SpawnFromPool("Wood Effect", transform.position + Vector3.up, transform.rotation);
             //SoundFX.PlaySound("Barrier Breaking Sound", Transform.position);
         }
         if (percent < 0.33f && breakLevel < 2)
@@ -77,7 +94,7 @@ public class Barrier : MonoBehaviour
             breakLevel = 2;
             parts[1].DOKill();
             parts[1].DOScale(Vector3.zero, 0.2f);
-            ObjectPooler.SpawnFromPool("Wood Effect", Transform.position + Vector3.up, Transform.rotation);
+            ObjectPooler.SpawnFromPool("Wood Effect", transform.position + Vector3.up, transform.rotation);
             //SoundFX.PlaySound("Barrier Breaking Sound", Transform.position);
         }
         if (percent <= 0.0f && breakLevel < 3)
@@ -85,7 +102,7 @@ public class Barrier : MonoBehaviour
             breakLevel = 3;
             parts[2].DOKill();
             parts[2].DOScale(Vector3.zero, 0.2f);
-            ObjectPooler.SpawnFromPool("Wood Effect", Transform.position + Vector3.up, Transform.rotation);
+            ObjectPooler.SpawnFromPool("Wood Effect", transform.position + Vector3.up, transform.rotation);
             //SoundFX.PlaySound("Barrier Breaking Sound", Transform.position);
         }
     }
