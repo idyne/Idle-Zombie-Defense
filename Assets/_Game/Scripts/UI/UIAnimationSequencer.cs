@@ -316,19 +316,24 @@ public class UIAnimationSequencer : MonoBehaviour
         PlayerProgression.PlayerData.MergeCount = 0;
         PlayerProgression.PlayerData.IncomeLevel = 1;
         PlayerProgression.PlayerData.FireRateLevel = 1;
-        //PlayerProgression.PlayerData.BaseDefenseLevel = 1;
-        //PlayerProgression.PlayerData.TNTLevel = 1;
-        //PlayerProgression.PlayerData.FrostLevel = 1;
-        //PlayerProgression.PlayerData.BarbwireLevel = 1;
-        //PlayerProgression.PlayerData.TurretLevel = 1;
-        //PlayerProgression.PlayerData.SoldierMergeLevel = 1;
-        //PlayerProgression.PlayerData.ThrowableWeaponsGuyLevel = 0;
-        //PlayerProgression.PlayerData.AirstrikeLevel = 0;
+        if (CycleNumber > 1 && WorldLevel == 1)
+        {
+            PlayerProgression.PlayerData.BaseDefenseLevel = 15;
+            PlayerProgression.PlayerData.TNTLevel = 10;
+            PlayerProgression.PlayerData.FrostLevel = 6;
+            PlayerProgression.PlayerData.BarbwireLevel = 8;
+            PlayerProgression.PlayerData.TurretLevel = 5;
+            PlayerProgression.PlayerData.SoldierMergeLevel = 1;
+            PlayerProgression.PlayerData.ThrowableWeaponsGuyLevel = 2;
+            PlayerProgression.PlayerData.AirstrikeLevel = 2;
+        }
+
         PlayerProgression.PlayerData.Traps.Clear();
         PlayerProgression.PlayerData.Turrets.Clear();
         foreach (Placeable placeable in FindObjectsOfType<Placeable>())
             placeable.Deactivate();
-        //PlayerProgression.UPGRADE_POINT = 0;
+        if (CycleNumber > 1 && WorldLevel == 1)
+            PlayerProgression.UPGRADE_POINT = 0;
         PlayerProgression.MONEY = 0;
     }
     private IEnumerator GoCurrentZone()
